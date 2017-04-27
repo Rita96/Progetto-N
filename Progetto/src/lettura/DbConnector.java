@@ -10,14 +10,7 @@ package lettura;
  *
  * @author luby
  */
-public class DbConnector implements InterfacciaLettura{
+public class DbConnector {
 
-    @Override
-    public void letturaPortate() {
-    }
 
-    @Override
-    public void letturaSale() {
-    }
-    
 }

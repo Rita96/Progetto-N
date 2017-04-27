@@ -2,7 +2,10 @@ package struttura;
 
 import funzionalita.FunzioniPrincipali;
 import funzionalita.Prenotazione;
+import java.io.IOException;
 import java.util.ArrayList;
+import lettura.LeggiSala;
+import menu.Portata;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -15,11 +18,25 @@ import java.util.ArrayList;
  * @author luby
  */
 public class Agriturismo implements FunzioniPrincipali{
-    private ArrayList<Prenotazione> prenotazione = new ArrayList<>();
+    private static ArrayList<Prenotazione> prenotazioni = new ArrayList<>();
     private int contatorePersone;
+    private static ArrayList<Sala> sale = new ArrayList<>();
+    
+    public Agriturismo(){
+        
+    }
+    
+    public void addSala(Sala s){
+        sale.add(s);
+    }
+    
+    public ArrayList<Sala> getSale() {
+        return sale;
+    }
+
 
     public ArrayList<Prenotazione> getPrenotazione() {
-        return prenotazione;
+        return prenotazioni;
     }
 
     public int getContatorePersone() {
@@ -27,7 +44,8 @@ public class Agriturismo implements FunzioniPrincipali{
     }
     
     @Override
-    public void aggiungiPrenotazione() {
+    public void aggiungiPrenotazione(Prenotazione p) {
+        prenotazioni.add(p);
     }
 
     @Override
@@ -40,7 +58,6 @@ public class Agriturismo implements FunzioniPrincipali{
 
     @Override
     public void stampaAccoglienza() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override

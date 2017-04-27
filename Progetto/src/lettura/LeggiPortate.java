@@ -1,7 +1,16 @@
 package lettura;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.xml.bind.ParseConversionEvent;
+import menu.MenuCompleto;
+import menu.Portata;
+import menu.TipoPortata;
 
-import lettura.InterfacciaLettura;
+
+
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -13,14 +22,27 @@ import lettura.InterfacciaLettura;
  *
  * @author luby
  */
-public class LeggiPortate implements InterfacciaLettura{
+public class LeggiPortate {
+    
+    MenuCompleto menu = new MenuCompleto();
+    
 
-    @Override
-    public void letturaPortate() {
+    public void letturaPortate() throws FileNotFoundException, IOException {
+        String s[];
+        String line=null;
+        String portata=null;
+        FileReader file = new FileReader("portate.txt");
+        BufferedReader buffer = new BufferedReader(file);
+        while((line=buffer.readLine())!=null){
+            s = line.split(", ");
+            portata = s[0];
+            TipoPortata tipoPortata = TipoPortata.valueOf(s[1]);
+            Portata p = new Portata(portata, tipoPortata);
+            menu.addPortata(p);
+        }
+        file.close();
+        
     }
 
-    @Override
-    public void letturaSale() {
-    }
     
 }

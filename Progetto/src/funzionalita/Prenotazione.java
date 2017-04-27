@@ -26,6 +26,13 @@ public class Prenotazione {
     private String pasto;
     private Cliente cliente;
 
+    public Prenotazione(int nAdulti, Date date, String pasto, Cliente cliente) {
+        this.nAdulti = nAdulti;
+        this.date = date;
+        this.pasto = pasto;
+        this.cliente = cliente;
+    }
+
     public Sala getSala() {
         return sala;
     }

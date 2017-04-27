@@ -11,7 +11,7 @@ package funzionalita;
  * @author luby
  */
 public interface FunzioniPrincipali {
-    public void aggiungiPrenotazione();
+    public void aggiungiPrenotazione(Prenotazione p);
     public void rimnuoviPrenotazione();
     public void modificaPrenotazione();
     public void stampaAccoglienza();

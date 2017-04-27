@@ -13,8 +13,12 @@ import java.util.ArrayList;
  * @author luby
  */
 public class MenuCliente {
-    private ArrayList<Portata> menuCliente = new ArrayList<>();
+    private ArrayList<Portata> menuCliente;
 
+    public MenuCliente(){
+        menuCliente = new ArrayList<>();
+    }
+    
     public ArrayList<Portata> getMenuCliente() {
         return menuCliente;
     }

@@ -10,5 +10,5 @@ package menu;
  * @author luby
  */
 public enum TipoPortata {
-    PRIMO, SECONDO, DOLCE
+    Primo, Secondo, Dolce
 }

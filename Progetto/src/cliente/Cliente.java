@@ -14,6 +14,11 @@ public class Cliente {
     private String nome;
     private long numTelefono;
 
+    public Cliente(String nome, long numTelefono) {
+        this.nome = nome;
+        this.numTelefono = numTelefono;
+    }
+
     public String getNome() {
         return nome;
     }

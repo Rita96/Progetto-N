@@ -13,12 +13,17 @@ import java.util.ArrayList;
  * @author luby
  */
 public class MenuCompleto {
-    private ArrayList<Portata> menuCliente = new ArrayList<>();
+    private static ArrayList<Portata> menuCompleto = new ArrayList<>();
 
-    public ArrayList<Portata> getMenuCliente() {
-        return menuCliente;
+    public ArrayList<Portata> getMenuCompleto() {
+        return menuCompleto;
     }
-
+    
+    public void addPortata(Portata portata){
+        menuCompleto.add(portata);
+    }
+    
+    
 }    
     
     

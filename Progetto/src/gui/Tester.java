@@ -24,7 +24,7 @@ public class Tester {
         GuiProva guiProva = new GuiProva();
         
         leggiPortate.letturaPortate();
-        leggiSala.letturaSale();
+        
         
         guiProva.setVisible(true);
         

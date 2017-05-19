@@ -23,10 +23,10 @@ import struttura.Sala;
  */
 public class LeggiSala {
    Agriturismo agri = new Agriturismo();
-    
-    public void letturaSale() throws FileNotFoundException, IOException{
+
+    public void letturaSale(String percorso) throws FileNotFoundException, IOException{
         String sala = null;
-        FileReader file = new FileReader("sale.txt");
+        FileReader file = new FileReader(percorso);
         BufferedReader buffer = new BufferedReader(file);
         while((sala=buffer.readLine())!= null){
             Sala s = new Sala(sala);
@@ -35,6 +35,8 @@ public class LeggiSala {
         file.close();
     }
 
+    
+  
     
     
     

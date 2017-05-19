@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package databse;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -23,7 +23,6 @@ public class ConnectDbMySql {
             String password= "HarryPotter";
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url, login, password);
-            JOptionPane.showMessageDialog(null, "Connesso al database");
             return conn;
             
             }

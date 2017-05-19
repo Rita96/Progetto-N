@@ -1,6 +1,7 @@
 package lettura;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,13 +26,12 @@ import menu.TipoPortata;
 public class LeggiPortate {
     
     MenuCompleto menu = new MenuCompleto();
-    
 
-    public void letturaPortate() throws FileNotFoundException, IOException {
+    public void letturaPortate(String percorso) throws FileNotFoundException, IOException {
         String s[];
         String line=null;
         String portata=null;
-        FileReader file = new FileReader("portate.txt");
+        FileReader file = new FileReader(percorso);
         BufferedReader buffer = new BufferedReader(file);
         while((line=buffer.readLine())!=null){
             s = line.split(", ");
@@ -43,6 +43,6 @@ public class LeggiPortate {
         file.close();
         
     }
-
     
+
 }

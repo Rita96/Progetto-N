@@ -21,10 +21,21 @@ public class Agriturismo implements FunzioniPrincipali{
     private static ArrayList<Prenotazione> prenotazioni = new ArrayList<>();
     private int contatorePersone;
     private static ArrayList<Sala> sale = new ArrayList<>();
+    private static String nome;
+    
+    public Agriturismo (String nome){
+        this.nome=nome;
+    }
     
     public Agriturismo(){
         
     }
+
+   public String getNome(){
+       return nome;
+   }
+
+    
     
     public void addSala(Sala s){
         sale.add(s);

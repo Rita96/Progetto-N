@@ -55,7 +55,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }
     
     public void riempiPrimi(){
-        for(Portata p: menuCompleto.getMenuCompleto()){
+        for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Primo)){
                 JPrimo1.addItem(p.getNome());
                 JPrimo2.addItem(p.getNome());
@@ -64,7 +64,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         }
     }
     public void riempiSecondi(){
-        for(Portata p: menuCompleto.getMenuCompleto()){
+        for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Secondo)){
                 JSecondo1.addItem(p.getNome());
                 JSecondo2.addItem(p.getNome());
@@ -73,7 +73,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         }
     }
     public void riempiDolci(){
-        for(Portata p: menuCompleto.getMenuCompleto()){
+        for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Dolce)){
                 JDolce.addItem(p.getNome());
             }

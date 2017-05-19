@@ -43,8 +43,7 @@ public class GuiProva extends javax.swing.JFrame {
             if((d.equals(p.getDate())) && pasto.equals(p.getPasto())){
                 object = new Object[]{p.getCliente().getNome(),p.getnAdulti()};
                 aggiornaTabelleSale(p);
-                
-              
+
             }
         } 
     }
@@ -52,9 +51,9 @@ public class GuiProva extends javax.swing.JFrame {
         for(GestioneTabelle t: arrayJTable){
             if(a.getSala().getNome().equals(t.getNomeSala())){
                 t.getDtm().addRow(object);
-            if(a.getSala().getNome() != "Indifferente"){
-                arrayJTable.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
-            }
+                if(a.getSala().getNome() != "Indifferente"){
+                    arrayJTable.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
+                }
             }
         }
     }

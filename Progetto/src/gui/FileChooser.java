@@ -18,10 +18,15 @@ import lettura.LeggiSala;
  * @author luby9
  */
 public class FileChooser extends javax.swing.JFrame {
-    LeggiSala leggiSala = new LeggiSala();
-    /**
-     * Creates new form FileChooser
-     */
+    
+    public static String percorso = null;
+
+    public String getPercorso() {
+        return percorso;
+    }
+
+ 
+    
     public FileChooser() {
         initComponents();
     }
@@ -37,7 +42,8 @@ public class FileChooser extends javax.swing.JFrame {
 
         jFileChooser1 = new javax.swing.JFileChooser();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setLocation(new java.awt.Point(400, 200));
 
         jFileChooser1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -73,14 +79,8 @@ public class FileChooser extends javax.swing.JFrame {
        
         if(response.equals(jFileChooser1.APPROVE_SELECTION)) {
             File f = jFileChooser1.getSelectedFile();
-            String percorso = f.getAbsolutePath();
-            try {
-                leggiSala.letturaSale(percorso);
-                System.out.println(f.getAbsolutePath());
-                dispose();
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Non è possibile leggere il file");
-            }
+            percorso = f.getAbsolutePath();
+            dispose();
         }else if (response.equals(jFileChooser1.CANCEL_SELECTION)){
             JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato");
             dispose();
@@ -92,37 +92,7 @@ public class FileChooser extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(FileChooser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(FileChooser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(FileChooser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(FileChooser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new FileChooser().setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFileChooser jFileChooser1;

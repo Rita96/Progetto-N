@@ -7,9 +7,13 @@ package gui;
 
 import cliente.Cliente;
 import com.toedter.calendar.JCalendar;
+import databse.CreateDb;
 import funzionalita.Prenotazione;
 import static gui.GuiProva.rimuoviOrarioData;
+import gui.menu.GuiInputMenu;
+import java.sql.SQLException;
 import java.util.Date;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import menu.MenuCliente;
 import menu.MenuCompleto;
@@ -26,14 +30,17 @@ public class GuiPrenotazione extends javax.swing.JFrame {
 
     private Date data = new Date();
     private Date dataOdierna = new Date();
+    CreateDb createDb;
     private String nome;
     private int numeroAdulti;
     private String pasto="Pranzo";
     private long numeroTelefono;
     private Sala sala;
+    private String prefSala;
+    private String tipoEvento;
     private String s = "Indifferente";
     private Portata portata;
-    private String portataString = "Indifferente";
+    private String portataString = "Indifferente"; 
     
     MenuCompleto menuCompleto = new MenuCompleto();
     MenuCliente menuCliente = new MenuCliente();
@@ -470,6 +477,56 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         prenotazione.setSala(new Sala(s));
         prenotazione.setMenu(menuCliente);
         agriturismo.aggiungiPrenotazione(prenotazione);
+        
+        if(jCheckBox1.isSelected())
+        {
+            prefSala = "Esclusiva";
+        }if(jCheckBox2.isSelected())
+        {
+            prefSala = "Esigenza";
+        }if(jCheckBox3.isSelected())
+        {
+            prefSala = "Preferenza";
+        }
+        if(jCheckBox4.isSelected())
+        {
+            prefSala = "In Attesa";
+        }
+        if(jCheckBox3.isSelected())
+        {
+            prefSala = "Da Confermare";
+        }else
+        {
+            prefSala = "Indifferente";
+        }
+        
+        if(!nome.isEmpty()){
+            
+            try {
+                createDb.addPrenotazione(nome, JPasto.getSelectedItem().toString(),
+                        JOra.getText(), data,numeroAdulti,
+                        JNumeroTelefono.getText(), JSala.getSelectedItem().toString(),
+                        prefSala, JNumeroTelefono3.getText(),
+                        JPrimo1.getSelectedItem().toString(),
+                        JPrimo2.getSelectedItem().toString(),
+                        JPrimo3.getSelectedItem().toString(),
+                        JSecondo1.getSelectedItem().toString(),
+                        JSecondo2.getSelectedItem().toString(),
+                        JSecondo3.getSelectedItem().toString(),
+                        JDolce.getSelectedItem().toString(),
+                        jTextArea1.toString());
+                JOptionPane.showMessageDialog(rootPane, "Prenotazione aggiunta con successo!");
+                
+                //createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
+        }
+        
+        
         dispose();
         
         

@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import menu.MenuCompleto;
@@ -122,50 +121,6 @@ public class CreateDb {
         stm.execute(query);
     }
     
-    
-    public void createTablePrenotazione() throws SQLException{
-            String query = "CREATE TABLE IF NOT EXISTS `"+agri.getNome()+"`.`prenotazioni` (\n" +
-                        "  `IdPrenotazione` INT NOT NULL AUTO_INCREMENT,\n" +
-                        "  `Cliente` VARCHAR(45) NOT NULL,\n" +
-                        "  `Pasto` VARCHAR(45) NOT NULL,\n" + 
-                        "  `Ora` VARCHAR(45) NOT NULL,\n" +
-                        "  `Data` DATE NOT NULL,\n" +
-                        "  `NPersone` INT NOT NULL,\n" +
-                        "  `NTelefono` VARCHAR(45) NOT NULL,\n" +
-                        "  `Sala` VARCHAR(45) NULL,\n" +
-                        "  `PreferenzaSala` VARCHAR(45) NULL,\n" +
-                        "  `TipoEvento` VARCHAR(45) NULL,\n" +
-                        "  `Primo1` VARCHAR(45) NULL,\n" +
-                        "  `Primo2` VARCHAR(45) NULL,\n" +
-                        "  `Primo3` VARCHAR(45) NULL,\n" +
-                        "  `Secondo1` VARCHAR(45) NULL,\n" +
-                        "  `Secondo2` VARCHAR(45) NULL,\n" +
-                        "  `Secondo3` VARCHAR(45) NULL,\n" +
-                        "  `Dolce` VARCHAR(45) NULL,\n" +
-                        "  `Note` VARCHAR(1000) NULL,\n"                    
-                    + "PRIMARY KEY (`idPrenotazione`, `Cliente`,`Ora`,`Data` ),\n";
-        stm.executeUpdate(query);
-    } 
-    
-    public void addPrenotazione(String cliente, String tipoPortata, 
-            String ora, Date data, int nPersone, String nTel, String sala, 
-            String prefSala, String tipoEvento,String primo1,
-            String primo2,String primo3,String secondo1,
-            String secondo2,String secondo3, String dolce, String note)
-            throws SQLException{
-            String query = "INSERT INTO `"+agri.getNome()+"`.`prenotazioni` "
-                + "(`Cliente`, `Pasto`, `Ora`, `Data`, `NPersone`,"
-                + " `NTelefono`, `Sala`, `PreferenzaSala`, `Stato`, `TipoEvento`,"
-                + "`Primo1`,`Primo2`,`Primo3`,`Secondo1`,`Secondo2`,`Secondo3`,"
-                + " `Dolce`,`Note`) "
-                + "VALUES ('"+cliente+"', '"+tipoPortata+"',"
-                + " '"+ora+"', '"+data+"', '"+nPersone+"',"
-                + " '"+nTel+"', '"+sala+"', '"+prefSala+"',"
-                + " '"+tipoEvento+"', '"+primo1+"', '"+primo2+"', "
-                + "'"+primo3+"', '"+secondo1+"', '"+secondo2+"', '"+secondo3+"',"
-                + " '"+dolce+"', '"+note+"');";
-        stm.execute(query);
-    }
     
      public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);

@@ -22,7 +22,7 @@ public class ConnectDbMySql {
             String login="root";
             String password= "HarryPotter";
             Class.forName("com.mysql.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url+"master", login, password);
+            Connection conn = DriverManager.getConnection(url, login, password);
             return conn;
             
             }

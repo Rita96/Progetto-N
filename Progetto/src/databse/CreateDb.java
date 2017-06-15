@@ -105,6 +105,26 @@ public class CreateDb {
                     "  `idmenu` INT NOT NULL AUTO_INCREMENT,\n" +
                     "  ` nome portata` VARCHAR(100) NOT NULL,\n" +
                     "  `tipo portata` VARCHAR(100) NOT NULL,\n" +
+                    "  `ingrediente1` VARCHAR(100) NULL,\n" +
+                    "  `qnt1` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente2` VARCHAR(100) NULL,\n" +
+                    "  `qnt2` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente3` VARCHAR(100) NULL,\n" +
+                    "  `qnt3` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente4` VARCHAR(100) NULL,\n" +
+                    "  `qnt4` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente5` VARCHAR(100) NULL,\n" +
+                    "  `qnt5` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente6` VARCHAR(100) NULL,\n" +
+                    "  `qnt6` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente7` VARCHAR(100) NULL,\n" +
+                    "  `qnt7` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente8` VARCHAR(100) NULL,\n" +
+                    "  `qnt8` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente9` VARCHAR(100) NULL,\n" +
+                    "  `qnt9` VARCHAR(100) NULL,\n"  +
+                    "  `ingrediente10` VARCHAR(100) NULL,\n" +
+                    "  `qnt10` VARCHAR(100) NULL,\n" +
                     "  PRIMARY KEY (`idmenu`, ` nome portata`),\n" +
                     "  UNIQUE INDEX ` nome portata_UNIQUE` (` nome portata` ASC));";
         stm.executeUpdate(query);

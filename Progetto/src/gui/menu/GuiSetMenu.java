@@ -3,7 +3,9 @@ package gui.menu;
 
 import databse.CreateDb;
 import gui.FileChooser;
+import gui.GuiProva;
 import gui.sale.GuiInformationSale;
+import gui.sale.GuiSetSale;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -119,9 +121,13 @@ public class GuiSetMenu extends javax.swing.JFrame {
             try {  
             leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
+            GuiProva guiProva = new GuiProva();
             JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
+            createDb.createTablePrenotazioni();
+            dispose();
+            guiProva.setVisible(true);
             } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, ex);
+            JOptionPane.showMessageDialog(rootPane, "Portata già inserita");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato!");
             }
@@ -130,9 +136,21 @@ public class GuiSetMenu extends javax.swing.JFrame {
             int choose;
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
-                dispose();
+                try {
+                    if(createDb.verificaTabella("menu")){
+                        dispose();
+                        createDb.createTablePrenotazioni();
+                        GuiProva guiProva = new GuiProva();
+                        guiProva.setVisible(true);
+                    }
+                    else
+                        JOptionPane.showMessageDialog(rootPane, "Inserire almeno una portata!");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
+                }
             }
         }
+      
       
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 

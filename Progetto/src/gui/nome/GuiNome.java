@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import struttura.Agriturismo;
+import exception.ExeptionNome;
 
 /**
  *
@@ -84,15 +85,17 @@ public class GuiNome extends javax.swing.JFrame {
             try {
                 CreateDb createDb = new CreateDb();
                 createDb.CreateSchema();
+                createDb.createTableDatiRistorante();
+                createDb.insertDatiRistorante();
             } catch (SQLException ex) {
-                JOptionPane.showConfirmDialog(rootPane, "Errore nella creazione dello Schema!");
+                JOptionPane.showConfirmDialog(rootPane, "Errore nel database!");
             }
          GuiInformationSale guiInformation;
             try {
                 guiInformation = new GuiInformationSale();
                 guiInformation.setVisible(true);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+                JOptionPane.showMessageDialog(rootPane, "Errore in SQL!");
             }
          dispose();
         } 

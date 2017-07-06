@@ -79,6 +79,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    CreateDb createDb = new CreateDb();
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         try {
             guiSetMenu = new GuiSetMenu();
@@ -88,6 +89,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         }
         dispose();
         guiSetMenu.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
 

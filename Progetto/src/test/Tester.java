@@ -5,6 +5,7 @@
  */
 package test;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import gui.nome.GuiNome;
 import databse.ConnectDbMySql;
 import databse.CreateDb;
@@ -24,14 +25,23 @@ public class Tester {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, SQLException {
+       GuiProva guiProva = new GuiProva();
        GuiNome guiNome = new GuiNome();
        CreateDb createDb = new CreateDb();
        
-     
-       GuiProva guiProva = new GuiProva();
+       boolean controllo = false;
        
-        if(true) //controllo se il ristorante è gia stato creato da fare
-            guiNome.setVisible(true);
+       try{
+           controllo = createDb.FirstAccess();
+       }catch(MySQLSyntaxErrorException ex){
+       }
+       
+       if(controllo){
+           guiProva.setVisible(true);
+       }else
+           guiNome.setVisible(true);
+       
+       
     }
     
 }

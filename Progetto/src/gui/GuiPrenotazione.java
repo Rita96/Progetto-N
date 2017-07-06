@@ -7,9 +7,20 @@ package gui;
 
 import cliente.Cliente;
 import com.toedter.calendar.JCalendar;
+import databse.CreateDb;
+import exception.ExeptionData;
+import exception.ExeptionNome;
+import exception.ExeptionNumeroAdulti;
 import funzionalita.Prenotazione;
 import static gui.GuiProva.rimuoviOrarioData;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import menu.MenuCliente;
 import menu.MenuCompleto;
@@ -28,12 +39,31 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     private Date dataOdierna = new Date();
     private String nome;
     private int numeroAdulti;
+    private int numeroBambini;
     private String pasto="Pranzo";
     private long numeroTelefono;
     private Sala sala;
+    String tipoEvento=null;
     private String s = "Indifferente";
-    private Portata portata;
+    private Portata portata= null;
+    private Portata primo2= null;
+    private Portata primo1= null;
+    private Portata primo3= null;
+    private Portata secondo2= null;
+    private Portata secondo3=  null;
+    private Portata dolce= null;
+    private String note;
+    private Portata secondo1= null;
     private String portataString = "Indifferente";
+    private int attesa = 0;
+    private int daConfermare = 0;
+    private int esclusiva = 0;
+    private int preferenza = 0;
+    private int esigenza = 0;
+    CreateDb createDb;
+    
+    
+    
     
     MenuCompleto menuCompleto = new MenuCompleto();
     MenuCliente menuCliente = new MenuCliente();
@@ -45,16 +75,23 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     Object[] object = new Object[2];
     GuiProva guiProva = new GuiProva();
     
-    public GuiPrenotazione() {
+    public GuiPrenotazione() throws SQLException {
+        createDb = new CreateDb();
         initComponents();
-        riempiPrimi();
-        riempiSecondi();
-        riempiDolci();
-        
+        riempiItemPrimi();
+        riempiItemSecondi();
+        riempItemiDolci();
+        riempiItemSale();
+       
 
     }
     
-    public void riempiPrimi(){
+    public void riempiItemSale(){
+        for(Sala s: agriturismo.getSale())
+            JSala.addItem(s.getNome());
+    }
+    
+    public void riempiItemPrimi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Primo)){
                 JPrimo1.addItem(p.getNome());
@@ -63,7 +100,9 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         }
     }
-    public void riempiSecondi(){
+    
+    
+    public void riempiItemSecondi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Secondo)){
                 JSecondo1.addItem(p.getNome());
@@ -72,14 +111,14 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         }
     }
-    public void riempiDolci(){
+    public void riempItemiDolci(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Dolce)){
                 JDolce.addItem(p.getNome());
             }
         }
     }
-    
+   
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -89,15 +128,13 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         JPasto = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
-        JNumeroPersone = new javax.swing.JTextField();
+        JNumeroAdulti = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         JNome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         JNumeroTelefono = new javax.swing.JTextField();
         JOk = new javax.swing.JButton();
         JData = new com.toedter.calendar.JDateChooser();
-        jLabel6 = new javax.swing.JLabel();
-        JOra = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         JSala = new javax.swing.JComboBox<>();
         jLabel8 = new javax.swing.JLabel();
@@ -112,15 +149,17 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         jLabel11 = new javax.swing.JLabel();
         JDolce = new javax.swing.JComboBox<>();
         jSeparator1 = new javax.swing.JSeparator();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBoxEsclusiva = new javax.swing.JCheckBox();
+        jCheckBoxPreferenza = new javax.swing.JCheckBox();
+        jCheckBoxEsigenza = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         JNumeroTelefono3 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jCheckBox4 = new javax.swing.JCheckBox();
-        jCheckBox5 = new javax.swing.JCheckBox();
+        jNote = new javax.swing.JTextArea();
+        jCheckBoxAttesa = new javax.swing.JCheckBox();
+        jCheckBoxDaConfermare = new javax.swing.JCheckBox();
+        jLabel13 = new javax.swing.JLabel();
+        JNumeroBambini = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(220, 70));
@@ -136,11 +175,11 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
 
-        jLabel3.setText("N. Persone");
+        jLabel3.setText("N. Adulti");
 
-        JNumeroPersone.addActionListener(new java.awt.event.ActionListener() {
+        JNumeroAdulti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JNumeroPersoneActionPerformed(evt);
+                JNumeroAdultiActionPerformed(evt);
             }
         });
 
@@ -173,17 +212,9 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
 
-        jLabel6.setText("Ora");
-
-        JOra.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JOraActionPerformed(evt);
-            }
-        });
-
         jLabel7.setText("Sala");
 
-        JSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indifferente", "Ingresso", "Gialla", "Verde", "Rosa", "Giardino", "Corte", "Salottino", "Gelsomino", "Aia", "Balcone", "Salone" }));
+        JSala.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Indifferente" }));
         JSala.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 JSalaActionPerformed(evt);
@@ -247,24 +278,24 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
 
-        jCheckBox1.setText(" Esclusiva");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxEsclusiva.setText(" Esclusiva");
+        jCheckBoxEsclusiva.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                jCheckBoxEsclusivaActionPerformed(evt);
             }
         });
 
-        jCheckBox2.setText(" Preferenza");
-        jCheckBox2.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxPreferenza.setText(" Preferenza");
+        jCheckBoxPreferenza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox2ActionPerformed(evt);
+                jCheckBoxPreferenzaActionPerformed(evt);
             }
         });
 
-        jCheckBox3.setText(" Esigenza");
-        jCheckBox3.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxEsigenza.setText(" Esigenza");
+        jCheckBoxEsigenza.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox3ActionPerformed(evt);
+                jCheckBoxEsigenzaActionPerformed(evt);
             }
         });
 
@@ -276,21 +307,29 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        jNote.setColumns(20);
+        jNote.setRows(5);
+        jScrollPane1.setViewportView(jNote);
 
-        jCheckBox4.setText("In attesa");
-        jCheckBox4.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxAttesa.setText("In attesa");
+        jCheckBoxAttesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox4ActionPerformed(evt);
+                jCheckBoxAttesaActionPerformed(evt);
             }
         });
 
-        jCheckBox5.setText("Da confermare");
-        jCheckBox5.addActionListener(new java.awt.event.ActionListener() {
+        jCheckBoxDaConfermare.setText("Da confermare");
+        jCheckBoxDaConfermare.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox5ActionPerformed(evt);
+                jCheckBoxDaConfermareActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setText("N. Bambini");
+
+        JNumeroBambini.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                JNumeroBambiniActionPerformed(evt);
             }
         });
 
@@ -320,55 +359,48 @@ public class GuiPrenotazione extends javax.swing.JFrame {
                                     .addComponent(jLabel7))
                                 .addGap(15, 15, 15)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jCheckBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jCheckBoxEsclusiva, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(JData, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
                                         .addComponent(JNome)
                                         .addComponent(JSala, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                         .addGap(31, 31, 31)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JSecondo2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JPrimo2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(JDolce, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(41, 41, 41)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JSecondo3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(JPrimo3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(JSecondo2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JPrimo2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(JDolce, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(41, 41, 41)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(JSecondo3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(JPrimo3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(jCheckBox3))
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel3))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(JPasto, 0, 118, Short.MAX_VALUE)
-                                                    .addComponent(JNumeroPersone))))
                                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(31, 31, 31)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel6)
-                                                    .addComponent(jLabel5))
-                                                .addGap(31, 31, 31)
-                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                                    .addComponent(JOra, javax.swing.GroupLayout.DEFAULT_SIZE, 118, Short.MAX_VALUE)
-                                                    .addComponent(JNumeroTelefono)))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(37, 37, 37)
-                                                .addComponent(jCheckBox2)))))
-                                .addGap(26, 26, 26))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jCheckBox5, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel13))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(JPasto, 0, 118, Short.MAX_VALUE)
+                                            .addComponent(JNumeroAdulti)
+                                            .addComponent(JNumeroBambini, javax.swing.GroupLayout.Alignment.TRAILING))
+                                        .addGap(37, 37, 37))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jCheckBoxPreferenza)
+                                        .addGap(46, 46, 46)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addGap(31, 31, 31)
+                                        .addComponent(JNumeroTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jCheckBoxAttesa, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(jCheckBoxDaConfermare, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(26, 26, 26)))
                 .addGap(81, 81, 81))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -382,12 +414,14 @@ public class GuiPrenotazione extends javax.swing.JFrame {
                         .addGap(396, 396, 396)
                         .addComponent(jLabel10))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(399, 399, 399)
-                        .addComponent(jLabel8))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(401, 401, 401)
-                        .addComponent(jLabel11)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jLabel11))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(293, 293, 293)
+                        .addComponent(jCheckBoxEsigenza)
+                        .addGap(35, 35, 35)
+                        .addComponent(jLabel8)))
+                .addContainerGap(456, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -396,30 +430,32 @@ public class GuiPrenotazione extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6)
-                        .addComponent(JOra, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(JData, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(JNumeroPersone, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(JNumeroAdulti, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(JNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel5)
                     .addComponent(JNumeroTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(JSala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jCheckBox1)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13)
+                        .addComponent(JNumeroBambini, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(JSala, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox5))
+                    .addComponent(jCheckBoxAttesa)
+                    .addComponent(jCheckBoxDaConfermare)
+                    .addComponent(jCheckBoxPreferenza)
+                    .addComponent(jCheckBoxEsigenza)
+                    .addComponent(jCheckBoxEsclusiva))
                 .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -456,21 +492,78 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JNumeroPersoneActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroPersoneActionPerformed
+    private void JNumeroAdultiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroAdultiActionPerformed
         
-    }//GEN-LAST:event_JNumeroPersoneActionPerformed
+    }//GEN-LAST:event_JNumeroAdultiActionPerformed
 
     private void JOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOkActionPerformed
+      
         
-        nome = JNome.getText();
-        numeroAdulti = Integer.valueOf(JNumeroPersone.getText());
-        numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
-        cliente = new Cliente(nome, numeroTelefono);
-        prenotazione = new Prenotazione(numeroAdulti, data, pasto, cliente);
-        prenotazione.setSala(new Sala(s));
-        prenotazione.setMenu(menuCliente);
-        agriturismo.aggiungiPrenotazione(prenotazione);
-        dispose();
+             
+        try{
+            
+            nome = JNome.getText();
+            if(nome.isEmpty())
+                throw new ExeptionNome();
+            numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
+            if(JNumeroAdulti.getText().isEmpty()){
+                throw new ExeptionNumeroAdulti();
+            }if(data.before(GuiProva.dataOdierna))
+                throw new ExeptionData();  
+            numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
+            tipoEvento = JNumeroTelefono3.getText();
+        
+            primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
+            primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
+            primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
+            secondo1 = new Portata((String) JSecondo1.getSelectedItem(), TipoPortata.Secondo);
+            secondo2 = new Portata((String) JSecondo2.getSelectedItem(), TipoPortata.Secondo);
+            secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
+            dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
+            note = jNote.getText();
+            cliente = new Cliente(nome, numeroTelefono);
+        
+            menuCliente.getMenuCliente().add(primo1);
+            menuCliente.getMenuCliente().add(primo2);
+            menuCliente.getMenuCliente().add(primo3);
+            menuCliente.getMenuCliente().add(secondo1);
+            menuCliente.getMenuCliente().add(secondo2);
+            menuCliente.getMenuCliente().add(secondo3);
+            menuCliente.getMenuCliente().add(dolce);
+            prenotazione = new Prenotazione(numeroAdulti, data, pasto, cliente);
+            prenotazione.setDateDb(data);
+            prenotazione.setNote(note);
+            prenotazione.setMenu(menuCliente);
+            prenotazione.setTipoEvento(tipoEvento);
+            prenotazione.setnBambini(numeroBambini);
+       
+            prenotazione.setSala(new Sala(s));
+            prenotazione.setMenu(menuCliente);
+            prenotazione.setAttesa(attesa);
+            prenotazione.setDaConfermare(daConfermare);
+            prenotazione.setEsclusiva(esclusiva);
+            prenotazione.setEsigenza(esigenza);
+            prenotazione.setPreferenza(preferenza);
+            prenotazione.setDate(data);
+
+            agriturismo.aggiungiPrenotazione(prenotazione);
+            createDb.addSinglePrenotazione(prenotazione);
+            dispose();
+
+            
+        }catch(ExeptionNome ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
+        }catch (SQLException ex) {
+            JOptionPane.showConfirmDialog(rootPane, "La prenotazione non è stata salvata!");
+        }catch(ExeptionNumeroAdulti ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(rootPane, "Errore in n.Adulti / numero di telefono !");
+        }catch(ExeptionData ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
         
         
     }//GEN-LAST:event_JOkActionPerformed
@@ -495,71 +588,54 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         }
         data = GuiProva.rimuoviOrarioData(data);
         GuiProva.rimuoviOrarioData(data);
-        if(data.before(GuiProva.dataOdierna)){
-            System.out.println("Non puoi prenotare per una data passata");
-        }
+      
          if(data!=dataOdierna){
             data = JData.getDate();
         }
     }//GEN-LAST:event_JDataPropertyChange
 
-    private void JOraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOraActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_JOraActionPerformed
-
     private void JPrimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPrimo1ActionPerformed
-        String portataString = (String)JPrimo1.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Primo);
-        menuCliente.getMenuCliente().add(portata);
+       
     }//GEN-LAST:event_JPrimo1ActionPerformed
 
     private void JPrimo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPrimo3ActionPerformed
-        String portataString = (String)JPrimo3.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Primo);
-        menuCliente.getMenuCliente().add(portata);
+        
     }//GEN-LAST:event_JPrimo3ActionPerformed
 
     private void JSecondo3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSecondo3ActionPerformed
-        String portataString = (String)JSecondo3.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Secondo);
-        menuCliente.getMenuCliente().add(portata);
+        
     }//GEN-LAST:event_JSecondo3ActionPerformed
 
     private void JSecondo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSecondo1ActionPerformed
-        String portataString = (String)JSecondo1.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Secondo);
-        menuCliente.getMenuCliente().add(portata);
+       
     }//GEN-LAST:event_JSecondo1ActionPerformed
 
     private void JPrimo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPrimo2ActionPerformed
-        String portataString = (String)JPrimo2.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Primo);
-        menuCliente.getMenuCliente().add(portata);
+       
     }//GEN-LAST:event_JPrimo2ActionPerformed
 
     private void JSecondo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSecondo2ActionPerformed
-        String portataString = (String)JSecondo2.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Secondo);
-        menuCliente.getMenuCliente().add(portata);
+        
     }//GEN-LAST:event_JSecondo2ActionPerformed
 
     private void JDolceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JDolceActionPerformed
-        String portataString = (String)JDolce.getSelectedItem();
-        portata = new Portata(portataString, TipoPortata.Dolce);
-        menuCliente.getMenuCliente().add(portata);
+      
     }//GEN-LAST:event_JDolceActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void jCheckBoxEsclusivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEsclusivaActionPerformed
+        if(jCheckBoxEsclusiva.isSelected())
+            esclusiva=1;
+    }//GEN-LAST:event_jCheckBoxEsclusivaActionPerformed
 
-    private void jCheckBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox2ActionPerformed
+    private void jCheckBoxPreferenzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPreferenzaActionPerformed
+        if(jCheckBoxPreferenza.isSelected())
+            preferenza=1;
+    }//GEN-LAST:event_jCheckBoxPreferenzaActionPerformed
 
-    private void jCheckBox3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox3ActionPerformed
+    private void jCheckBoxEsigenzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEsigenzaActionPerformed
+        if(jCheckBoxEsigenza.isSelected())
+            esigenza=1;
+    }//GEN-LAST:event_jCheckBoxEsigenzaActionPerformed
 
     private void JSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSalaActionPerformed
 
@@ -567,27 +643,39 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JSalaActionPerformed
 
     private void JNumeroTelefono3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroTelefono3ActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_JNumeroTelefono3ActionPerformed
 
-    private void jCheckBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox4ActionPerformed
+    private void jCheckBoxAttesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAttesaActionPerformed
+        if(jCheckBoxAttesa.isSelected())
+            attesa=1;
+    }//GEN-LAST:event_jCheckBoxAttesaActionPerformed
 
-    private void jCheckBox5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox5ActionPerformed
+    private void jCheckBoxDaConfermareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDaConfermareActionPerformed
+         if(jCheckBoxDaConfermare.isSelected())
+            daConfermare=1;
+    }//GEN-LAST:event_jCheckBoxDaConfermareActionPerformed
+
+    private void JNumeroBambiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroBambiniActionPerformed
+        String line;
+        line = JNumeroBambini.getText();
+        if(line.isEmpty()){
+            numeroBambini=0;
+        }
+        else
+            numeroBambini = Integer.parseInt(JNumeroBambini.getText());
+    }//GEN-LAST:event_JNumeroBambiniActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser JData;
     private javax.swing.JComboBox<String> JDolce;
     private javax.swing.JTextField JNome;
-    private javax.swing.JTextField JNumeroPersone;
+    private javax.swing.JTextField JNumeroAdulti;
+    private javax.swing.JTextField JNumeroBambini;
     private javax.swing.JTextField JNumeroTelefono;
     private javax.swing.JTextField JNumeroTelefono3;
     private javax.swing.JButton JOk;
-    private javax.swing.JTextField JOra;
     private javax.swing.JComboBox<String> JPasto;
     private javax.swing.JComboBox<String> JPrimo1;
     private javax.swing.JComboBox<String> JPrimo2;
@@ -596,25 +684,25 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> JSecondo1;
     private javax.swing.JComboBox<String> JSecondo2;
     private javax.swing.JComboBox<String> JSecondo3;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
-    private javax.swing.JCheckBox jCheckBox5;
+    private javax.swing.JCheckBox jCheckBoxAttesa;
+    private javax.swing.JCheckBox jCheckBoxDaConfermare;
+    private javax.swing.JCheckBox jCheckBoxEsclusiva;
+    private javax.swing.JCheckBox jCheckBoxEsigenza;
+    private javax.swing.JCheckBox jCheckBoxPreferenza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JTextArea jNote;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }

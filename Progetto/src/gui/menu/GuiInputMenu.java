@@ -5,6 +5,8 @@
  */
 package gui.menu;
 
+import databse.CreateDb;
+import gui.GuiProva;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiSetSale;
 import java.sql.SQLException;
@@ -23,12 +25,13 @@ public class GuiInputMenu extends javax.swing.JFrame {
 
 //     public DefaultTableModel jtm = null;
      GuiAddPortata guiAddPortata;
-     
+     CreateDb createDb;
      
     
     public GuiInputMenu() throws SQLException {
         initComponents();
         guiAddPortata = new GuiAddPortata();
+        createDb = new CreateDb();
     }
     
     
@@ -119,7 +122,20 @@ public class GuiInputMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-       
+         try {
+             if(createDb.verificaTabella("menu")){
+                dispose();
+                createDb.createTablePrenotazioni();
+                GuiProva guiProva = new GuiProva();
+                guiProva.setVisible(true);
+             }
+             else
+                 JOptionPane.showMessageDialog(rootPane, "Inserire almeno una portata!");
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
+         }
+        
+        
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     /**

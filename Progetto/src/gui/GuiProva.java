@@ -6,10 +6,15 @@
 package gui;
 
 import funzionalita.Prenotazione;
+import gui.menu.NewJFrame;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import struttura.Agriturismo;
@@ -34,6 +39,9 @@ public class GuiProva extends javax.swing.JFrame {
         initComponents();
         aggiungiTabelleArray();
         aggiornaTabelle(date);
+        JDateChooser.setDate(dataOdierna);
+        
+       
     }
     
     //operazioni tabelle
@@ -84,7 +92,7 @@ public class GuiProva extends javax.swing.JFrame {
         arrayJTable.add(new GestioneTabelle(tabellaGelsomino, "Gelsomino"));
         DefaultTableModel tabellaBalcone = (DefaultTableModel) JTavoliBalcone.getModel();
         arrayJTable.add(new GestioneTabelle(tabellaBalcone, "Balcone"));
-       
+        
     }
     
    
@@ -112,6 +120,8 @@ public class GuiProva extends javax.swing.JFrame {
         dataOdierna = rimuoviOrarioData(dataOdierna);
         return dataOdierna;
     }
+   
+    
    
     
 
@@ -708,7 +718,12 @@ public class GuiProva extends javax.swing.JFrame {
     }//GEN-LAST:event_JPastoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        GuiPrenotazione guiPrenotazione = new GuiPrenotazione();
+        GuiPrenotazione guiPrenotazione = null;
+        try {
+            guiPrenotazione = new GuiPrenotazione();
+        } catch (SQLException ex) {
+            Logger.getLogger(GuiProva.class.getName()).log(Level.SEVERE, null, ex);
+        }
         guiPrenotazione.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -772,4 +787,7 @@ public class GuiProva extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
     // End of variables declaration//GEN-END:variables
+
+    
 }
+

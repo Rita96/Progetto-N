@@ -5,6 +5,7 @@
  */
 package gui.sale;
 
+import databse.CreateDb;
 import gui.menu.*;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -22,12 +23,14 @@ public class GuiInputSale extends javax.swing.JFrame {
 
 //     public DefaultTableModel jtm = null;
      GuiAddSala guiAddSala;
+     CreateDb createDb;
      
      
     
     public GuiInputSale() throws SQLException {
         initComponents();
         guiAddSala = new GuiAddSala();
+        createDb = new CreateDb();
     }
  
     @SuppressWarnings("unchecked")
@@ -102,13 +105,20 @@ public class GuiInputSale extends javax.swing.JFrame {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
          try {
-             GuiInformationMenu guiInformationMenu = new GuiInformationMenu();
-             dispose();
-             guiInformationMenu.setVisible(true);
-         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+             if(createDb.verificaTabella("sale")){
+                 try {
+                     GuiInformationMenu guiInformationMenu = new GuiInformationMenu();
+                     dispose();
+                     guiInformationMenu.setVisible(true);
+                 } catch (SQLException ex) {
+                     JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+                 }
+             }
+             else
+                JOptionPane.showMessageDialog(rootPane, "Inserire almeno una sala!");
+                 } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
          }
-        
        
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 

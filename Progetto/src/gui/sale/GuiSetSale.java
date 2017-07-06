@@ -107,7 +107,7 @@ public class GuiSetSale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-      
+        
 
         if(jCheckBoxSaleGui.isSelected()){
             guiInputSale.setVisible(true);
@@ -136,11 +136,19 @@ public class GuiSetSale extends javax.swing.JFrame {
             int choose;
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
-                dispose();
-                guiInformationMenu.setVisible(true);
+                try {
+                    if(createDb.verificaTabella("sale")){
+                        dispose();
+                        guiInformationMenu.setVisible(true);
+                    }
+                    else
+                        JOptionPane.showMessageDialog(rootPane, "Inserire almeno una sala!");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
+                }
+                
             }
         }
-        
         
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
@@ -179,8 +187,6 @@ public class GuiSetSale extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
-    
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAvanti;
     private javax.swing.JButton jButtonFileChooser;

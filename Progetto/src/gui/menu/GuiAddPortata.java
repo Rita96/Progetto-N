@@ -16,6 +16,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.MenuCompleto;
+import menu.ModificaMenu;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
@@ -98,6 +99,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
                 createDb.addSinglePortata(nome, tipoPortata);
                 JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
                 createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
+                ModificaMenu.addElementoMenu(new Portata(nome, TipoPortata.valueOf(tp)));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
             }

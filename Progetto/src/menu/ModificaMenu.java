@@ -12,8 +12,8 @@ package menu;
  */
 public class ModificaMenu {
     
-    public void addElementoMenu(){
-    
+    public static void addElementoMenu(Portata p){
+        MenuCompleto.menuCompleto.add(p);
     }
     
     public void removeElementoMenu(){

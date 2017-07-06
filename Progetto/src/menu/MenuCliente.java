@@ -22,6 +22,11 @@ public class MenuCliente {
     public ArrayList<Portata> getMenuCliente() {
         return menuCliente;
     }
+
+    public void setMenuCliente(ArrayList<Portata> menuCliente) {
+        this.menuCliente = menuCliente;
+    }
+    
     
     
     

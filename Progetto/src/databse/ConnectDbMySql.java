@@ -14,22 +14,27 @@ import javax.swing.JOptionPane;
  * @author luby9
  */
 public class ConnectDbMySql {
-    
+   public static Connection connection = null;
+
 
     public static Connection ConnectDB(){
+        if(connection==null){
         try{
             String url = "jdbc:mysql://127.0.0.1:3306/?user=root";
             String login="root";
             String password= "HarryPotter";
             Class.forName("com.mysql.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url, login, password);
-            return conn;
+            connection=conn;
+            return connection;
             
             }
         catch(Exception e){
             JOptionPane.showMessageDialog(null, "Impossibile Connetersi al database!");
              return null;
             }
+        }
+        else return connection;
         }
     
     

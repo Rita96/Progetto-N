@@ -20,6 +20,7 @@ import menu.MenuCompleto;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
+import struttura.Sala;
 
 /**
  *
@@ -55,6 +56,12 @@ public class GuiAddSala extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(430, 100));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextFieldNomeActionPerformed(evt);
+            }
+        });
         getContentPane().add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 25, 292, -1));
 
         jLabelNome.setText("Nome");
@@ -82,6 +89,7 @@ public class GuiAddSala extends javax.swing.JFrame {
                 createDb.addSingleSala(nome);
                 JOptionPane.showMessageDialog(rootPane, "Sala aggiunta con successo!");
                 createDb.riempiTabella(GuiInputSale.jTableSale, query);
+                agri.addSala(new Sala(nome));
             } catch (SQLException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
             }
@@ -91,6 +99,10 @@ public class GuiAddSala extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_jButtonAddActionPerformed
+
+    private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldNomeActionPerformed
         
   
 

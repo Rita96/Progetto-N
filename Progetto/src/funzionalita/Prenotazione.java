@@ -1,6 +1,7 @@
 package funzionalita;
 
 import cliente.Cliente;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import menu.MenuCliente;
 import struttura.Sala;
@@ -25,7 +26,55 @@ public class Prenotazione {
     private MenuCliente menu;
     private String pasto;
     private Cliente cliente;
+    private int attesa;
+    private int daConfermare;
+    private int esclusiva;
+    private int preferenza;
+    private int esigenza;
+    private String dateDb;
 
+    public int getAttesa() {
+        return attesa;
+    }
+
+    public void setAttesa(int attesa) {
+        this.attesa = attesa;
+    }
+
+    public int getDaConfermare() {
+        return daConfermare;
+    }
+
+    public void setDaConfermare(int daConfermare) {
+        this.daConfermare = daConfermare;
+    }
+
+    public int getEsclusiva() {
+        return esclusiva;
+    }
+
+    public void setEsclusiva(int esclusiva) {
+        this.esclusiva = esclusiva;
+    }
+
+    public int getPreferenza() {
+        return preferenza;
+    }
+
+    public void setPreferenza(int preferenza) {
+        this.preferenza = preferenza;
+    }
+
+    public int getEsigenza() {
+        return esigenza;
+    }
+
+    public void setEsigenza(int esigenza) {
+        this.esigenza = esigenza;
+    }
+
+
+    
     public Prenotazione(int nAdulti, Date date, String pasto, Cliente cliente) {
         this.nAdulti = nAdulti;
         this.date = date;
@@ -103,6 +152,15 @@ public class Prenotazione {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+    
+    public void setDateDb(Date d){
+        SimpleDateFormat sdf = new SimpleDateFormat();
+        sdf.applyPattern("yyyy-MM-dd");
+        dateDb = sdf.format(d);
+    }
+    public String getDateDb(){
+        return dateDb;
     }
     
     

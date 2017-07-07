@@ -26,6 +26,10 @@ public class Agriturismo implements FunzioniPrincipali{
     public Agriturismo (String nome){
         this.nome=nome;
     }
+
+    public static void setNome(String nome) {
+        Agriturismo.nome = nome;
+    }
     
     public Agriturismo(){
         

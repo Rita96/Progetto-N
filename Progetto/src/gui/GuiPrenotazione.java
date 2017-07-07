@@ -497,11 +497,8 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JNumeroAdultiActionPerformed
 
     private void JOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOkActionPerformed
-      
-        
-             
-        try{
-            
+          
+        try{            
             nome = JNome.getText();
             if(nome.isEmpty())
                 throw new ExeptionNome();
@@ -509,7 +506,13 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             if(JNumeroAdulti.getText().isEmpty()){
                 throw new ExeptionNumeroAdulti();
             }if(data.before(GuiProva.dataOdierna))
-                throw new ExeptionData();  
+                throw new ExeptionData();
+            String line;
+            line = JNumeroBambini.getText();
+            if(line.isEmpty())
+                numeroBambini=0;
+            else
+                numeroBambini = Integer.parseInt(JNumeroBambini.getText());
             numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
             tipoEvento = JNumeroTelefono3.getText();
         
@@ -549,18 +552,17 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             agriturismo.aggiungiPrenotazione(prenotazione);
             createDb.addSinglePrenotazione(prenotazione);
             dispose();
-
             
         }catch(ExeptionNome ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NullPointerException ex){
             JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
         }catch (SQLException ex) {
-            JOptionPane.showConfirmDialog(rootPane, "La prenotazione non è stata salvata!");
+            JOptionPane.showMessageDialog(rootPane, "La prenotazione non è stata salvata!");
         }catch(ExeptionNumeroAdulti ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(rootPane, "Errore in n.Adulti / numero di telefono !");
+            JOptionPane.showMessageDialog(rootPane, "Possibile errore nei campi: n.Adulti / numero di telefono /numero di bambini !");
         }catch(ExeptionData ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
@@ -638,7 +640,6 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxEsigenzaActionPerformed
 
     private void JSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSalaActionPerformed
-
         s = (String) JSala.getSelectedItem();
     }//GEN-LAST:event_JSalaActionPerformed
 
@@ -657,13 +658,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_jCheckBoxDaConfermareActionPerformed
 
     private void JNumeroBambiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroBambiniActionPerformed
-        String line;
-        line = JNumeroBambini.getText();
-        if(line.isEmpty()){
-            numeroBambini=0;
-        }
-        else
-            numeroBambini = Integer.parseInt(JNumeroBambini.getText());
+        
     }//GEN-LAST:event_JNumeroBambiniActionPerformed
 
 

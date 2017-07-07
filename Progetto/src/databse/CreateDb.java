@@ -5,6 +5,7 @@
  */
 package databse;
 
+import cliente.Cliente;
 import funzionalita.Prenotazione;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,8 +14,10 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import menu.MenuCliente;
 import menu.MenuCompleto;
 import menu.Portata;
 import menu.TipoPortata;
@@ -187,6 +190,7 @@ public class CreateDb {
                         "  `pasto` VARCHAR(50) NOT NULL,\n" +
                         "  `nome` VARCHAR(100) NOT NULL,\n" +
                         "  `numero di adulti` INT NOT NULL,\n" +
+                        "  `numero di telefono` BIGINT NOT NULL,\n" +
                         "  `numero di bambini` INT NULL,\n" +
                         "  `sala` VARCHAR(100) NULL,\n" +
                         "  `esigenza sala` INT NULL,\n" +
@@ -203,7 +207,7 @@ public class CreateDb {
                         "  `secondo3` VARCHAR(200) NULL,\n" +
                         "  `dolce` VARCHAR(200) NULL,\n" +
                         "  `note` VARCHAR(2000) NULL,\n" +
-                        "  PRIMARY KEY (`idprenotazioni`, `data`, `nome`, `numero di adulti`, `pasto`),\n" +
+                        "  PRIMARY KEY (`idprenotazioni`, `data`, `nome`, `numero di adulti`, `numero di telefono`, `pasto`),\n" +
                         "  UNIQUE INDEX `idprenotazioni_UNIQUE` (`idprenotazioni` ASC));";
         
         stm.executeUpdate(query);
@@ -215,7 +219,7 @@ public class CreateDb {
                 + ", `primo1`, `primo2`, `primo3`"
                 + ", `secondo1`, `secondo2`, `secondo3`, `dolce`, `note`"
                 + ", `lista attesa`, `esigenza sala`, `preferenza sala`"
-                + ", `esclusiva sala`, `da confermare`, `tipo di evento`, `data`) VALUES "
+                + ", `esclusiva sala`, `da confermare`, `tipo di evento`, `data`, `numero di telefono`) VALUES "
                 + "('"+p.getPasto()+"', "
                 + "'"+p.getCliente().getNome()+"', "
                 + "'"+p.getnAdulti()+"', "
@@ -235,10 +239,106 @@ public class CreateDb {
                 + "'"+p.getEsclusiva()+"' ,"
                 + "'"+p.getDaConfermare()+"' ,"
                 + "'"+p.getTipoEvento()+"' ,"
-                + "'"+p.getDateDb()+"');";
+                + "'"+p.getDateDb()+"' ,"
+                + "'"+p.getCliente().getNumTelefono()+"');";
         stm.execute(query);
     
     }
+    
+    public void toJavaFromDbSale() throws SQLException{
+        String query = "SELECT * FROM `ristorante`.`sale`";
+        rs = stm.executeQuery(query);
+        while(rs.next()){
+           String nomeSala =rs.getString("nome");
+           agri.addSala(new Sala(nomeSala));
+        }
+        
+    }
+    public void toJavaFromDbPortate() throws SQLException{
+        String query = "SELECT * FROM `ristorante`.`menu`";
+        rs = stm.executeQuery(query);
+        while(rs.next()){
+           String nomePortata = rs.getString(" nome portata");
+           String tipoPortata = rs.getString("tipo portata");
+           Portata portata = new Portata(nomePortata, TipoPortata.valueOf(tipoPortata));
+           MenuCompleto.menuCompleto.add(portata);
+        }
+    }    
+        public void toJavaFromDbNome() throws SQLException{
+        String query = "SELECT * FROM `ristorante`.`dati`";
+        rs = stm.executeQuery(query);
+        while(rs.next()){
+           String nomeRistorante = rs.getString("nome");
+           agri.setNome(nomeRistorante);
+        }
+    }    
+        public void toJavaFromDbPrenotazioni() throws SQLException{
+        int i = 0;
+        String query = "SELECT * FROM `ristorante`.`prenotazioni`";
+        rs = stm.executeQuery(query);
+        while(rs.next()){
+            MenuCliente menuCliente = new MenuCliente();
+            int id = rs.getInt("idprenotazioni");
+            Date date = rs.getDate("data");
+            String nome = rs.getString("nome");
+            String pasto = rs.getString("pasto");
+            int numeroAdulti = rs.getInt("numero di adulti");
+            long numeroTelefono = rs.getLong("numero di telefono");
+            int numeroBambini = rs.getInt("numero di bambini");
+            String nomeSala = rs.getString("sala");
+            Sala sala = new Sala(nomeSala);
+            int esigenzaSala = rs.getInt("esigenza sala");
+            int preferenzaSala = rs.getInt("preferenza sala");
+            int listaAttesa = rs.getInt("lista attesa");
+            int esclusivaSala = rs.getInt("esclusiva sala");
+            int daConfermare = rs.getInt("da confermare");
+            String tipoEvento = rs.getString("tipo di evento");
+            String primo1 = rs.getString("primo1");
+            String primo2 = rs.getString("primo2");
+            String primo3 = rs.getString("primo3");
+            String secondo1 = rs.getString("secondo1");
+            String secondo2 = rs.getString("secondo2");
+            String secondo3 = rs.getString("secondo3");
+            String dolce = rs.getString("dolce");
+            String note = rs.getString("note");
+            Cliente cliente = new Cliente(nome, numeroTelefono);
+            Prenotazione prenotazione = new Prenotazione(numeroAdulti, date, pasto, cliente);
+
+            prenotazione.setnBambini(numeroBambini);
+            prenotazione.setSala(sala);
+            prenotazione.setPreferenza(preferenzaSala);
+            prenotazione.setAttesa(listaAttesa);
+            prenotazione.setDaConfermare(daConfermare);
+            prenotazione.setEsclusiva(esclusivaSala);
+            prenotazione.setEsigenza(esigenzaSala);
+            prenotazione.setId(id);
+            prenotazione.setTipoEvento(tipoEvento);
+            prenotazione.setNote(note);
+ 
+            Portata primoUno= new Portata(primo1, TipoPortata.Primo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata primoDue= new Portata(primo2, TipoPortata.Primo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata primoTre= new Portata(primo3, TipoPortata.Primo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata secondoUno= new Portata(secondo1, TipoPortata.Secondo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata secondoDue= new Portata(secondo2, TipoPortata.Secondo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata SecondoTre= new Portata(secondo3, TipoPortata.Secondo);
+            menuCliente.getMenuCliente().add(primoUno);
+            Portata dolcE= new Portata(dolce, TipoPortata.Dolce);
+            menuCliente.getMenuCliente().add(primoUno);
+            
+            prenotazione.setMenu(menuCliente);
+            agri.aggiungiPrenotazione(prenotazione);
+            
+        }    
+        
+            
+        }
+        
+        
     
   
     

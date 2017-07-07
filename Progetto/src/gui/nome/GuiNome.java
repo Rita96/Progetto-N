@@ -87,17 +87,18 @@ public class GuiNome extends javax.swing.JFrame {
                 createDb.CreateSchema();
                 createDb.createTableDatiRistorante();
                 createDb.insertDatiRistorante();
+                dispose();
             } catch (SQLException ex) {
-                JOptionPane.showConfirmDialog(rootPane, "Errore nel database!");
+                JOptionPane.showConfirmDialog(rootPane, "Errore nel database !");
             }
          GuiInformationSale guiInformation;
             try {
                 guiInformation = new GuiInformationSale();
                 guiInformation.setVisible(true);
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Errore in SQL!");
+                JOptionPane.showMessageDialog(rootPane, "Errore in SQL !");
             }
-         dispose();
+         
         } 
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 

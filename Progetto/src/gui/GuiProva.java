@@ -31,23 +31,25 @@ public class GuiProva extends javax.swing.JFrame {
     protected static Date dataOdierna = new Date();
     private String pasto="Pranzo";
     private Object[] object;
-    private ArrayList<GestioneTabelle> arrayJTable = new ArrayList<>();
+    private ArrayList<GestioneTabelle> arrayGestioneTabelle = new ArrayList<>();
+    private ArrayList<JTable> arrayJTable = new ArrayList<>();
 
 
     
     public GuiProva() {    
         initComponents();
         aggiungiTabelleArray();
-        aggiornaTabelle(date);
         JDateChooser.setDate(dataOdierna);
+        aggiornaTabelle(date);
+        
         
        
     }
     
     //operazioni tabelle
-    public void aggiornaTabelle(Date d){  
+    public void aggiornaTabelle(Date d){ 
         rimuoviRigheTabellaSala();
-        for(Prenotazione p: agri.getPrenotazione()){  
+        for(Prenotazione p: agri.getPrenotazione()){ 
             if((d.equals(p.getDate())) && pasto.equals(p.getPasto())){
                 object = new Object[]{p.getCliente().getNome(),p.getnAdulti()};
                 aggiornaTabelleSale(p);
@@ -56,48 +58,49 @@ public class GuiProva extends javax.swing.JFrame {
         } 
     }
     public void aggiornaTabelleSale(Prenotazione a){
-        for(GestioneTabelle t: arrayJTable){
+        for(GestioneTabelle t: arrayGestioneTabelle){
             if(a.getSala().getNome().equals(t.getNomeSala())){
                 t.getDtm().addRow(object);
-                if(a.getSala().getNome() != "Indifferente"){
-                    arrayJTable.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
+                if(!a.getSala().getNome().equalsIgnoreCase("Indifferente")){
+                    arrayGestioneTabelle.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
                 }
             }
         }
     }
     public void aggiungiTabelleArray(){
         DefaultTableModel tabellaPrincipale = (DefaultTableModel) JTuttiTavoli.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaPrincipale, "Indifferente"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaPrincipale, "Indifferente"));
+        arrayJTable.add(JTuttiTavoli);
         DefaultTableModel tabellaVerde = (DefaultTableModel) JTavoliVerde.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaVerde, "Verde"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaVerde, "Verde"));
         DefaultTableModel tabellaGilla = (DefaultTableModel) JTavoliGialla.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaGilla, "Gialla"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGilla, "Gialla"));
         DefaultTableModel tabellaRosa = (DefaultTableModel) JTavoliRosa.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaRosa, "Rosa"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaRosa, "Rosa"));
         DefaultTableModel tabellaIngresso = (DefaultTableModel) JTavoliIngresso.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaIngresso, "Ingresso"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaIngresso, "Ingresso"));
         DefaultTableModel tabellaCorte = (DefaultTableModel) JTavoliCorte.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaCorte, "Corte"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaCorte, "Corte"));
         DefaultTableModel tabellaGiardino = (DefaultTableModel) JTavoliGiardino.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaGiardino, "Giardino"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGiardino, "Giardino"));
         DefaultTableModel tabellaSalottino = (DefaultTableModel) JTavoliSalottino.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaSalottino, "Salottino"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalottino, "Salottino"));
         DefaultTableModel tabellaGarden = (DefaultTableModel) JTavoliGarden.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaGarden, "Garden"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGarden, "Garden"));
         DefaultTableModel tabellaAia = (DefaultTableModel) JTavoliAia.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaAia, "Aia"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaAia, "Aia"));
         DefaultTableModel tabellaSalone = (DefaultTableModel) JTavoliSalone.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaSalone, "Salone"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalone, "Salone"));
         DefaultTableModel tabellaGelsomino = (DefaultTableModel) JTavoliGelsomino.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaGelsomino, "Gelsomino"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGelsomino, "Gelsomino"));
         DefaultTableModel tabellaBalcone = (DefaultTableModel) JTavoliBalcone.getModel();
-        arrayJTable.add(new GestioneTabelle(tabellaBalcone, "Balcone"));
+        arrayGestioneTabelle.add(new GestioneTabelle(tabellaBalcone, "Balcone"));
         
     }
     
    
     public void rimuoviRigheTabellaSala(){
-        for(GestioneTabelle t: arrayJTable){
+        for(GestioneTabelle t: arrayGestioneTabelle){
             while(t.getDtm().getRowCount()>0){
                 t.getDtm().removeRow(0);
             }
@@ -183,6 +186,8 @@ public class GuiProva extends javax.swing.JFrame {
         jScrollPane12 = new javax.swing.JScrollPane();
         JTavoliAia = new javax.swing.JTable();
         JVerde11 = new javax.swing.JLabel();
+        jButtonAggiorna = new javax.swing.JButton();
+        jButtonModifica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -242,6 +247,11 @@ public class GuiProva extends javax.swing.JFrame {
 
             public Class getColumnClass(int columnIndex) {
                 return types [columnIndex];
+            }
+        });
+        JTuttiTavoli.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JTuttiTavoliMouseClicked(evt);
             }
         });
         jScrollPane14.setViewportView(JTuttiTavoli);
@@ -488,6 +498,20 @@ public class GuiProva extends javax.swing.JFrame {
 
         JVerde11.setText("AIA");
 
+        jButtonAggiorna.setText("Aggiorna");
+        jButtonAggiorna.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAggiornaActionPerformed(evt);
+            }
+        });
+
+        jButtonModifica.setText("Modifica");
+        jButtonModifica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonModificaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -507,31 +531,38 @@ public class GuiProva extends javax.swing.JFrame {
                                         .addGap(35, 35, 35)
                                         .addComponent(JVerde)
                                         .addGap(61, 61, 61)
-                                        .addComponent(JNumeroPVerde)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jButtonAggiorna)
+                                            .addComponent(JNumeroPVerde))))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
-                                        .addComponent(JVerde1)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(JNumeroPVerde1)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
+                                                .addComponent(JVerde1)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(JNumeroPVerde1)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
+                                                .addComponent(JVerde3)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(JNumeroPVerde3)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(35, 35, 35)
+                                                .addComponent(JVerde2)
+                                                .addGap(61, 61, 61)
+                                                .addComponent(JNumeroPVerde2))))
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
-                                        .addComponent(JVerde3)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(JNumeroPVerde3)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(35, 35, 35)
-                                        .addComponent(JVerde2)
-                                        .addGap(61, 61, 61)
-                                        .addComponent(JNumeroPVerde2))))
+                                        .addGap(16, 16, 16)
+                                        .addComponent(jButtonModifica))))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -612,7 +643,10 @@ public class GuiProva extends javax.swing.JFrame {
                         .addGap(39, 39, 39)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(JDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(JPasto, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jButtonAggiorna)
+                                .addComponent(jButtonModifica))))
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -727,6 +761,19 @@ public class GuiProva extends javax.swing.JFrame {
         guiPrenotazione.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButtonAggiornaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiornaActionPerformed
+        date = rimuoviOrarioData(date);
+        aggiornaTabelle(date);
+    }//GEN-LAST:event_jButtonAggiornaActionPerformed
+
+    private void JTuttiTavoliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTuttiTavoliMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_JTuttiTavoliMouseClicked
+
+    private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
+      
+    }//GEN-LAST:event_jButtonModificaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -773,6 +820,8 @@ public class GuiProva extends javax.swing.JFrame {
     private javax.swing.JLabel JVerde8;
     private javax.swing.JLabel JVerde9;
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAggiorna;
+    private javax.swing.JButton jButtonModifica;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

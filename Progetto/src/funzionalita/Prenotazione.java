@@ -32,6 +32,15 @@ public class Prenotazione {
     private int preferenza;
     private int esigenza;
     private String dateDb;
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getAttesa() {
         return attesa;

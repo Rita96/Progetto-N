@@ -29,15 +29,21 @@ public class Tester {
        GuiNome guiNome = new GuiNome();
        CreateDb createDb = new CreateDb();
        
-       boolean controllo = false;
+        boolean controllo = false;
        
+
        try{
            controllo = createDb.FirstAccess();
        }catch(MySQLSyntaxErrorException ex){
        }
        
        if(controllo){
-           guiProva.setVisible(true);
+            createDb.toJavaFromDbSale();
+            createDb.toJavaFromDbPortate();
+            createDb.toJavaFromDbNome();
+            createDb.toJavaFromDbPrenotazioni();
+            guiProva.setVisible(true);
+            
        }else
            guiNome.setVisible(true);
        

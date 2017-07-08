@@ -35,7 +35,7 @@ public class GuiAddSala extends javax.swing.JFrame {
     TipoPortata tipoPortata = null;
     CreateDb createDb;
     String tp = "Pranzo";
-    String query = "SELECT `nome` FROM `"+agri.getNome()+"`.`sale`";
+    String query = "SELECT `nome` FROM `ristorante`.`sale`";
     
     
     public GuiAddSala() throws SQLException {

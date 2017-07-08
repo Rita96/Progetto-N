@@ -10,6 +10,7 @@ import gui.nome.GuiNome;
 import databse.ConnectDbMySql;
 import databse.CreateDb;
 import gui.GuiProva;
+import gui.GuiProvaM;
 import java.io.IOException;
 import java.sql.SQLException;
 import lettura.LeggiPortate;
@@ -25,7 +26,7 @@ public class Tester {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws IOException, SQLException {
-       GuiProva guiProva = new GuiProva();
+     
        GuiNome guiNome = new GuiNome();
        CreateDb createDb = new CreateDb();
        
@@ -42,6 +43,7 @@ public class Tester {
             createDb.toJavaFromDbPortate();
             createDb.toJavaFromDbNome();
             createDb.toJavaFromDbPrenotazioni();
+             GuiProvaM guiProva = new GuiProvaM();
             guiProva.setVisible(true);
             
        }else

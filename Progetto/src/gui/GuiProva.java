@@ -5,6 +5,7 @@
  */
 package gui;
 
+import databse.CreateDb;
 import funzionalita.Prenotazione;
 import gui.menu.NewJFrame;
 import java.sql.SQLException;
@@ -32,18 +33,16 @@ public class GuiProva extends javax.swing.JFrame {
     private String pasto="Pranzo";
     private Object[] object;
     private ArrayList<GestioneTabelle> arrayGestioneTabelle = new ArrayList<>();
-    private ArrayList<JTable> arrayJTable = new ArrayList<>();
-
+    private CreateDb createDb;
+    private int numeroSale;
 
     
-    public GuiProva() {    
+    public GuiProva() throws SQLException {  
+        createDb = new CreateDb();
         initComponents();
         aggiungiTabelleArray();
         JDateChooser.setDate(dataOdierna);
-        aggiornaTabelle(date);
-        
-        
-       
+        numeroSale = createDb.getNumeroSale();
     }
     
     //operazioni tabelle
@@ -67,34 +66,40 @@ public class GuiProva extends javax.swing.JFrame {
             }
         }
     }
+    
     public void aggiungiTabelleArray(){
-        DefaultTableModel tabellaPrincipale = (DefaultTableModel) JTuttiTavoli.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaPrincipale, "Indifferente"));
-        arrayJTable.add(JTuttiTavoli);
-        DefaultTableModel tabellaVerde = (DefaultTableModel) JTavoliVerde.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaVerde, "Verde"));
-        DefaultTableModel tabellaGilla = (DefaultTableModel) JTavoliGialla.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGilla, "Gialla"));
-        DefaultTableModel tabellaRosa = (DefaultTableModel) JTavoliRosa.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaRosa, "Rosa"));
-        DefaultTableModel tabellaIngresso = (DefaultTableModel) JTavoliIngresso.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaIngresso, "Ingresso"));
-        DefaultTableModel tabellaCorte = (DefaultTableModel) JTavoliCorte.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaCorte, "Corte"));
-        DefaultTableModel tabellaGiardino = (DefaultTableModel) JTavoliGiardino.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGiardino, "Giardino"));
-        DefaultTableModel tabellaSalottino = (DefaultTableModel) JTavoliSalottino.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalottino, "Salottino"));
-        DefaultTableModel tabellaGarden = (DefaultTableModel) JTavoliGarden.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGarden, "Garden"));
-        DefaultTableModel tabellaAia = (DefaultTableModel) JTavoliAia.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaAia, "Aia"));
-        DefaultTableModel tabellaSalone = (DefaultTableModel) JTavoliSalone.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalone, "Salone"));
-        DefaultTableModel tabellaGelsomino = (DefaultTableModel) JTavoliGelsomino.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaGelsomino, "Gelsomino"));
-        DefaultTableModel tabellaBalcone = (DefaultTableModel) JTavoliBalcone.getModel();
-        arrayGestioneTabelle.add(new GestioneTabelle(tabellaBalcone, "Balcone"));
+                
+        try{
+            
+            DefaultTableModel tabellaPrincipale = (DefaultTableModel) JTuttiTavoli.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaPrincipale, "Indifferente"));
+            DefaultTableModel tabellaVerde = (DefaultTableModel) JTable1.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaVerde, agri.getSale().get(0).getNome()));
+            DefaultTableModel tabellaGilla = (DefaultTableModel) JTable2.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaGilla, agri.getSale().get(1).getNome()));
+            DefaultTableModel tabellaRosa = (DefaultTableModel) JTable3.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaRosa, agri.getSale().get(2).getNome()));
+            DefaultTableModel tabellaIngresso = (DefaultTableModel) JTable4.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaIngresso, agri.getSale().get(3).getNome()));
+            DefaultTableModel tabellaCorte = (DefaultTableModel) JTable5.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaCorte, agri.getSale().get(4).getNome()));
+            DefaultTableModel tabellaGiardino = (DefaultTableModel) JTable6.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaGiardino, agri.getSale().get(5).getNome()));
+            DefaultTableModel tabellaSalottino = (DefaultTableModel) JTable7.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalottino, agri.getSale().get(6).getNome()));
+            DefaultTableModel tabellaGarden = (DefaultTableModel) JTable8.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaGarden, agri.getSale().get(7).getNome()));
+            DefaultTableModel tabellaAia = (DefaultTableModel) JTable9.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaAia, agri.getSale().get(8).getNome()));
+            DefaultTableModel tabellaSalone = (DefaultTableModel) JTable10.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaSalone, agri.getSale().get(9).getNome()));
+            DefaultTableModel tabellaGelsomino = (DefaultTableModel) JTable11.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaGelsomino, agri.getSale().get(10).getNome()));
+            DefaultTableModel tabellaBalcone = (DefaultTableModel) JTable12.getModel();
+            arrayGestioneTabelle.add(new GestioneTabelle(tabellaBalcone, agri.getSale().get(11).getNome()));
+        }catch(IndexOutOfBoundsException ex){
+        }
+
         
     }
     
@@ -134,7 +139,7 @@ public class GuiProva extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTavoliVerde = new javax.swing.JTable();
+        JTable1 = new javax.swing.JTable();
         JVerde = new javax.swing.JLabel();
         JNumeroPVerde = new javax.swing.JLabel();
         JPasto = new javax.swing.JComboBox<>();
@@ -145,38 +150,38 @@ public class GuiProva extends javax.swing.JFrame {
         JVerde1 = new javax.swing.JLabel();
         JNumeroPVerde1 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        JTavoliRosa = new javax.swing.JTable();
+        JTable3 = new javax.swing.JTable();
         JVerde2 = new javax.swing.JLabel();
         JNumeroPVerde2 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        JTavoliGialla = new javax.swing.JTable();
+        JTable2 = new javax.swing.JTable();
         jScrollPane4 = new javax.swing.JScrollPane();
-        JTavoliIngresso = new javax.swing.JTable();
+        JTable4 = new javax.swing.JTable();
         JVerde3 = new javax.swing.JLabel();
         JNumeroPVerde3 = new javax.swing.JLabel();
         JNumeroPVerde4 = new javax.swing.JLabel();
         jScrollPane5 = new javax.swing.JScrollPane();
-        JTavoliGiardino = new javax.swing.JTable();
+        JTable6 = new javax.swing.JTable();
         JVerde4 = new javax.swing.JLabel();
         JNumeroPVerde5 = new javax.swing.JLabel();
         JVerde5 = new javax.swing.JLabel();
         JNumeroPVerde6 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
-        JTavoliCorte = new javax.swing.JTable();
+        JTable5 = new javax.swing.JTable();
         JVerde6 = new javax.swing.JLabel();
         JNumeroPVerde7 = new javax.swing.JLabel();
         jScrollPane7 = new javax.swing.JScrollPane();
-        JTavoliSalottino = new javax.swing.JTable();
+        JTable7 = new javax.swing.JTable();
         jScrollPane8 = new javax.swing.JScrollPane();
-        JTavoliGarden = new javax.swing.JTable();
+        JTable8 = new javax.swing.JTable();
         JVerde7 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
-        JTavoliSalone = new javax.swing.JTable();
+        JTable10 = new javax.swing.JTable();
         jScrollPane10 = new javax.swing.JScrollPane();
-        JTavoliBalcone = new javax.swing.JTable();
+        JTable12 = new javax.swing.JTable();
         JNumeroPVerde8 = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
-        JTavoliGelsomino = new javax.swing.JTable();
+        JTable11 = new javax.swing.JTable();
         JNumeroPVerde9 = new javax.swing.JLabel();
         JNumeroPVerde10 = new javax.swing.JLabel();
         JNumeroPVerde11 = new javax.swing.JLabel();
@@ -184,14 +189,14 @@ public class GuiProva extends javax.swing.JFrame {
         JVerde9 = new javax.swing.JLabel();
         JVerde10 = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
-        JTavoliAia = new javax.swing.JTable();
+        JTable9 = new javax.swing.JTable();
         JVerde11 = new javax.swing.JLabel();
         jButtonAggiorna = new javax.swing.JButton();
         jButtonModifica = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        JTavoliVerde.setModel(new javax.swing.table.DefaultTableModel(
+        JTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -207,7 +212,7 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(JTavoliVerde);
+        jScrollPane1.setViewportView(JTable1);
 
         JVerde.setText("VERDE");
 
@@ -260,7 +265,7 @@ public class GuiProva extends javax.swing.JFrame {
 
         JNumeroPVerde1.setText("0");
 
-        JTavoliRosa.setModel(new javax.swing.table.DefaultTableModel(
+        JTable3.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -276,13 +281,13 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane2.setViewportView(JTavoliRosa);
+        jScrollPane2.setViewportView(JTable3);
 
         JVerde2.setText("INGERESSO");
 
         JNumeroPVerde2.setText("0");
 
-        JTavoliGialla.setModel(new javax.swing.table.DefaultTableModel(
+        JTable2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -298,9 +303,9 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane3.setViewportView(JTavoliGialla);
+        jScrollPane3.setViewportView(JTable2);
 
-        JTavoliIngresso.setModel(new javax.swing.table.DefaultTableModel(
+        JTable4.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -316,7 +321,7 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane4.setViewportView(JTavoliIngresso);
+        jScrollPane4.setViewportView(JTable4);
 
         JVerde3.setText("GIALLA");
 
@@ -324,7 +329,7 @@ public class GuiProva extends javax.swing.JFrame {
 
         JNumeroPVerde4.setText("0");
 
-        JTavoliGiardino.setModel(new javax.swing.table.DefaultTableModel(
+        JTable6.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -340,7 +345,7 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane5.setViewportView(JTavoliGiardino);
+        jScrollPane5.setViewportView(JTable6);
 
         JVerde4.setText("GIARDINO");
 
@@ -350,7 +355,7 @@ public class GuiProva extends javax.swing.JFrame {
 
         JNumeroPVerde6.setText("0");
 
-        JTavoliCorte.setModel(new javax.swing.table.DefaultTableModel(
+        JTable5.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -366,13 +371,13 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane6.setViewportView(JTavoliCorte);
+        jScrollPane6.setViewportView(JTable5);
 
         JVerde6.setText("GARDEN");
 
         JNumeroPVerde7.setText("0");
 
-        JTavoliSalottino.setModel(new javax.swing.table.DefaultTableModel(
+        JTable7.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -388,9 +393,9 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane7.setViewportView(JTavoliSalottino);
+        jScrollPane7.setViewportView(JTable7);
 
-        JTavoliGarden.setModel(new javax.swing.table.DefaultTableModel(
+        JTable8.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -406,11 +411,11 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane8.setViewportView(JTavoliGarden);
+        jScrollPane8.setViewportView(JTable8);
 
         JVerde7.setText("SALOTTINO");
 
-        JTavoliSalone.setModel(new javax.swing.table.DefaultTableModel(
+        JTable10.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -426,9 +431,9 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane9.setViewportView(JTavoliSalone);
+        jScrollPane9.setViewportView(JTable10);
 
-        JTavoliBalcone.setModel(new javax.swing.table.DefaultTableModel(
+        JTable12.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -444,11 +449,11 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane10.setViewportView(JTavoliBalcone);
+        jScrollPane10.setViewportView(JTable12);
 
         JNumeroPVerde8.setText("0");
 
-        JTavoliGelsomino.setModel(new javax.swing.table.DefaultTableModel(
+        JTable11.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -464,7 +469,7 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane11.setViewportView(JTavoliGelsomino);
+        jScrollPane11.setViewportView(JTable11);
 
         JNumeroPVerde9.setText("0");
 
@@ -478,7 +483,7 @@ public class GuiProva extends javax.swing.JFrame {
 
         JVerde10.setText("GELSOMINO");
 
-        JTavoliAia.setModel(new javax.swing.table.DefaultTableModel(
+        JTable9.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -494,7 +499,7 @@ public class GuiProva extends javax.swing.JFrame {
                 return types [columnIndex];
             }
         });
-        jScrollPane12.setViewportView(JTavoliAia);
+        jScrollPane12.setViewportView(JTable9);
 
         JVerde11.setText("AIA");
 
@@ -633,25 +638,27 @@ public class GuiProva extends javax.swing.JFrame {
                         .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(264, 264, 264)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(335, Short.MAX_VALUE))
+                .addContainerGap(229, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(JDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButtonAggiorna)
-                                .addComponent(jButtonModifica))))
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane14, javax.swing.GroupLayout.PREFERRED_SIZE, 492, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(JDateChooser, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                        .addComponent(JPasto, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jButtonAggiorna)
+                                        .addComponent(jButtonModifica))))
+                            .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(52, 52, 52)
+                        .addComponent(jScrollPane14))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addGap(155, 155, 155)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -748,7 +755,6 @@ public class GuiProva extends javax.swing.JFrame {
 
     private void JPastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPastoActionPerformed
        pasto = (String) JPasto.getSelectedItem();
-       aggiornaTabelle(date);
     }//GEN-LAST:event_JPastoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -764,14 +770,17 @@ public class GuiProva extends javax.swing.JFrame {
     private void jButtonAggiornaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAggiornaActionPerformed
         date = rimuoviOrarioData(date);
         aggiornaTabelle(date);
+     
+        
+        
     }//GEN-LAST:event_jButtonAggiornaActionPerformed
 
     private void JTuttiTavoliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JTuttiTavoliMouseClicked
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_JTuttiTavoliMouseClicked
 
     private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
-      
+        
     }//GEN-LAST:event_jButtonModificaActionPerformed
 
     /**
@@ -794,18 +803,18 @@ public class GuiProva extends javax.swing.JFrame {
     private javax.swing.JLabel JNumeroPVerde8;
     private javax.swing.JLabel JNumeroPVerde9;
     private javax.swing.JComboBox<String> JPasto;
-    public javax.swing.JTable JTavoliAia;
-    public javax.swing.JTable JTavoliBalcone;
-    public javax.swing.JTable JTavoliCorte;
-    public javax.swing.JTable JTavoliGarden;
-    public javax.swing.JTable JTavoliGelsomino;
-    public javax.swing.JTable JTavoliGialla;
-    public javax.swing.JTable JTavoliGiardino;
-    public javax.swing.JTable JTavoliIngresso;
-    public javax.swing.JTable JTavoliRosa;
-    public javax.swing.JTable JTavoliSalone;
-    public javax.swing.JTable JTavoliSalottino;
-    public javax.swing.JTable JTavoliVerde;
+    public javax.swing.JTable JTable1;
+    public javax.swing.JTable JTable10;
+    public javax.swing.JTable JTable11;
+    public javax.swing.JTable JTable12;
+    public javax.swing.JTable JTable2;
+    public javax.swing.JTable JTable3;
+    public javax.swing.JTable JTable4;
+    public javax.swing.JTable JTable5;
+    public javax.swing.JTable JTable6;
+    public javax.swing.JTable JTable7;
+    public javax.swing.JTable JTable8;
+    public javax.swing.JTable JTable9;
     private javax.swing.JTable JTuttiTavoli;
     private javax.swing.JLabel JVerde;
     private javax.swing.JLabel JVerde1;

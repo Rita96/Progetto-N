@@ -333,10 +333,18 @@ public class CreateDb {
             prenotazione.setMenu(menuCliente);
             agri.aggiungiPrenotazione(prenotazione);
             
-        }    
-        
-            
+            }    
         }
+        public int getNumeroSale() throws SQLException{
+            String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`sale`;";
+            rs=stm.executeQuery(query);
+            rs.last();
+            int numeroSale = rs.getInt("Numero");
+            return numeroSale;
+        }
+        
+         
+ }
         
         
     
@@ -346,4 +354,4 @@ public class CreateDb {
     
     
     
-}
+

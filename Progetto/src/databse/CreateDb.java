@@ -246,7 +246,7 @@ public class CreateDb {
     }
     
     public void toJavaFromDbSale() throws SQLException{
-        String query = "SELECT * FROM `ristorante`.`sale`";
+        String query = "SELECT * FROM `ristorante`.`sale` ORDER BY `sale`.`idsale`";
         rs = stm.executeQuery(query);
         while(rs.next()){
            String nomeSala =rs.getString("nome");
@@ -342,7 +342,20 @@ public class CreateDb {
             int numeroSale = rs.getInt("Numero");
             return numeroSale;
         }
-        
+        public void modificaPrenotazione(Prenotazione p){
+            String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                    + "`data`=`"+p.getDate()+"`, `pasto`=`"+p.getPasto()+"`, "
+                    + "`nome`, `numero di adulti`, "
+                    + "`numero di telefono`, `numero di bambini`, "
+                    + "`sala`, `esigenza sala`, "
+                    + "`lista attesa`, `preferenza sala`, "
+                    + "`esclusiva sala`, `da confermare`, "
+                    + "`primo1`, `primo2`, `primo3`, "
+                    + "`secondo1`, `secondo2`, "
+                    + "`secondo3`, `dolce`, `note` "
+                    + "WHERE "
+                    + "`idprenotazioni`='"+p.getId()+"';";
+        }
          
  }
         

@@ -6,7 +6,7 @@
 package gui.menu;
 
 import databse.CreateDb;
-import gui.GuiProva;
+import gui.GuiProvaM;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiSetSale;
 import java.sql.SQLException;
@@ -93,7 +93,7 @@ public class GuiInputMenu extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonIndietro, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, -1, -1));
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\luby9\\Desktop\\sfondo chiaro.jpg")); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 300));
 
         pack();
@@ -126,7 +126,7 @@ public class GuiInputMenu extends javax.swing.JFrame {
              if(createDb.verificaTabella("menu")){
                 dispose();
                 createDb.createTablePrenotazioni();
-                GuiProva guiProva = new GuiProva();
+                GuiProvaM guiProva = new GuiProvaM();
                 guiProva.setVisible(true);
              }
              else

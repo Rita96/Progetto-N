@@ -48,7 +48,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         jTextArea1.setEditable(false);
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
-        jTextArea1.setText("\n  Nella prossima schermata ti sarà chiesto di \n  inserire le portate che compongono il menu. \n  ");
+        jTextArea1.setText("\n  Nella prossima schermata ti verrà chiesto di \n  inserire le portate che compongono il menu. \n  ");
         jTextArea1.setOpaque(false);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -62,7 +62,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         });
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 70, -1));
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\luby9\\Desktop\\WKNetBeans\\Progetto-N\\Progetto\\sfondi\\c tumblr_mitp4xxIrb1r1iv4bo1_500.jpg")); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         jPanel1.add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 300));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

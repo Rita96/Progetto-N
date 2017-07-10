@@ -81,7 +81,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(321, 56, 84, -1));
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\luby9\\Desktop\\WKNetBeans\\Progetto-N\\Progetto\\sfondi\\sfondo chiaro.jpg")); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 90));
 
         pack();

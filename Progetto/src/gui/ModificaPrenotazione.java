@@ -32,7 +32,7 @@ import struttura.Sala;
  *
  * @author luby
  */
-public class GuiPrenotazione extends javax.swing.JFrame {
+public class ModificaPrenotazione extends javax.swing.JFrame {
 
     private Date data = new Date();
     private Date dataOdierna = new Date();
@@ -60,7 +60,8 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     private int preferenza = 0;
     private int esigenza = 0;
     CreateDb createDb;
-    
+    int i = 0;
+
     
     
     
@@ -75,10 +76,9 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     Agriturismo agri = new Agriturismo();
     GuiProvaM guiProva = new GuiProvaM();
     
-    public GuiPrenotazione() throws SQLException {
+    public ModificaPrenotazione() throws SQLException {
         createDb = new CreateDb();
         initComponents();
-        JData.setDate(dataOdierna);
         riempiItemPrimi();
         riempiItemSecondi();
         riempItemiDolci();
@@ -120,6 +120,56 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         }
     }
 
+    public void setDataField(int id){
+        for(Prenotazione p: agri.getPrenotazione()){
+            if(p.getId()==id){
+                JData.setDate(p.getDate());
+                JPasto.setSelectedItem(p.getPasto());
+                JNome.setText(p.getCliente().getNome());
+                JNumeroAdulti.setText(String.valueOf(p.getnAdulti()));
+                JNumeroBambini.setText(String.valueOf(p.getnBambini()));
+                JNumeroTelefono.setText(String.valueOf(p.getCliente().getNumTelefono()));
+                boolean controllo = false;
+                if(p.getAttesa()==1)
+                    controllo=true;
+                else
+                    controllo = false;
+                jCheckBoxAttesa.setSelected(controllo);
+                if(p.getDaConfermare()==1)
+                    controllo=true;
+                else
+                    controllo = false;
+                jCheckBoxDaConfermare.setSelected(controllo);
+                if(p.getEsclusiva()==1)
+                    controllo=true;
+                else
+                    controllo = false;
+                jCheckBoxEsclusiva.setSelected(controllo);
+                if(p.getEsigenza()==1)
+                    controllo=true;
+                else
+                    controllo = false;
+                jCheckBoxEsigenza.setSelected(controllo);
+                if(p.getPreferenza()==1)
+                    controllo=true;
+                else
+                    controllo = false;
+                jCheckBoxPreferenza.setSelected(controllo);
+                
+                JTipoEvento.setText(p.getTipoEvento());
+                JPrimo1.setSelectedItem(p.getMenu().getMenuCliente().get(0).getNome());
+                JPrimo2.setSelectedItem(p.getMenu().getMenuCliente().get(1).getNome());
+                JPrimo3.setSelectedItem(p.getMenu().getMenuCliente().get(2).getNome());
+                JSecondo1.setSelectedItem(p.getMenu().getMenuCliente().get(3).getNome());
+                JSecondo2.setSelectedItem(p.getMenu().getMenuCliente().get(4).getNome());
+                JSecondo3.setSelectedItem(p.getMenu().getMenuCliente().get(5).getNome());
+                JDolce.setSelectedItem(p.getMenu().getMenuCliente().get(6).getNome());
+                jNote.setText(p.getNote());
+                i++;
+                
+            }
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -154,7 +204,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         jCheckBoxPreferenza = new javax.swing.JCheckBox();
         jCheckBoxEsigenza = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
-        JNumeroTelefono3 = new javax.swing.JTextField();
+        JTipoEvento = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jNote = new javax.swing.JTextArea();
         jCheckBoxAttesa = new javax.swing.JCheckBox();
@@ -165,9 +215,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(220, 70));
-        setMaximumSize(new java.awt.Dimension(920, 720));
         setMinimumSize(new java.awt.Dimension(920, 720));
-        setPreferredSize(new java.awt.Dimension(920, 720));
         getContentPane().setLayout(null);
 
         jLabel1.setText("Data");
@@ -365,13 +413,13 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         getContentPane().add(jLabel12);
         jLabel12.setBounds(49, 185, 130, 14);
 
-        JNumeroTelefono3.addActionListener(new java.awt.event.ActionListener() {
+        JTipoEvento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JNumeroTelefono3ActionPerformed(evt);
+                JTipoEventoActionPerformed(evt);
             }
         });
-        getContentPane().add(JNumeroTelefono3);
-        JNumeroTelefono3.setBounds(180, 180, 154, 30);
+        getContentPane().add(JTipoEvento);
+        JTipoEvento.setBounds(180, 180, 154, 30);
 
         jNote.setColumns(20);
         jNote.setRows(5);
@@ -425,8 +473,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JNumeroAdultiActionPerformed
 
     private void JOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOkActionPerformed
-          
-        try{            
+         try{            
             nome = JNome.getText();
             if(nome.isEmpty())
                 throw new ExeptionNome();
@@ -442,7 +489,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             else
                 numeroBambini = Integer.parseInt(JNumeroBambini.getText());
             numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
-            tipoEvento = JNumeroTelefono3.getText();
+            tipoEvento = JTipoEvento.getText();
         
             primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
             primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
@@ -494,8 +541,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         }catch(ExeptionData ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-        
-        
+        createDb.modificaPrenotazione(agri.getPrenotazione().get(i));
     }//GEN-LAST:event_JOkActionPerformed
 
     private void JNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNomeActionPerformed
@@ -511,7 +557,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JPastoActionPerformed
 
     private void JDataPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDataPropertyChange
-       
+
         if(data==null){
             data = guiProva.dataOdierda();
             data = GuiProvaM.rimuoviOrarioData(data);
@@ -571,9 +617,9 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         s = (String) JSala.getSelectedItem();
     }//GEN-LAST:event_JSalaActionPerformed
 
-    private void JNumeroTelefono3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroTelefono3ActionPerformed
+    private void JTipoEventoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JTipoEventoActionPerformed
         
-    }//GEN-LAST:event_JNumeroTelefono3ActionPerformed
+    }//GEN-LAST:event_JTipoEventoActionPerformed
 
     private void jCheckBoxAttesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAttesaActionPerformed
         if(jCheckBoxAttesa.isSelected())
@@ -597,7 +643,6 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     private javax.swing.JTextField JNumeroAdulti;
     private javax.swing.JTextField JNumeroBambini;
     private javax.swing.JTextField JNumeroTelefono;
-    private javax.swing.JTextField JNumeroTelefono3;
     private javax.swing.JButton JOk;
     private javax.swing.JComboBox<String> JPasto;
     private javax.swing.JComboBox<String> JPrimo1;
@@ -607,6 +652,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> JSecondo1;
     private javax.swing.JComboBox<String> JSecondo2;
     private javax.swing.JComboBox<String> JSecondo3;
+    private javax.swing.JTextField JTipoEvento;
     private javax.swing.JCheckBox jCheckBoxAttesa;
     private javax.swing.JCheckBox jCheckBoxDaConfermare;
     private javax.swing.JCheckBox jCheckBoxEsclusiva;

@@ -9,10 +9,10 @@ import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import gui.nome.GuiNome;
 import databse.ConnectDbMySql;
 import databse.CreateDb;
-import gui.GuiProva;
 import gui.GuiProvaM;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import lettura.LeggiPortate;
 import lettura.LeggiSala;
 
@@ -29,7 +29,6 @@ public class Tester {
      
        GuiNome guiNome = new GuiNome();
        CreateDb createDb = new CreateDb();
-       
         boolean controllo = false;
        
 
@@ -43,7 +42,9 @@ public class Tester {
             createDb.toJavaFromDbPortate();
             createDb.toJavaFromDbNome();
             createDb.toJavaFromDbPrenotazioni();
-             GuiProvaM guiProva = new GuiProvaM();
+            GuiProvaM guiProva = new GuiProvaM();
+            guiProva.refreshNumber();
+            guiProva.setLocationRelativeTo(null);
             guiProva.setVisible(true);
             
        }else

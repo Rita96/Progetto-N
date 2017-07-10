@@ -47,10 +47,11 @@ public class GuiNome extends javax.swing.JFrame {
         setLocation(new java.awt.Point(400, 200));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel2.setFont(new java.awt.Font("Yu Gothic Light", 3, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Gill Sans MT", 1, 24)); // NOI18N
         jLabel2.setText("NOME DEL RISTORANTE");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 60, 310, 28));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 60, 310, 28));
 
+        jTextNome.setFont(new java.awt.Font("Times New Roman", 0, 12)); // NOI18N
         jTextNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextNomeActionPerformed(evt);
@@ -66,7 +67,7 @@ public class GuiNome extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonAvanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\luby9\\Desktop\\WKNetBeans\\Progetto-N\\Progetto\\sfondi\\wood-background-911074_960_720.jpg")); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 300));
 
         pack();

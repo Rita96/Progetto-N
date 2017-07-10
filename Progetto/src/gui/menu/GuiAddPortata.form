@@ -94,7 +94,7 @@
     <Component class="javax.swing.JLabel" name="jLabelSfondo">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="2" name="C:\Users\luby9\Desktop\WKNetBeans\Progetto-N\Progetto\sfondi\sfondo chiaro.jpg"/>
+          <Image iconType="3" name="/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"/>
         </Property>
       </Properties>
       <Constraints>

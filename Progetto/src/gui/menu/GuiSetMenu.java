@@ -3,7 +3,7 @@ package gui.menu;
 
 import databse.CreateDb;
 import gui.FileChooser;
-import gui.GuiProva;
+import gui.GuiProvaM;
 import gui.sale.GuiInformationSale;
 import gui.sale.GuiSetSale;
 import java.io.IOException;
@@ -101,7 +101,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonIndietro, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, -1, -1));
 
-        jLabelSfondo.setIcon(new javax.swing.ImageIcon("C:\\Users\\luby9\\Desktop\\menu_gran_mattino.png")); // NOI18N
+        jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 450, 300));
 
         pack();
@@ -121,7 +121,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
             try {  
             leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
-            GuiProva guiProva = new GuiProva();
+            GuiProvaM guiProva = new GuiProvaM();
             JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
             createDb.createTablePrenotazioni();
             dispose();
@@ -140,7 +140,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
                     if(createDb.verificaTabella("menu")){
                         dispose();
                         createDb.createTablePrenotazioni();
-                        GuiProva guiProva = new GuiProva();
+                        GuiProvaM guiProva = new GuiProvaM();
                         guiProva.setVisible(true);
                     }
                     else

@@ -5,8 +5,8 @@
  */
 package tests;
 
-import database.ConnectDbMySql;
-import database.CreateDb;
+import databse.ConnectDbMySql;
+import databse.CreateDb;
 import java.sql.SQLException;
 import menu.TipoPortata;
 import org.junit.Test;

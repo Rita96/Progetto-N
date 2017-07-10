@@ -182,6 +182,23 @@ public class CreateDb {
         }
     }
     
+     public void addIngredienti(String nomePortata, TipoPortata tipoPortata, String ingrediente, int qnt) throws SQLException{
+        
+        for(int i=1;i<11;i++){
+            String query = "SELECT `ingrediente"+i+"`, `idmenu` from `"+agri.getNome()+"`.`menu` WHERE`nomeportata`= "+nomePortata+" "
+                    + "AND `tipo portata`="+tipoPortata+";";
+            ResultSet rs = stm.executeQuery(query);
+            if(rs.next()){
+                String ingr = rs.getString(1);            
+                System.out.println(ingr);
+            }else{
+                int id = rs.getInt(2);
+                query = "UPDATE `"+agri.getNome()+"`.`menu` SET `ingrediente"+i+"` = '"+ingrediente+"',`qnt"+i+"` = "+qnt+" WHERE `idmenu` = "+id+";";
+                stm.execute(query);
+            }
+        }
+    }    
+    
      public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);
          rs = pstmt.executeQuery();
@@ -360,11 +377,11 @@ public class CreateDb {
             return numeroSale;
         }  
         
-        public void modificaPrenotazione(Prenotazione p, String id) throws SQLException{
+        public void modificaPrenotazione(Prenotazione p) throws SQLException{
             
             String query = "UPDATE `ristorante`.`prenotazioni` "
                     + "SET `data`="+p.getDate()+"`, `pasto`="+p.getPasto()+""
-                    + " WHERE `idprenotazioni` = "+id+";";
+                    + " WHERE `idprenotazioni` = "+p.getId()+";";
                 stm.execute(query);
             
             /*String query = "UPDATE ristorante.prenotazioni SET "

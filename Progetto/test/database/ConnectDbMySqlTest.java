@@ -5,6 +5,7 @@
  */
 package database;
 
+import databse.ConnectDbMySql;
 import java.sql.Connection;
 import org.junit.Test;
 import static org.junit.Assert.*;

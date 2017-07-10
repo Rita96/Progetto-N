@@ -123,34 +123,35 @@ public class CreateDb {
     
     public void createTableMenu() throws SQLException{
        
-        String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`menu` (\n" +
+        String query = "CREATE TABLE IF NOT EXISTS `"+agri.getNome()+"`.`menu` (\n" +
                     "  `idmenu` INT NOT NULL AUTO_INCREMENT,\n" +
-                    "  ` nome portata` VARCHAR(100) NOT NULL,\n" +
-                    "  `tipo portata` VARCHAR(100) NOT NULL,\n" +
+                    "  `nomeportata` VARCHAR(100) NOT NULL,\n" +
+                    "  `tipoportata` VARCHAR(100) NOT NULL,\n" +
                     "  `ingrediente1` VARCHAR(100) NULL,\n" +
-                    "  `qnt1` VARCHAR(100) NULL,\n"  +
+                    "  `qnt1` INT NULL,\n"  +
                     "  `ingrediente2` VARCHAR(100) NULL,\n" +
-                    "  `qnt2` VARCHAR(100) NULL,\n"  +
+                    "  `qnt2` INT NULL,\n"  +
                     "  `ingrediente3` VARCHAR(100) NULL,\n" +
-                    "  `qnt3` VARCHAR(100) NULL,\n"  +
+                    "  `qnt3` INT NULL,\n"  +
                     "  `ingrediente4` VARCHAR(100) NULL,\n" +
-                    "  `qnt4` VARCHAR(100) NULL,\n"  +
+                    "  `qnt4` INT NULL,\n"  +
                     "  `ingrediente5` VARCHAR(100) NULL,\n" +
-                    "  `qnt5` VARCHAR(100) NULL,\n"  +
+                    "  `qnt5` INT NULL,\n"  +
                     "  `ingrediente6` VARCHAR(100) NULL,\n" +
-                    "  `qnt6` VARCHAR(100) NULL,\n"  +
+                    "  `qnt6` INT NULL,\n"  +
                     "  `ingrediente7` VARCHAR(100) NULL,\n" +
-                    "  `qnt7` VARCHAR(100) NULL,\n"  +
+                    "  `qnt7` INT NULL,\n"  +
                     "  `ingrediente8` VARCHAR(100) NULL,\n" +
-                    "  `qnt8` VARCHAR(100) NULL,\n"  +
+                    "  `qnt8` INT NULL,\n"  +
                     "  `ingrediente9` VARCHAR(100) NULL,\n" +
-                    "  `qnt9` VARCHAR(100) NULL,\n"  +
+                    "  `qnt9` INT NULL,\n"  +
                     "  `ingrediente10` VARCHAR(100) NULL,\n" +
-                    "  `qnt10` VARCHAR(100) NULL,\n" +
+                    "  `qnt10` INT NULL,\n" +
                     "  PRIMARY KEY (`idmenu`, ` nome portata`),\n" +
                     "  UNIQUE INDEX ` nome portata_UNIQUE` (` nome portata` ASC));";
         stm.executeUpdate(query);
     }
+
     
     public void addPortataFromFiletoDb() throws SQLException{
           for(Portata p: MenuCompleto.menuCompleto){
@@ -164,6 +165,22 @@ public class CreateDb {
         stm.execute(query);
     }
     
+    
+    public void modificaIngrediente(String nomePortata, TipoPortata tipoPortata, String newIngrediente, String oldIngrediente) throws SQLException{
+        
+        for(int i=1;i<11;i++){
+            String query = "SELECT `ingrediente"+i+"`,`idmenu` from `"+agri.getNome()+"`.`menu` WHERE `nomeportata`= "+nomePortata+" AND `ingrediente"+i+"`= "+oldIngrediente+";";
+            ResultSet rs = stm.executeQuery(query);
+            if(rs.next()){
+                String id = rs.getString(2);            
+                System.out.println(id);
+                query = "UPDATE `"+agri.getNome()+"`.`menu` SET `ingrediente"+i+"` = "+newIngrediente+" WHERE `idmenu` = "+id+" AND `ingrediente"+i+"`='"+oldIngrediente+"';";
+                stm.execute(query);
+            }else{
+                continue;  
+            }  
+        }
+    }
     
      public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);
@@ -341,9 +358,16 @@ public class CreateDb {
             rs.last();
             int numeroSale = rs.getInt("Numero");
             return numeroSale;
-        }
-        public void modificaPrenotazione(Prenotazione p) throws SQLException{
-            String query = "UPDATE ristorante.prenotazioni SET "
+        }  
+        
+        public void modificaPrenotazione(Prenotazione p, String id) throws SQLException{
+            
+            String query = "UPDATE `ristorante`.`prenotazioni` "
+                    + "SET `data`="+p.getDate()+"`, `pasto`="+p.getPasto()+""
+                    + " WHERE `idprenotazioni` = "+id+";";
+                stm.execute(query);
+            
+            /*String query = "UPDATE ristorante.prenotazioni SET "
                     + "data=`"+p.getDate()+"`, pasto=`"+p.getPasto()+"`, "
 //                    + "`nome`, `numero di adulti`, "
 //                    + "`numero di telefono`, `numero di bambini`, "
@@ -355,7 +379,7 @@ public class CreateDb {
 //                    + "`secondo3`, `dolce`, `note` "
                     + "WHERE "
                     + "idprenotazioni='4';";
-            stm.execute(query);
+            stm.execute(query);*/
         }
          
  }

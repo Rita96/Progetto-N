@@ -342,19 +342,20 @@ public class CreateDb {
             int numeroSale = rs.getInt("Numero");
             return numeroSale;
         }
-        public void modificaPrenotazione(Prenotazione p){
-            String query = "UPDATE `ristorante`.`prenotazioni` SET "
-                    + "`data`=`"+p.getDate()+"`, `pasto`=`"+p.getPasto()+"`, "
-                    + "`nome`, `numero di adulti`, "
-                    + "`numero di telefono`, `numero di bambini`, "
-                    + "`sala`, `esigenza sala`, "
-                    + "`lista attesa`, `preferenza sala`, "
-                    + "`esclusiva sala`, `da confermare`, "
-                    + "`primo1`, `primo2`, `primo3`, "
-                    + "`secondo1`, `secondo2`, "
-                    + "`secondo3`, `dolce`, `note` "
+        public void modificaPrenotazione(Prenotazione p) throws SQLException{
+            String query = "UPDATE ristorante.prenotazioni SET "
+                    + "data=`"+p.getDate()+"`, pasto=`"+p.getPasto()+"`, "
+//                    + "`nome`, `numero di adulti`, "
+//                    + "`numero di telefono`, `numero di bambini`, "
+//                    + "`sala`, `esigenza sala`, "
+//                    + "`lista attesa`, `preferenza sala`, "
+//                    + "`esclusiva sala`, `da confermare`, "
+//                    + "`primo1`, `primo2`, `primo3`, "
+//                    + "`secondo1`, `secondo2`, "
+//                    + "`secondo3`, `dolce`, `note` "
                     + "WHERE "
-                    + "`idprenotazioni`='"+p.getId()+"';";
+                    + "idprenotazioni='4';";
+            stm.execute(query);
         }
          
  }

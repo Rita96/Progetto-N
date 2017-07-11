@@ -52,7 +52,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private CreateDb createDb;
     private ArrayList<GestioneTabelle> arrayJTable = new ArrayList<>();
     private int numeroSale;
-    private int[] numPplPerRoom = new int[12];
+    private int[] numPplPerRoom = new int[13];
     private ArrayList<JMenuItem> arrayItem = new ArrayList<>();
     private int id;
     private String nomePrenotazione;
@@ -818,6 +818,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         updateNumPeople(jScrollPane11,tavolo10,labelnp10,9);
         updateNumPeople(jScrollPane12,tavolo11,labelnp11,10);
         updateNumPeople(jScrollPane13,tavolo12,labelnp12,11);
+        updateNumPeople(jScrollPane1,jTable1,jLabelTotale,12);
     }
     public void updateNumPeople(JScrollPane j,JTable t,JLabel l,int index){
         for(int k = 0 ; k<numPplPerRoom.length ; k++){
@@ -900,6 +901,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jScrollPane14 = new javax.swing.JScrollPane();
         tabellaAttesa = new javax.swing.JTable();
         jButtonRefresh = new javax.swing.JButton();
+        jLabelTotale = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         jModifica.setText("jMenuItem2");
@@ -1479,6 +1481,10 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jPanel1.add(jButtonRefresh);
         jButtonRefresh.setBounds(550, 50, 110, 23);
 
+        jLabelTotale.setText("0");
+        jPanel1.add(jLabelTotale);
+        jLabelTotale.setBounds(170, 120, 40, 14);
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         jLabel3.setToolTipText("");
         jPanel1.add(jLabel3);
@@ -1604,6 +1610,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JMenuItem jItemSala2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabelTotale;
     private javax.swing.JPopupMenu jMenuPrincipale;
     private javax.swing.JPopupMenu jMenuSale;
     private javax.swing.JMenuItem jModifica;

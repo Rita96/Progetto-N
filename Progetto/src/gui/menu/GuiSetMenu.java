@@ -3,7 +3,7 @@ package gui.menu;
 
 import databse.CreateDb;
 import gui.FileChooser;
-import gui.GuiProvaM;
+import gui.GuiPrincipale;
 import gui.sale.GuiInformationSale;
 import gui.sale.GuiSetSale;
 import java.io.IOException;
@@ -121,7 +121,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
             try {  
             leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
-            GuiProvaM guiProva = new GuiProvaM();
+            GuiPrincipale guiProva = new GuiPrincipale();
             JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
             createDb.createTablePrenotazioni();
             dispose();
@@ -140,7 +140,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
                     if(createDb.verificaTabella("menu")){
                         dispose();
                         createDb.createTablePrenotazioni();
-                        GuiProvaM guiProva = new GuiProvaM();
+                        GuiPrincipale guiProva = new GuiPrincipale();
                         guiProva.setVisible(true);
                     }
                     else

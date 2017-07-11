@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package gui.guiPrenotazione;
 
 import cliente.Cliente;
 import com.toedter.calendar.JCalendar;
@@ -12,6 +12,7 @@ import exception.ExeptionData;
 import exception.ExeptionNome;
 import exception.ExeptionNumeroAdulti;
 import funzionalita.Prenotazione;
+import gui.GuiPrincipale;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,7 +74,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     Cliente cliente;
     Object[] object = new Object[2];
     Agriturismo agri = new Agriturismo();
-    GuiProvaM guiProva = new GuiProvaM();
+    GuiPrincipale guiProva = new GuiPrincipale();
     
     public GuiPrenotazione() throws SQLException {
         createDb = new CreateDb();
@@ -165,9 +166,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(220, 70));
-        setMaximumSize(new java.awt.Dimension(920, 720));
         setMinimumSize(new java.awt.Dimension(920, 720));
-        setPreferredSize(new java.awt.Dimension(920, 720));
         getContentPane().setLayout(null);
 
         jLabel1.setText("Data");
@@ -433,7 +432,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
             if(JNumeroAdulti.getText().isEmpty()){
                 throw new ExeptionNumeroAdulti();
-            }if(data.before(GuiProvaM.dataOdierna))
+            }if(data.before(GuiPrincipale.dataOdierna))
                 throw new ExeptionData();
             String line;
             line = JNumeroBambini.getText();
@@ -516,10 +515,10 @@ public class GuiPrenotazione extends javax.swing.JFrame {
        
         if(data==null){
             data = guiProva.dataOdierda();
-            data = GuiProvaM.rimuoviOrarioData(data);
+            data = GuiPrincipale.rimuoviOrarioData(data);
         }
-        data = GuiProvaM.rimuoviOrarioData(data);
-        GuiProvaM.rimuoviOrarioData(data);
+        data = GuiPrincipale.rimuoviOrarioData(data);
+        GuiPrincipale.rimuoviOrarioData(data);
       
          if(data!=dataOdierna){
             data = JData.getDate();

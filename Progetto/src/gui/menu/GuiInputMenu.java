@@ -6,7 +6,7 @@
 package gui.menu;
 
 import databse.CreateDb;
-import gui.GuiProvaM;
+import gui.GuiPrincipale;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiSetSale;
 import java.sql.SQLException;
@@ -126,7 +126,7 @@ public class GuiInputMenu extends javax.swing.JFrame {
              if(createDb.verificaTabella("menu")){
                 dispose();
                 createDb.createTablePrenotazioni();
-                GuiProvaM guiProva = new GuiProvaM();
+                GuiPrincipale guiProva = new GuiPrincipale();
                 guiProva.setVisible(true);
              }
              else

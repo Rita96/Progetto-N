@@ -60,7 +60,6 @@ public class CreateDb {
         }
         return controllo;
     }
-
     public void CreateSchema() throws SQLException{
         String query = "CREATE SCHEMA IF NOT EXISTS `ristorante`";
         stm.execute(query);
@@ -69,13 +68,11 @@ public class CreateDb {
         String query = "DROP SCHEMA IF EXISTS `ristorante`";
         stm.execute(query);
     }
-    
     public void closeConnection() throws SQLException{
             stm.close(); // rilascio le risorse
             pstmt.close(); // rilascio le risorse
             conn.close(); // termino la connessione
     }
-    
     public void createTableSale() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`sale` (\n" +
                 "  `idsale` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -95,32 +92,26 @@ public class CreateDb {
     public void insertDatiRistorante() throws SQLException{
         String query = "INSERT INTO `ristorante`.`dati` (`nome`) VALUES ('"+agri.getNome()+"')";;
         stm.executeUpdate(query);
-    }
-    
-    
+    } 
     public void addSaleFromFileToDb() throws SQLException{
         for(Sala s: agri.getSale()){
         String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+s.getNome()+"')";
             stm.executeUpdate(query);
         }
     }
-    
     public void addSingleSala(String nomeSala) throws SQLException{
         String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+nomeSala+"');";
         stm.execute(query);
-    }
-    
+    }   
     public void removeSchema() throws SQLException{
         String query = "DROP SCHEMA IF EXISTS  `ristorante`";
         stm.execute(query);
     }
-    
     public void DropTableSale() throws SQLException{
         String query = "DROP TABLE IF EXISTS `ristorante`.`sale`";
         stm.executeUpdate(query);
     
-    }
-    
+    } 
     public void createTableMenu() throws SQLException{
        
         String query = "CREATE TABLE IF NOT EXISTS `"+agri.getNome()+"`.`menu` (\n" +
@@ -151,21 +142,16 @@ public class CreateDb {
                     "  UNIQUE INDEX ` nome portata_UNIQUE` (` nome portata` ASC));";
         stm.executeUpdate(query);
     }
-
-    
     public void addPortataFromFiletoDb() throws SQLException{
           for(Portata p: MenuCompleto.menuCompleto){
             String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+p.getNome()+"', '"+p.getTipoPortata()+"');";
             stm.executeUpdate(query);
         }
     }
-
     public void addSinglePortata(String nomePortata, TipoPortata tipoPortata) throws SQLException{
         String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+nomePortata+"', '"+tipoPortata+"');";;
         stm.execute(query);
-    }
-    
-    
+    }  
     public void modificaIngrediente(String nomePortata, TipoPortata tipoPortata, String newIngrediente, String oldIngrediente) throws SQLException{
         
         for(int i=1;i<11;i++){
@@ -180,14 +166,12 @@ public class CreateDb {
                 continue;  
             }  
         }
-    }
-    
-     public void riempiTabella(JTable table, String query) throws SQLException{
+    }    
+    public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);
          rs = pstmt.executeQuery();
          table.setModel(DbUtils.resultSetToTableModel(rs));
-     }
-     
+     }  
     public boolean verificaTabella(String tabella) throws SQLException{
         String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`"+tabella+"`;";
         rs=stm.executeQuery(query);
@@ -198,8 +182,7 @@ public class CreateDb {
         } 
         else 
             return false;
-    }
-    
+    }  
     public void createTablePrenotazioni() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`prenotazioni` (\n" +
                         "  `idprenotazioni` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -228,8 +211,7 @@ public class CreateDb {
                         "  UNIQUE INDEX `idprenotazioni_UNIQUE` (`idprenotazioni` ASC));";
         
         stm.executeUpdate(query);
-    }
-    
+    }    
     public void addSinglePrenotazione(Prenotazione p) throws SQLException{
         String query = "INSERT INTO `ristorante`.`prenotazioni` (`pasto`, "
                 + "`nome`, `numero di adulti`, `sala`, `numero di bambini`"
@@ -260,8 +242,7 @@ public class CreateDb {
                 + "'"+p.getCliente().getNumTelefono()+"');";
         stm.execute(query);
     
-    }
-    
+    }   
     public void toJavaFromDbSale() throws SQLException{
         String query = "SELECT * FROM `ristorante`.`sale` ORDER BY `sale`.`idsale`";
         rs = stm.executeQuery(query);
@@ -281,7 +262,7 @@ public class CreateDb {
            MenuCompleto.menuCompleto.add(portata);
         }
     }    
-        public void toJavaFromDbNome() throws SQLException{
+    public void toJavaFromDbNome() throws SQLException{
         String query = "SELECT * FROM `ristorante`.`dati`";
         rs = stm.executeQuery(query);
         while(rs.next()){
@@ -289,9 +270,9 @@ public class CreateDb {
            agri.setNome(nomeRistorante);
         }
     }    
-        public void toJavaFromDbPrenotazioni() throws SQLException{
+    public void toJavaFromDbPrenotazioni() throws SQLException{
         int i = 0;
-        String query = "SELECT * FROM `ristorante`.`prenotazioni`";
+        String query = "SELECT * FROM `ristorante`.`prenotazioni` ORDER BY `idprenotazioni`";
         rs = stm.executeQuery(query);
         while(rs.next()){
             MenuCliente menuCliente = new MenuCliente();
@@ -352,36 +333,50 @@ public class CreateDb {
             
             }    
         }
-        public int getNumeroSale() throws SQLException{
+    public int getNumeroSale() throws SQLException{
             String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`sale`;";
             rs=stm.executeQuery(query);
             rs.last();
             int numeroSale = rs.getInt("Numero");
             return numeroSale;
         }  
-        
-        public void modificaPrenotazione(Prenotazione p, String id) throws SQLException{
-            
-            String query = "UPDATE `ristorante`.`prenotazioni` "
-                    + "SET `data`="+p.getDate()+"`, `pasto`="+p.getPasto()+""
-                    + " WHERE `idprenotazioni` = "+id+";";
-                stm.execute(query);
-            
-            /*String query = "UPDATE ristorante.prenotazioni SET "
-                    + "data=`"+p.getDate()+"`, pasto=`"+p.getPasto()+"`, "
-//                    + "`nome`, `numero di adulti`, "
-//                    + "`numero di telefono`, `numero di bambini`, "
-//                    + "`sala`, `esigenza sala`, "
-//                    + "`lista attesa`, `preferenza sala`, "
-//                    + "`esclusiva sala`, `da confermare`, "
-//                    + "`primo1`, `primo2`, `primo3`, "
-//                    + "`secondo1`, `secondo2`, "
-//                    + "`secondo3`, `dolce`, `note` "
-                    + "WHERE "
-                    + "idprenotazioni='4';";
-            stm.execute(query);*/
+    public void modificaPrenotazione(Prenotazione p) throws SQLException{
+            String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                    + "`note`='"+p.getNote()+"', `nome`='"+p.getCliente().getNome()+"' ,"
+                    + "`numero di telefono`='"+p.getCliente().getNumTelefono()+"', "
+                    + "`pasto`='"+p.getPasto()+"' ,`data`='"+p.getDateDb()+"' ,"
+                    + "`numero di adulti`='"+p.getnAdulti()+"' ,`numero di bambini`='"+p.getnBambini()+"' ,"
+                    + " `sala`='"+p.getSala().getNome()+"' ,"
+                    + "`tipo di evento`='"+p.getTipoEvento()+"' ,"
+                    + "`esigenza sala`='"+p.getEsigenza()+"' ,"
+                    + "`lista attesa`='"+p.getAttesa()+"' ,"
+                    + "`preferenza sala`='"+p.getPreferenza()+"' ,"
+                    + "`esclusiva sala`='"+p.getEsclusiva()+"' ,"
+                    + "`primo1`='"+p.getMenu().getMenuCliente().get(0).getNome()+"' ,"
+                    + "`primo2`='"+p.getMenu().getMenuCliente().get(1).getNome()+"' ,"
+                    + "`primo3`='"+p.getMenu().getMenuCliente().get(2).getNome()+"' ,"
+                    + "`secondo1`='"+p.getMenu().getMenuCliente().get(3).getNome()+"' ,"
+                    + "`secondo2`='"+p.getMenu().getMenuCliente().get(4).getNome()+"' ,"
+                    + "`secondo3`='"+p.getMenu().getMenuCliente().get(5).getNome()+"' ,"
+                    + "`dolce`='"+p.getMenu().getMenuCliente().get(6).getNome()+"' ,"
+                    + "`da confermare`='"+p.getDaConfermare()+"'"
+                    + " WHERE `idprenotazioni`='"+p.getId()+"'";
+           
+                stm.executeUpdate(query);
         }
-         
+    public void deletePrenotazione(int id, String nomePrenotazione) throws SQLException{
+            String query = "DELETE FROM `ristorante`.`prenotazioni` WHERE `idprenotazioni`='"+id+"' "
+                    + "and`nome`='"+nomePrenotazione+"'";
+            stm.execute(query);
+        }
+    public int selectMaxId() throws SQLException{
+        int max;
+        String query = "SELECT MAX(idprenotazioni) AS 'max' FROM ristorante.prenotazioni";
+        rs = stm.executeQuery(query);
+        rs.next();
+        max = rs.getInt("max");
+        return max;
+    }
  }
         
         

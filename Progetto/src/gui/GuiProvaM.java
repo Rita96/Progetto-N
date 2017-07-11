@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -52,6 +53,7 @@ public class GuiProvaM extends javax.swing.JFrame {
     private int[] numPplPerRoom = new int[12];
     private ArrayList<JMenuItem> arrayItem = new ArrayList<>();
     private int id;
+    private String nomePrenotazione;
     
     
     /**
@@ -66,15 +68,14 @@ public class GuiProvaM extends javax.swing.JFrame {
         jDateChooser.setDate(dataOdierna);
         numeroSale = createDb.getNumeroSale();
         inserisciSale(numeroSale);
-        impostaJSposta();
+        
         impostaJModifica();
+        impostaRimuovi();
         
     }
      public ArrayList<GestioneTabelle> getArrayJTable() {
         return arrayJTable;
     }
-    
-    
     public void inizializzo(){
         jScrollPane13.setVisible(false);
         jScrollPane3.setVisible(false);
@@ -114,7 +115,6 @@ public class GuiProvaM extends javax.swing.JFrame {
         
         
     }
-    //operazioni tabelle
     public void aggiornaTabelle(Date d){  
         rimuoviRigheTabellaSala();
         for(Prenotazione p: agri.getPrenotazione()){ 
@@ -145,8 +145,6 @@ public class GuiProvaM extends javax.swing.JFrame {
         }
 
     }
-    
-   
     public void aggiungiTabelleArray(){    
         try{
             DefaultTableModel tabellaPrincipale = (DefaultTableModel) jTable1.getModel();
@@ -182,9 +180,6 @@ public class GuiProvaM extends javax.swing.JFrame {
         }
         
     }
-    
- 
-   
     public void rimuoviRigheTabellaSala(){
         for(GestioneTabelle t: arrayJTable){
             while(t.getDtm().getRowCount()>0){
@@ -192,8 +187,6 @@ public class GuiProvaM extends javax.swing.JFrame {
             }
         }
     }
- 
-    //operazioni date
     public static Date rimuoviOrarioData(Date d){
         Calendar cal = Calendar.getInstance();
         cal.setTime(d);
@@ -213,16 +206,17 @@ public class GuiProvaM extends javax.swing.JFrame {
         
         jModifica.setText("Modifica");
         jSposta.setText("Sposta");
-        jPopupMenu1.add(jModifica);
-        jPopupMenu1.add(jSposta);
-        int i = 0;
-        jMenuSale.removeAll();
-        for(Sala s: agri.getSale()){
-            JMenuItem itemSala = new JMenuItem(s.getNome());
-            arrayItem.add(itemSala);
-            jMenuSale.add(arrayItem.get(i));
-            i++;
-        }
+        jRimuovi.setText("Rimuovi");
+        jMenuPrincipale.add(jModifica);
+        jMenuPrincipale.add(jRimuovi);
+//        int i = 0;
+//        jMenuSale.removeAll();
+//        for(Sala s: agri.getSale()){
+//            JMenuItem itemSala = new JMenuItem(s.getNome());
+//            arrayItem.add(itemSala);
+//            jMenuSale.add(arrayItem.get(i));
+//            i++;
+//        }
         
        
     }
@@ -251,7 +245,6 @@ public class GuiProvaM extends javax.swing.JFrame {
                 ModificaPrenotazione mp;
                 try {
                     mp = new ModificaPrenotazione();
-                   
                     mp.setDataField(id);
                     mp.setVisible(true);
                 } catch (SQLException ex) {
@@ -261,7 +254,6 @@ public class GuiProvaM extends javax.swing.JFrame {
             }
         });
     }
-    
     public void inserisciSale(int n){
 
         switch(n){
@@ -777,17 +769,52 @@ public class GuiProvaM extends javax.swing.JFrame {
         
             
     }
-
+    public void rightClick(JTable jtable, java.awt.event.MouseEvent evt ){
+        try {
+            impostaMenu();
+        } catch (SQLException ex) {
+            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if(SwingUtilities.isRightMouseButton(evt)){
+           jMenuPrincipale.show(this, evt.getXOnScreen(), evt.getYOnScreen());
+        }
+        try{
+            int i = jtable.getSelectedRow();        
+            id = Integer.parseInt(jtable.getValueAt(i, 2).toString());
+            nomePrenotazione = (String) jtable.getValueAt(i, 0);
+        }catch(ArrayIndexOutOfBoundsException s){}
+    }
+    public void impostaRimuovi(){
+        jRimuovi.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                for(int j=0;j<agri.getPrenotazione().size(); j++){
+                    if(agri.getPrenotazione().get(j).getId()==id){ 
+                        int choose = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler "
+                                + "eliminare la prenotazione a nome di '"+nomePrenotazione+"' ?");
+                        if(choose==JOptionPane.YES_OPTION){  
+                            try {
+                                createDb.deletePrenotazione(id, nomePrenotazione);
+                                agri.getPrenotazione().remove(j);
+                            } catch (SQLException ex) {
+                                Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
+                            }
+                        }  
+                    }
+                } 
+            }
+        });
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMenuPrincipale = new javax.swing.JPopupMenu();
         jModifica = new javax.swing.JMenuItem();
+        jRimuovi = new javax.swing.JMenuItem();
         jSposta = new javax.swing.JMenuItem();
         jMenuSale = new javax.swing.JPopupMenu();
-        jItemSala1 = new javax.swing.JMenuItem();
         jItemSala2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         labelnp3 = new javax.swing.JLabel();
@@ -851,12 +878,13 @@ public class GuiProvaM extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
 
         jModifica.setText("jMenuItem2");
-        jPopupMenu1.add(jModifica);
+        jMenuPrincipale.add(jModifica);
+
+        jRimuovi.setText("jMenuItem1");
+        jMenuPrincipale.add(jRimuovi);
 
         jSposta.setText("jMenuItem3");
-        jPopupMenu1.add(jSposta);
-
-        jItemSala1.setText("jMenuItem1");
+        jMenuPrincipale.add(jSposta);
 
         jItemSala2.setText("jMenuItem2");
 
@@ -1343,10 +1371,19 @@ public class GuiProvaM extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Tavoli", "N.Persone"
+                "Tavoli", "N.Persone", "id"
             }
         ));
+        tabellaAttesa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tabellaAttesaMouseClicked(evt);
+            }
+        });
         jScrollPane14.setViewportView(tabellaAttesa);
+        if (tabellaAttesa.getColumnModel().getColumnCount() > 0) {
+            tabellaAttesa.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tabellaAttesa.getColumnModel().getColumn(2).setPreferredWidth(40);
+        }
 
         jPanel1.add(jScrollPane14);
         jScrollPane14.setBounds(1120, 140, 199, 564);
@@ -1444,37 +1481,11 @@ public class GuiProvaM extends javax.swing.JFrame {
     }//GEN-LAST:event_jDateChooserPropertyChange
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-      
-       
-        if(SwingUtilities.isRightMouseButton(evt)){
-            try {
-                impostaMenu();
-            } catch (SQLException ex) {
-                Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-            }
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-         try{
-            int i = jTable1.getSelectedRow();        
-            id = Integer.parseInt(jTable1.getValueAt(i, 2).toString());
-         }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(jTable1, evt);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void tavolo1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo1MouseReleased
-        
-        try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo1.getSelectedRow();        
-            id = Integer.parseInt(tavolo1.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo1, evt);
     }//GEN-LAST:event_tavolo1MouseReleased
 
     private void tavolo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo1MouseClicked
@@ -1482,180 +1493,52 @@ public class GuiProvaM extends javax.swing.JFrame {
     }//GEN-LAST:event_tavolo1MouseClicked
 
     private void tavolo2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo2MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo2.getSelectedRow();        
-            id = Integer.parseInt(tavolo2.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo2, evt);
     }//GEN-LAST:event_tavolo2MouseClicked
 
     private void tavolo3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo3MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo3.getSelectedRow();        
-            id = Integer.parseInt(tavolo3.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo3, evt);
     }//GEN-LAST:event_tavolo3MouseClicked
 
     private void tavolo4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo4MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo4.getSelectedRow();        
-            id = Integer.parseInt(tavolo4.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo4, evt);
     }//GEN-LAST:event_tavolo4MouseClicked
 
     private void tavolo5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo5MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo5.getSelectedRow();        
-            id = Integer.parseInt(tavolo5.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo5, evt);
     }//GEN-LAST:event_tavolo5MouseClicked
 
     private void tavolo6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo6MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo6.getSelectedRow();        
-            id = Integer.parseInt(tavolo6.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo6, evt);
     }//GEN-LAST:event_tavolo6MouseClicked
 
     private void tavolo7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo7MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo7.getSelectedRow();        
-            id = Integer.parseInt(tavolo7.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+         rightClick(tavolo7, evt);
     }//GEN-LAST:event_tavolo7MouseClicked
 
     private void tavolo8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo8MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo8.getSelectedRow();        
-            id = Integer.parseInt(tavolo8.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo8, evt);
     }//GEN-LAST:event_tavolo8MouseClicked
 
     private void tavolo9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo9MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo9.getSelectedRow();        
-            id = Integer.parseInt(tavolo9.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+         rightClick(tavolo9, evt);
     }//GEN-LAST:event_tavolo9MouseClicked
 
     private void tavolo10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo10MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo10.getSelectedRow();        
-            id = Integer.parseInt(tavolo10.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+         rightClick(tavolo10, evt);
     }//GEN-LAST:event_tavolo10MouseClicked
 
     private void tavolo11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo11MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo11.getSelectedRow();        
-            id = Integer.parseInt(tavolo11.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+         rightClick(tavolo11, evt);
     }//GEN-LAST:event_tavolo11MouseClicked
 
     private void tavolo12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tavolo12MouseClicked
-         try {
-            impostaMenu();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiProvaM.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-        if(SwingUtilities.isRightMouseButton(evt)){
-           jPopupMenu1.show(this, evt.getXOnScreen(), evt.getYOnScreen());
-        }
-        try{
-            int i = tavolo12.getSelectedRow();        
-            id = Integer.parseInt(tavolo12.getValueAt(i, 2).toString());
-        }catch(ArrayIndexOutOfBoundsException s){}
+        rightClick(tavolo12, evt);
     }//GEN-LAST:event_tavolo12MouseClicked
+
+    private void tabellaAttesaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tabellaAttesaMouseClicked
+        rightClick(tabellaAttesa, evt);
+    }//GEN-LAST:event_tabellaAttesaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1667,14 +1550,14 @@ public class GuiProvaM extends javax.swing.JFrame {
     private javax.swing.JButton Prenota;
     private javax.swing.JButton jButtonRefresh;
     private com.toedter.calendar.JDateChooser jDateChooser;
-    private javax.swing.JMenuItem jItemSala1;
     private javax.swing.JMenuItem jItemSala2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JPopupMenu jMenuPrincipale;
     private javax.swing.JPopupMenu jMenuSale;
     private javax.swing.JMenuItem jModifica;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JMenuItem jRimuovi;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane10;
     private javax.swing.JScrollPane jScrollPane11;

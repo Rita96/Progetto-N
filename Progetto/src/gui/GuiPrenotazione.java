@@ -480,13 +480,15 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             agriturismo.aggiungiPrenotazione(prenotazione);
             createDb.addSinglePrenotazione(prenotazione);
             dispose();
+            int id = createDb.selectMaxId();
+            prenotazione.setId(id);
             
         }catch(ExeptionNome ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NullPointerException ex){
             JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
         }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "La prenotazione non è stata salvata!");
+            JOptionPane.showMessageDialog(rootPane, ex);
         }catch(ExeptionNumeroAdulti ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NumberFormatException ex){

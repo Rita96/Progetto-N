@@ -60,7 +60,7 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
     private int preferenza = 0;
     private int esigenza = 0;
     CreateDb createDb;
-    int i = 0;
+    int indice;
 
     
     
@@ -121,52 +121,52 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
     }
 
     public void setDataField(int id){
-        for(Prenotazione p: agri.getPrenotazione()){
-            if(p.getId()==id){
-                JData.setDate(p.getDate());
-                JPasto.setSelectedItem(p.getPasto());
-                JNome.setText(p.getCliente().getNome());
-                JNumeroAdulti.setText(String.valueOf(p.getnAdulti()));
-                JNumeroBambini.setText(String.valueOf(p.getnBambini()));
-                JNumeroTelefono.setText(String.valueOf(p.getCliente().getNumTelefono()));
+        for(int i = 0; i<agri.getPrenotazione().size(); i++){
+            if(agri.getPrenotazione().get(i).getId()==id){
+                JSala.setSelectedItem(agri.getPrenotazione().get(i).getSala().getNome());
+                JData.setDate(agri.getPrenotazione().get(i).getDate());
+                JPasto.setSelectedItem(agri.getPrenotazione().get(i).getPasto());
+                JNome.setText(agri.getPrenotazione().get(i).getCliente().getNome());
+                JNumeroAdulti.setText(String.valueOf(agri.getPrenotazione().get(i).getnAdulti()));
+                JNumeroBambini.setText(String.valueOf(agri.getPrenotazione().get(i).getnBambini()));
+                JNumeroTelefono.setText(String.valueOf(agri.getPrenotazione().get(i).getCliente().getNumTelefono()));
                 boolean controllo = false;
-                if(p.getAttesa()==1)
+                if(agri.getPrenotazione().get(i).getAttesa()==1)
                     controllo=true;
                 else
                     controllo = false;
                 jCheckBoxAttesa.setSelected(controllo);
-                if(p.getDaConfermare()==1)
+                if(agri.getPrenotazione().get(i).getDaConfermare()==1)
                     controllo=true;
                 else
                     controllo = false;
                 jCheckBoxDaConfermare.setSelected(controllo);
-                if(p.getEsclusiva()==1)
+                if(agri.getPrenotazione().get(i).getEsclusiva()==1)
                     controllo=true;
                 else
                     controllo = false;
                 jCheckBoxEsclusiva.setSelected(controllo);
-                if(p.getEsigenza()==1)
+                if(agri.getPrenotazione().get(i).getEsigenza()==1)
                     controllo=true;
                 else
                     controllo = false;
                 jCheckBoxEsigenza.setSelected(controllo);
-                if(p.getPreferenza()==1)
+                if(agri.getPrenotazione().get(i).getPreferenza()==1)
                     controllo=true;
                 else
                     controllo = false;
                 jCheckBoxPreferenza.setSelected(controllo);
                 
-                JTipoEvento.setText(p.getTipoEvento());
-                JPrimo1.setSelectedItem(p.getMenu().getMenuCliente().get(0).getNome());
-                JPrimo2.setSelectedItem(p.getMenu().getMenuCliente().get(1).getNome());
-                JPrimo3.setSelectedItem(p.getMenu().getMenuCliente().get(2).getNome());
-                JSecondo1.setSelectedItem(p.getMenu().getMenuCliente().get(3).getNome());
-                JSecondo2.setSelectedItem(p.getMenu().getMenuCliente().get(4).getNome());
-                JSecondo3.setSelectedItem(p.getMenu().getMenuCliente().get(5).getNome());
-                JDolce.setSelectedItem(p.getMenu().getMenuCliente().get(6).getNome());
-                jNote.setText(p.getNote());
-                i++;
-                
+                JTipoEvento.setText(agri.getPrenotazione().get(i).getTipoEvento());
+                JPrimo1.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(0).getNome());
+                JPrimo2.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(1).getNome());
+                JPrimo3.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(2).getNome());
+                JSecondo1.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(3).getNome());
+                JSecondo2.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(4).getNome());
+                JSecondo3.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(5).getNome());
+                JDolce.setSelectedItem(agri.getPrenotazione().get(i).getMenu().getMenuCliente().get(6).getNome());
+                jNote.setText(agri.getPrenotazione().get(i).getNote());
+                indice = i;
             }
         }
     }
@@ -490,7 +490,8 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
                 numeroBambini = Integer.parseInt(JNumeroBambini.getText());
             numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
             tipoEvento = JTipoEvento.getText();
-        
+            s = (String) JSala.getSelectedItem();
+
             primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
             primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
             primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
@@ -499,8 +500,10 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
             secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
             dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
             note = jNote.getText();
-            cliente = new Cliente(nome, numeroTelefono);
         
+            for(int i = 0; i<menuCliente.getMenuCliente().size();i++){
+                agri.getPrenotazione().get(indice).getMenu().getMenuCliente().remove(i);
+            }
             menuCliente.getMenuCliente().add(primo1);
             menuCliente.getMenuCliente().add(primo2);
             menuCliente.getMenuCliente().add(primo3);
@@ -508,32 +511,31 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
             menuCliente.getMenuCliente().add(secondo2);
             menuCliente.getMenuCliente().add(secondo3);
             menuCliente.getMenuCliente().add(dolce);
-            prenotazione = new Prenotazione(numeroAdulti, data, pasto, cliente);
-            prenotazione.setDateDb(data);
-            prenotazione.setNote(note);
-            prenotazione.setMenu(menuCliente);
-            prenotazione.setTipoEvento(tipoEvento);
-            prenotazione.setnBambini(numeroBambini);
-       
-            prenotazione.setSala(new Sala(s));
-            prenotazione.setMenu(menuCliente);
-            prenotazione.setAttesa(attesa);
-            prenotazione.setDaConfermare(daConfermare);
-            prenotazione.setEsclusiva(esclusiva);
-            prenotazione.setEsigenza(esigenza);
-            prenotazione.setPreferenza(preferenza);
-            prenotazione.setDate(data);
+            agri.getPrenotazione().get(indice).setDateDb(data);
+            agri.getPrenotazione().get(indice).setNote(note);
+            agri.getPrenotazione().get(indice).setMenu(menuCliente);
+            agri.getPrenotazione().get(indice).setTipoEvento(tipoEvento);
+            agri.getPrenotazione().get(indice).setnBambini(numeroBambini);
+            agri.getPrenotazione().get(indice).getCliente().setNome(nome);
+            agri.getPrenotazione().get(indice).getCliente().setNumTelefono(numeroTelefono);
+            agri.getPrenotazione().get(indice).setPasto(pasto);
+            agri.getPrenotazione().get(indice).setnAdulti(numeroAdulti);
+            agri.getPrenotazione().get(indice).setSala(new Sala(s));
+            agri.getPrenotazione().get(indice).setMenu(menuCliente);
+            agri.getPrenotazione().get(indice).setAttesa(attesa);
+            agri.getPrenotazione().get(indice).setDaConfermare(daConfermare);
+            agri.getPrenotazione().get(indice).setEsclusiva(esclusiva);
+            agri.getPrenotazione().get(indice).setEsigenza(esigenza);
+            agri.getPrenotazione().get(indice).setPreferenza(preferenza);
+            agri.getPrenotazione().get(indice).setDate(data);
 
-            agriturismo.aggiungiPrenotazione(prenotazione);
-            createDb.addSinglePrenotazione(prenotazione);
+            
             dispose();
             
         }catch(ExeptionNome ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NullPointerException ex){
             JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "La prenotazione non è stata salvata!");
         }catch(ExeptionNumeroAdulti ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }catch(NumberFormatException ex){
@@ -541,7 +543,11 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
         }catch(ExeptionData ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());
         }
-        createDb.modificaPrenotazione(agri.getPrenotazione().get(i));
+        try {
+            createDb.modificaPrenotazione(agri.getPrenotazione().get(indice));
+        } catch (SQLException ex) {
+            Logger.getLogger(ModificaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_JOkActionPerformed
 
     private void JNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNomeActionPerformed

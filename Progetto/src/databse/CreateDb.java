@@ -149,9 +149,17 @@ public class CreateDb {
             stm.executeUpdate(query);
         }
     }
-    public void addSinglePortata(String nomePortata, TipoPortata tipoPortata) throws SQLException{
-        String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+nomePortata+"', '"+tipoPortata+"');";;
+    public void addSinglePortata(Portata p) throws SQLException{
+        String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+p.getNome()+"', '"+p.getTipoPortata().toString()+"');";;
         stm.execute(query);
+        for(int i=1;i<=p.getIngredienti().size();i++){
+                String query1 = "UPDATE `ristorante`.`menu` SET `ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', `qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' WHERE ` nome portata`='"+p.getNome()+"';";
+  
+                
+                stm.executeUpdate(query1);
+            }
+        
+        
     }  
     public void modificaIngrediente(String nomePortata, TipoPortata tipoPortata, String newIngrediente, String oldIngrediente) throws SQLException{
         
@@ -169,34 +177,15 @@ public class CreateDb {
         }
     }  
     public void addIngredienti() throws SQLException{
-        
-//        for(int i=1;i<13;i++){
-//            String query = "SELECT `ingrediente"+i+"`, `idmenu` from `"+agri.getNome()+"`.`menu` WHERE`nomeportata`= "+nomePortata+" "
-//                    + "AND `tipo portata`="+tipoPortata+";";
-//            ResultSet rs = stm.executeQuery(query);
-//            if(rs.next()){
-//                String ingr = rs.getString(1);            
-//                System.out.println(ingr);
-//            }else{
-//                int id = rs.getInt(2);
-//                query = "UPDATE `"+agri.getNome()+"`.`menu` SET `ingrediente"+i+"` = '"+ingrediente+"',`qnt"+i+"` = "+qnt+" WHERE `idmenu` = "+id+";";
-//                stm.execute(query);
-//            }
-//        }
          for(Portata p: MenuCompleto.menuCompleto){
         
             for(int i=1;i<=p.getIngredienti().size();i++){
                 String query = "UPDATE `ristorante`.`menu` SET `ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', `qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' WHERE ` nome portata`='"+p.getNome()+"';";
-//                String qery = "INSERT INTO `ristorante`.`menu` (`ingrediente"+i+"`, `qnt"+i+"`) "
-//                        + "VALUES ('"+p.getIngredienti().get(i-1).getName()+"', "
-//                        + "'"+p.getIngredienti().get(i-1).getQuantity()+"');";  
+  
                 
                 stm.executeUpdate(query);
             }
-            
         }
-
-
     }    
     public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);

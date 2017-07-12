@@ -33,7 +33,7 @@ public class TestProgetto {
         
         
         agri.setNome("agriturismo");
-        cdb.addIngredienti("Muffin", TipoPortata.Dolce, "Uova", 4);
+       // cdb.addIngredienti("Muffin", TipoPortata.Dolce, "Uova", 4);
         
     }
     

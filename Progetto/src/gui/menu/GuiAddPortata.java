@@ -96,17 +96,19 @@ public class GuiAddPortata extends javax.swing.JFrame {
         if(!nome.isEmpty()){
             this.tipoPortata = getTipoPortata();
             try {
+                MenuCompleto.menuCompleto.add(new Portata(nome,TipoPortata.valueOf(tp)));
                 createDb.addSinglePortata(nome, tipoPortata);
                 JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
                 createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
                 ModificaMenu.addElementoMenu(new Portata(nome, TipoPortata.valueOf(tp)));
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-            }
+                JOptionPane.showMessageDialog(rootPane, "La portata esiste già!");
+            }catch(NullPointerException e){}
         }
         else{
             JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
         }
+        jTextFieldNome.setText("");
         
     }//GEN-LAST:event_jButtonAddActionPerformed
 

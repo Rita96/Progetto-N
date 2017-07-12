@@ -6,6 +6,8 @@ import gui.FileChooser;
 import gui.GuiPrincipale;
 import gui.sale.GuiInformationSale;
 import gui.sale.GuiSetSale;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -40,9 +42,25 @@ public class GuiSetMenu extends javax.swing.JFrame {
         createDb = new CreateDb();
         guiInputMenu = new GuiInputMenu();
         createDb.createTableMenu();
+        imprevisto();
     }
 
-  
+  public void imprevisto(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
+                if(i==JOptionPane.YES_OPTION){
+                    try {
+                        createDb.DropSchema();
+                        dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
+                    }  
+                }
+            }
+        });
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -127,7 +145,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
             dispose();
             guiProva.setVisible(true);
             } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Portata già inserita");
+            JOptionPane.showMessageDialog(rootPane, ex);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato!");
             }
@@ -137,7 +155,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
                 try {
-                    if(createDb.verificaTabella("menu")){
+                    if(createDb.verificaTabella("menu")!=0){
                         dispose();
                         createDb.createTablePrenotazioni();
                         GuiPrincipale guiProva = new GuiPrincipale();

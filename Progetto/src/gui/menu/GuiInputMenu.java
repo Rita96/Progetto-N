@@ -9,6 +9,8 @@ import databse.CreateDb;
 import gui.GuiPrincipale;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiSetSale;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,8 +34,25 @@ public class GuiInputMenu extends javax.swing.JFrame {
         initComponents();
         guiAddPortata = new GuiAddPortata();
         createDb = new CreateDb();
+        imprevisto();
     }
     
+public void imprevisto(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
+                if(i==JOptionPane.YES_OPTION){
+                    try {
+                        createDb.DropSchema();
+                        dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
+                    }  
+                }
+            }
+        });
+    }
     
     
     
@@ -123,8 +142,9 @@ public class GuiInputMenu extends javax.swing.JFrame {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
          try {
-             if(createDb.verificaTabella("menu")){
+             if(createDb.verificaTabella("menu")!=0){
                 dispose();
+                guiAddPortata.dispose();
                 createDb.createTablePrenotazioni();
                 GuiPrincipale guiProva = new GuiPrincipale();
                 guiProva.setVisible(true);

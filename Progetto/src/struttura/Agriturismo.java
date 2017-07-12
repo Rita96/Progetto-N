@@ -2,8 +2,18 @@ package struttura;
 
 import funzionalita.FunzioniPrincipali;
 import funzionalita.Prenotazione;
+import gui.guiPrenotazione.GestioneTabelle;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.logging.Formatter;
+import java.util.logging.Level;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 import lettura.LeggiSala;
 import menu.Portata;
 
@@ -22,6 +32,8 @@ public class Agriturismo implements FunzioniPrincipali{
     private int contatorePersone;
     private static ArrayList<Sala> sale = new ArrayList<>();
     private static String nome;
+    public File file = new File("accoglienza.txt");
+    private boolean controllo = true;
     
     public Agriturismo (String nome){
         this.nome=nome;
@@ -65,6 +77,7 @@ public class Agriturismo implements FunzioniPrincipali{
 
     @Override
     public void rimnuoviPrenotazione() {
+        
     }
 
     @Override
@@ -72,8 +85,29 @@ public class Agriturismo implements FunzioniPrincipali{
     }
 
     @Override
-    public void stampaAccoglienza() {
+    public void stampaAccoglienza(ArrayList<GestioneTabelle> g) {
+        PrintStream pw=null;
+        try {
+            pw = new PrintStream(file);
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Agriturismo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        for(GestioneTabelle gt: g){
+            if(gt.getDtm().getRowCount()!=0){ 
+                pw.println("\n\n\n\n\n\n\n\n\n\n\n");
+                pw.println("\n\n\n\n\n\n\n\n\n\n\n");
+                pw.println(gt.getNomeSala().toString().toUpperCase());
+                for(int i=0;i<gt.getDtm().getRowCount();i++){
+                    String nome = (String)gt.getDtm().getValueAt(i, 0).toString();
+                    pw.println(nome+"                                  "+gt.getDtm().getValueAt(i, 1).toString());
+                    pw.print("\n\n");
+                }
+                pw.flush();
+            }
+        }    
     }
+        
+    
 
     @Override
     public void stampaCucina() {

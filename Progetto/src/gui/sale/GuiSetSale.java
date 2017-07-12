@@ -5,6 +5,8 @@ import databse.CreateDb;
 import gui.FileChooser;
 import gui.menu.GuiInformationMenu;
 import gui.menu.GuiSetMenu;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -39,8 +41,24 @@ public class GuiSetSale extends javax.swing.JFrame {
         createDb = new CreateDb();
         guiInputSale = new GuiInputSale();
         createDb.createTableSale();
+        imprevisto();
     }
-
+public void imprevisto(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
+                if(i==JOptionPane.YES_OPTION){
+                    try {
+                        createDb.DropSchema();
+                        dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
+                    }  
+                }
+            }
+        });
+    }
   
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -117,32 +135,42 @@ public class GuiSetSale extends javax.swing.JFrame {
         
         if(jCheckBoxFile.isSelected()){
             jButtonFileChooser.setEnabled(true);
+           
             try {
-            leggiSala.letturaSale(fileChooser.getPercorso());
-            createDb.addSaleFromFileToDb();
-            JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
-            dispose();
-            guiInformationMenu.setVisible(true);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
+                leggiSala.letturaSale(fileChooser.getPercorso());
+
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Problemi con la lettura dei dati");
-            } catch (NullPointerException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato");
+                JOptionPane.showMessageDialog(rootPane, "Impossibile leggere il file");
             }
-            
-        }
+                if(agri.getSale().size()>0 && agri.getSale().size()<13){
+                     try {
+                         createDb.addSaleFromFileToDb();
+                        JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
+                        dispose();
+                        guiInformationMenu.setVisible(true);
+                    }catch (SQLException ex) {
+                         JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
+                    } catch (NullPointerException ex) {
+                         JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserite non è valido");
+                    System.out.println(agri.getSale().size());
+                   agri.getSale().clear();
+                    
+                }    
+            }
         if(!jCheckBoxFile.isSelected() && !jCheckBoxSaleGui.isSelected()){
             int choose;
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
                 try {
-                    if(createDb.verificaTabella("sale")){
+                    if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
                         dispose();
                         guiInformationMenu.setVisible(true);
                     }
                     else
-                        JOptionPane.showMessageDialog(rootPane, "Inserire almeno una sala!");
+                        JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
                 }

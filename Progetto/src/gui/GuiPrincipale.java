@@ -6,11 +6,17 @@ import com.toedter.calendar.JDateChooser;
 import databse.CreateDb;
 import funzionalita.Prenotazione;
 import gui.guiPrenotazione.GestioneTabelle;
+import gui.menu.GuiAddPortata;
+import gui.menu.GuiRimuoviPortata;
+import gui.sale.GuiAddSala;
+import gui.sale.GuiInputSale;
+import gui.sale.GuiRimuoviSala;
 import java.awt.AWTEventMulticaster;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -71,8 +77,14 @@ public class GuiPrincipale extends javax.swing.JFrame {
         numeroSale = createDb.getNumeroSale();
         inserisciSale(numeroSale);
         
+        impostaJSposta();
         impostaJModifica();
         impostaRimuovi();
+        impostaStampa();
+        impostaAggiungiSala();
+        impostaAggiungiPortata();
+        impostaRimuoviPortata();
+        impostaRimuoviSala();
         
     }
      public ArrayList<GestioneTabelle> getArrayJTable() {
@@ -210,20 +222,21 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jRimuovi.setText("Rimuovi");
         jMenuPrincipale.add(jModifica);
         jMenuPrincipale.add(jRimuovi);
-//        int i = 0;
-//        jMenuSale.removeAll();
-//        for(Sala s: agri.getSale()){
-//            JMenuItem itemSala = new JMenuItem(s.getNome());
-//            arrayItem.add(itemSala);
-//            jMenuSale.add(arrayItem.get(i));
-//            i++;
-//        }
+        jMenuPrincipale.add(jSposta);
+        int i = 0;
+        jMenuSale.removeAll();
+        for(Sala s: agri.getSale()){
+            JMenuItem itemSala = new JMenuItem(s.getNome());
+            arrayItem.add(itemSala);
+            JMenuSala.add(itemSala);
+            i++;
+        }
 
     }
     public void impostaJSposta(){
          jSposta.addMouseListener(new MouseInputAdapter() {
             @Override
-            public void mouseEntered(MouseEvent me) {
+            public void mouseClicked(MouseEvent me) {
                 try{
                     jMenuSale.show(me.getComponent(), me.getX(), me.getY());
                 }catch(java.awt.IllegalComponentStateException e){}
@@ -798,6 +811,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
                                 agri.getPrenotazione().remove(j);
                             } catch (SQLException ex) {
                                 Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                               
                             }
                         }  
                     }
@@ -831,6 +845,83 @@ public class GuiPrincipale extends javax.swing.JFrame {
             l.setText((String.valueOf(numPplPerRoom[index])));
         }
     }
+    public void impostaStampa(){
+         JStampaItem.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                 if(!agri.file.exists())
+                    try {
+                        agri.file.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    else
+                        agri.file.delete();
+                    try {
+                        agri.file.createNewFile();
+                    } catch (IOException ex) {
+                        Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                agri.stampaAccoglienza(arrayJTable);
+            }  
+        });
+    }
+    public void impostaAggiungiSala(){
+        JItemAddSala.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                try {
+                    GuiAddSala gas = new GuiAddSala();
+                    gas.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }  
+        });
+    }
+    public void impostaAggiungiPortata(){
+        jItemAddPortata.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                try {
+                    GuiAddPortata gap = new GuiAddPortata();
+                    gap.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }  
+        });
+    }
+    public void impostaRimuoviPortata(){
+        JItemRemovePortata.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                try {
+                    GuiRimuoviPortata grp = new GuiRimuoviPortata();
+                    grp.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+            }  
+        });
+    }
+    public void impostaRimuoviSala(){
+        JItemaRemoveSala.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                try {
+                    GuiRimuoviSala grs = new GuiRimuoviSala();
+                    grs.setVisible(true);
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Impossibile connettersi al Database!");
+                }
+                
+            }  
+        });
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -841,7 +932,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jRimuovi = new javax.swing.JMenuItem();
         jSposta = new javax.swing.JMenuItem();
         jMenuSale = new javax.swing.JPopupMenu();
-        jItemSala2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         labelnp3 = new javax.swing.JLabel();
         jScrollPane10 = new javax.swing.JScrollPane();
@@ -903,6 +993,15 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jButtonRefresh = new javax.swing.JButton();
         jLabelTotale = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenuFile = new javax.swing.JMenu();
+        JStampaItem = new javax.swing.JMenuItem();
+        JMenuPortata = new javax.swing.JMenu();
+        jItemAddPortata = new javax.swing.JMenuItem();
+        JItemRemovePortata = new javax.swing.JMenuItem();
+        JMenuSala = new javax.swing.JMenu();
+        JItemAddSala = new javax.swing.JMenuItem();
+        JItemaRemoveSala = new javax.swing.JMenuItem();
 
         jModifica.setText("jMenuItem2");
         jMenuPrincipale.add(jModifica);
@@ -912,8 +1011,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         jSposta.setText("jMenuItem3");
         jMenuPrincipale.add(jSposta);
-
-        jItemSala2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -1493,6 +1590,40 @@ public class GuiPrincipale extends javax.swing.JFrame {
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1344, 850);
 
+        jMenuFile.setText("File");
+
+        JStampaItem.setText("Stampa");
+        JStampaItem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                JStampaItemMouseClicked(evt);
+            }
+        });
+        jMenuFile.add(JStampaItem);
+
+        jMenuBar1.add(jMenuFile);
+
+        JMenuPortata.setText("Menu");
+
+        jItemAddPortata.setText("Aggiungi Portata");
+        JMenuPortata.add(jItemAddPortata);
+
+        JItemRemovePortata.setText("Rimuovi Portata");
+        JMenuPortata.add(JItemRemovePortata);
+
+        jMenuBar1.add(JMenuPortata);
+
+        JMenuSala.setText("Sala");
+
+        JItemAddSala.setText("Aggiungi Sala");
+        JMenuSala.add(JItemAddSala);
+
+        JItemaRemoveSala.setText("Rimuovi Sala");
+        JMenuSala.add(JItemaRemoveSala);
+
+        jMenuBar1.add(JMenuSala);
+
+        setJMenuBar(jMenuBar1);
+
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -1601,16 +1732,28 @@ public class GuiPrincipale extends javax.swing.JFrame {
         rightClick(tabellaAttesa, evt);
     }//GEN-LAST:event_tabellaAttesaMouseClicked
 
+    private void JStampaItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JStampaItemMouseClicked
+        
+    }//GEN-LAST:event_JStampaItemMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem JItemAddSala;
+    private javax.swing.JMenuItem JItemRemovePortata;
+    private javax.swing.JMenuItem JItemaRemoveSala;
+    private javax.swing.JMenu JMenuPortata;
+    private javax.swing.JMenu JMenuSala;
     private javax.swing.JComboBox<String> JPasto;
+    private javax.swing.JMenuItem JStampaItem;
     private javax.swing.JButton Prenota;
     private javax.swing.JButton jButtonRefresh;
     private com.toedter.calendar.JDateChooser jDateChooser;
-    private javax.swing.JMenuItem jItemSala2;
+    private javax.swing.JMenuItem jItemAddPortata;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelTotale;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenu jMenuFile;
     private javax.swing.JPopupMenu jMenuPrincipale;
     private javax.swing.JPopupMenu jMenuSale;
     private javax.swing.JMenuItem jModifica;

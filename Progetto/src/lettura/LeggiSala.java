@@ -25,35 +25,19 @@ import struttura.Sala;
  */
 public class LeggiSala {
    Agriturismo agri = new Agriturismo();
-   Scanner x ;
+
    
     
     public void letturaSale(String percorso) throws FileNotFoundException, IOException{
         String sala = null;
-        Scanner inputStream = null;
-        x = new Scanner(new File(percorso));
-        while(x.hasNext()){
-            String riga = x.nextLine();
-            String parts[] = riga.split("\n");
-            String genericSala = parts[0];
-            Sala s = new Sala(genericSala);
+        FileReader file = new FileReader(percorso);
+        BufferedReader buffer = new BufferedReader(file);
+        while((sala=buffer.readLine())!= null){
+            Sala s = new Sala(sala);
             agri.addSala(s);
         }
-        x.close();
-        
-//        String[] array = riga.split("\n");
-//        FileReader file = new FileReader(percorso);
-//        BufferedReader buffer = new BufferedReader(file);
-//        while((sala=buffer.readLine())!= null){
-//            Sala s = new Sala(sala);
-//            agri.addSala(s);
-//        }
-//        file.close();
+        file.close();
     }
-
-    
-  
-    
-    
+        
     
 }

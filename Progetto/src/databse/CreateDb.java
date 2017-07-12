@@ -44,12 +44,9 @@ public class CreateDb {
         conn = ConnectDbMySql.ConnectDB();
         stm = conn.createStatement();
     }
-
     public Statement getStm() {
         return stm;
-    }
-
-    
+    }   
     public boolean FirstAccess() throws SQLException{
         boolean controllo = false;
         String query = "SELECT * FROM `ristorante`.`dati`";
@@ -114,10 +111,10 @@ public class CreateDb {
     } 
     public void createTableMenu() throws SQLException{
        
-        String query = "CREATE TABLE IF NOT EXISTS `"+agri.getNome()+"`.`menu` (\n" +
+        String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`menu` (\n" +
                     "  `idmenu` INT NOT NULL AUTO_INCREMENT,\n" +
-                    "  `nomeportata` VARCHAR(100) NOT NULL,\n" +
-                    "  `tipoportata` VARCHAR(100) NOT NULL,\n" +
+                    "  ` nome portata` VARCHAR(100) NOT NULL,\n" +
+                    "  `tipo portata` VARCHAR(100) NOT NULL,\n" +
                     "  `ingrediente1` VARCHAR(100) NULL,\n" +
                     "  `qnt1` INT NULL,\n"  +
                     "  `ingrediente2` VARCHAR(100) NULL,\n" +
@@ -167,7 +164,7 @@ public class CreateDb {
             }  
         }
     }  
-     public void addIngredienti(String nomePortata, TipoPortata tipoPortata, String ingrediente, int qnt) throws SQLException{
+    public void addIngredienti(String nomePortata, TipoPortata tipoPortata, String ingrediente, int qnt) throws SQLException{
         
         for(int i=1;i<11;i++){
             String query = "SELECT `ingrediente"+i+"`, `idmenu` from `"+agri.getNome()+"`.`menu` WHERE`nomeportata`= "+nomePortata+" "
@@ -183,21 +180,17 @@ public class CreateDb {
             }
         }
     }    
-     public void riempiTabella(JTable table, String query) throws SQLException{
+    public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);
          rs = pstmt.executeQuery();
          table.setModel(DbUtils.resultSetToTableModel(rs));
      }  
-    public boolean verificaTabella(String tabella) throws SQLException{
+    public int verificaTabella(String tabella) throws SQLException{
         String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`"+tabella+"`;";
         rs=stm.executeQuery(query);
         rs.last();
         int i = rs.getInt("Numero");
-        if(i!=0){
-            return true;
-        } 
-        else 
-            return false;
+       return i;
     }  
     public void createTablePrenotazioni() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`prenotazioni` (\n" +
@@ -392,6 +385,14 @@ public class CreateDb {
         rs.next();
         max = rs.getInt("max");
         return max;
+    }
+    public void deletePortataFromMenu(String nome) throws SQLException{
+         String query = "DELETE FROM `ristorante`.`menu` WHERE ` nome portata`='"+nome+"'";
+            stm.execute(query);
+    }
+    public void deleteSalaFromMenu(String nome) throws SQLException{
+         String query = "DELETE FROM `ristorante`.`sale` WHERE `nome`='"+nome+"'";
+            stm.execute(query);
     }
  }
         

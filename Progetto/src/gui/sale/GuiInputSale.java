@@ -7,6 +7,8 @@ package gui.sale;
 
 import databse.CreateDb;
 import gui.menu.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,8 +33,24 @@ public class GuiInputSale extends javax.swing.JFrame {
         initComponents();
         guiAddSala = new GuiAddSala();
         createDb = new CreateDb();
+        imprevisto();
     }
- 
+public void imprevisto(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
+                if(i==JOptionPane.YES_OPTION){
+                    try {
+                        createDb.DropSchema();
+                        dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
+                    }  
+                }
+            }
+        });
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -105,17 +123,18 @@ public class GuiInputSale extends javax.swing.JFrame {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
          try {
-             if(createDb.verificaTabella("sale")){
+             if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
                  try {
                      GuiInformationMenu guiInformationMenu = new GuiInformationMenu();
                      dispose();
                      guiInformationMenu.setVisible(true);
+                     guiAddSala.dispose();
                  } catch (SQLException ex) {
-                     JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+                     JOptionPane.showMessageDialog(rootPane, "Sala già esistente");
                  }
              }
              else
-                JOptionPane.showMessageDialog(rootPane, "Inserire almeno una sala!");
+                JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
                  } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
          }

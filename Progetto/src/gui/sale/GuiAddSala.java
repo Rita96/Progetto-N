@@ -85,19 +85,23 @@ public class GuiAddSala extends javax.swing.JFrame {
         nome = jTextFieldNome.getText();
         
         if(!nome.isEmpty()){
-            try {
-                createDb.addSingleSala(nome);
-                JOptionPane.showMessageDialog(rootPane, "Sala aggiunta con successo!");
-                createDb.riempiTabella(GuiInputSale.jTableSale, query);
-                agri.addSala(new Sala(nome));
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+            if(agri.getSale().size()>=0 && agri.getSale().size()<12){
+                 try {
+                    createDb.addSingleSala(nome);
+                    JOptionPane.showMessageDialog(rootPane, "Sala aggiunta con successo!");
+                    createDb.riempiTabella(GuiInputSale.jTableSale, query);
+                    agri.addSala(new Sala(nome));
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
             }
-        }
-        else {
+            catch(NullPointerException e){}
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Il numero massimo di sale è stato raggiunto!");
+                agri.getSale().clear();
+            }
+        }else 
             JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
-        }
-        
+        jTextFieldNome.setText("");
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed

@@ -14,7 +14,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import lettura.IngredientsReading;
 import lettura.LeggiPortate;
+import menu.Ingredient;
 import menu.MenuCompleto;
 import struttura.Agriturismo;
 import struttura.Sala;
@@ -138,8 +140,10 @@ public class GuiSetMenu extends javax.swing.JFrame {
         
         if(jCheckBoxFile.isSelected()){
             jButtonFileChooser.setEnabled(true);
-            try {  
-            leggiPortate.letturaPortate(fileChooser.getPercorso());
+            try {
+                IngredientsReading ir = new IngredientsReading();
+                ir.IngredientsReading(fileChooser.getPercorso());
+            //leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
             GuiPrincipale guiProva = new GuiPrincipale();
             JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");

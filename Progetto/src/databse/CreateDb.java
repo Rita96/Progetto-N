@@ -135,6 +135,10 @@ public class CreateDb {
                     "  `qnt9` INT NULL,\n"  +
                     "  `ingrediente10` VARCHAR(100) NULL,\n" +
                     "  `qnt10` INT NULL,\n" +
+                    "  `ingrediente11` VARCHAR(100) NULL,\n" +
+                    "  `qnt11` INT NULL,\n" +
+                    "  `ingrediente12` VARCHAR(100) NULL,\n" +
+                    "  `qnt12` INT NULL,\n" +
                     "  PRIMARY KEY (`idmenu`, ` nome portata`),\n" +
                     "  UNIQUE INDEX ` nome portata_UNIQUE` (` nome portata` ASC));";
         stm.executeUpdate(query);
@@ -166,7 +170,7 @@ public class CreateDb {
     }  
     public void addIngredienti(String nomePortata, TipoPortata tipoPortata, String ingrediente, int qnt) throws SQLException{
         
-        for(int i=1;i<11;i++){
+        for(int i=1;i<13;i++){
             String query = "SELECT `ingrediente"+i+"`, `idmenu` from `"+agri.getNome()+"`.`menu` WHERE`nomeportata`= "+nomePortata+" "
                     + "AND `tipo portata`="+tipoPortata+";";
             ResultSet rs = stm.executeQuery(query);

@@ -1,5 +1,7 @@
 package menu;
 
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -13,10 +15,20 @@ package menu;
 public class Portata {
     private String nome;
     private TipoPortata tipoPortata;
+    private ArrayList<Ingredient> ingredienti;
+
+    public ArrayList<Ingredient> getIngredienti() {
+        return ingredienti;
+    }
+
+    public void setIngredienti(ArrayList<Ingredient> ingredienti) {
+        this.ingredienti = ingredienti;
+    }
 
     public Portata(String nome, TipoPortata tipoPortata) {
         this.nome = nome;
         this.tipoPortata = tipoPortata;
+        ingredienti = new ArrayList<>();
     }
 
     public String getNome() {
@@ -34,6 +46,7 @@ public class Portata {
     public void setTipoPortata(TipoPortata tipoPortata) {
         this.tipoPortata = tipoPortata;
     }
+
     
     
 }

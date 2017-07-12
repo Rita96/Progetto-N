@@ -236,13 +236,13 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jMenuPrincipale.add(jRimuovi);
         jMenuPrincipale.add(jSposta);
         int i = 0;
-        jMenuSale.removeAll();
-        for(Sala s: agri.getSale()){
-            JMenuItem itemSala = new JMenuItem(s.getNome());
-            arrayItem.add(itemSala);
-            JMenuSala.add(itemSala);
-            i++;
-        }
+//        jMenuSale.removeAll();
+//        for(Sala s: agri.getSale()){
+//            JMenuItem itemSala = new JMenuItem(s.getNome());
+//            arrayItem.add(itemSala);
+//            JMenuSala.add(itemSala);
+//            i++;
+//        }
 
     }
     public void impostaJSposta(){

@@ -8,6 +8,8 @@ package databse;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
+import menu.MenuCompleto;
+import menu.Portata;
 
 /**
  *
@@ -37,5 +39,5 @@ public class ConnectDbMySql {
         else return connection;
         }
     
-    
+   
 }

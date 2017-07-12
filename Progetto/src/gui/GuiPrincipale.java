@@ -14,6 +14,7 @@ import gui.sale.GuiRimuoviSala;
 import java.awt.AWTEventMulticaster;
 import java.awt.Component;
 import java.awt.ComponentOrientation;
+import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -77,6 +78,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jDateChooser.setDate(dataOdierna);
         numeroSale = createDb.getNumeroSale();
         inserisciSale(numeroSale);
+        
       
         
         impostaJSposta();
@@ -801,7 +803,10 @@ public class GuiPrincipale extends javax.swing.JFrame {
             Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(SwingUtilities.isRightMouseButton(evt)){
-           jMenuPrincipale.show(this, evt.getXOnScreen(), evt.getYOnScreen());
+            
+          int[] coordinate = coordinateJTable(jtable);
+          
+           jMenuPrincipale.show(this, coordinate[0]+evt.getX(), coordinate[1]+evt.getY());
         }
         try{
             int i = jtable.getSelectedRow();        
@@ -950,7 +955,53 @@ public class GuiPrincipale extends javax.swing.JFrame {
         tavolo12.setDefaultRenderer(Object.class, crt);
         tabellaAttesa.setDefaultRenderer(Object.class, crt);
     }
-    
+    public int[] coordinateJTable(JTable j){
+        int coordinate[] = new int[2];
+        if(j.equals(jTable1)){
+            coordinate[0]=35;
+            coordinate[1]=220;
+        }if(j.equals(tavolo1)){
+            coordinate[0]=255;
+            coordinate[1]=220;
+        }if(j.equals(tavolo2)){
+            coordinate[0]=480;
+            coordinate[1]=220;
+        }if(j.equals(tavolo3)){
+            coordinate[0]=700;
+            coordinate[1]=220;
+        }if(j.equals(tavolo4)){
+            coordinate[0]=920;
+            coordinate[1]=220;
+        }if(j.equals(tavolo5)){
+            coordinate[0]=255;
+            coordinate[1]=433;
+        }if(j.equals(tavolo6)){
+            coordinate[0]=480;
+            coordinate[1]=433;
+        }if(j.equals(tavolo7)){
+            coordinate[0]=700;
+            coordinate[1]=433;
+        }if(j.equals(tavolo8)){
+            coordinate[0]=920;
+            coordinate[1]=433;
+        }if(j.equals(tavolo9)){
+            coordinate[0]=255;
+            coordinate[1]=655;
+        }if(j.equals(tavolo10)){
+            coordinate[0]=480;
+            coordinate[1]=655;
+        }if(j.equals(tavolo11)){
+            coordinate[0]=700;
+            coordinate[1]=655;
+        }if(j.equals(tavolo12)){
+            coordinate[0]=920;
+            coordinate[1]=655;
+        }if(j.equals(tabellaAttesa)){
+            coordinate[0]=1130;
+            coordinate[1]=220;
+        }
+        return coordinate;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -1053,6 +1104,14 @@ public class GuiPrincipale extends javax.swing.JFrame {
         setLocation(new java.awt.Point(0, 0));
         setMinimumSize(new java.awt.Dimension(1344, 850));
         setSize(new java.awt.Dimension(1344, 850));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
         getContentPane().setLayout(null);
 
         jPanel1.setBackground(new java.awt.Color(204, 255, 204));
@@ -1060,6 +1119,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jPanel1.setMaximumSize(new java.awt.Dimension(1344, 850));
         jPanel1.setPreferredSize(new java.awt.Dimension(1344, 850));
         jPanel1.setRequestFocusEnabled(false);
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
         jPanel1.setLayout(null);
 
         labelnp3.setText("0");
@@ -1338,11 +1402,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
             }
         });
         tavolo1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tavolo1MouseClicked(evt);
-            }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 tavolo1MouseReleased(evt);
+            }
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tavolo1MouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(tavolo1);
@@ -1622,6 +1686,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         jLabel3.setToolTipText("");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel3);
         jLabel3.setBounds(0, 0, 1410, 1080);
 
@@ -1801,6 +1870,29 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private void JStampaItemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_JStampaItemMouseClicked
         
     }//GEN-LAST:event_JStampaItemMouseClicked
+
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        
+       
+          
+                 
+            
+       
+       
+        
+    }//GEN-LAST:event_formMouseClicked
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+         
+    }//GEN-LAST:event_jPanel1MouseClicked
+
+    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
+        
+    }//GEN-LAST:event_formMousePressed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

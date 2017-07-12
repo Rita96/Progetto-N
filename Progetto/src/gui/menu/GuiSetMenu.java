@@ -18,6 +18,7 @@ import lettura.IngredientsReading;
 import lettura.LeggiPortate;
 import menu.Ingredient;
 import menu.MenuCompleto;
+import menu.Portata;
 import struttura.Agriturismo;
 import struttura.Sala;
 
@@ -143,8 +144,11 @@ public class GuiSetMenu extends javax.swing.JFrame {
             try {
                 IngredientsReading ir = new IngredientsReading();
                 ir.IngredientsReading(fileChooser.getPercorso());
+                
+                
             //leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
+            createDb.addIngredienti();
             GuiPrincipale guiProva = new GuiPrincipale();
             JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
             createDb.createTablePrenotazioni();

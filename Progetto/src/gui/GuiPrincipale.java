@@ -144,6 +144,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     }
     public void aggiornaTabelleSale(Prenotazione a){
          int i = 0;
+         boolean controllo = true;
          for(GestioneTabelle t: arrayJTable){
             if(a.getSala().getNome().equals(t.getNomeSala())){
                 t.getDtm().addRow(object);
@@ -152,9 +153,14 @@ public class GuiPrincipale extends javax.swing.JFrame {
                     i = arrayJTable.get(0).getDtm().getRowCount();
                 }
             if(a.getAttesa()==1){
-                    arrayJTable.get(1).getDtm().addRow(object); 
-                    arrayJTable.get(0).getDtm().removeRow(i-1);
-                    t.getDtm().removeRow(i-1);
+                if(controllo){
+                    try{
+                        arrayJTable.get(1).getDtm().addRow(object); 
+                        arrayJTable.get(0).getDtm().removeRow(i-1);
+                        t.getDtm().removeRow(i-1);
+                        controllo=false;
+                    }catch(ArrayIndexOutOfBoundsException s){}
+                }
             }
         }
             try{
@@ -1022,8 +1028,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
         JItemAddSala = new javax.swing.JMenuItem();
         JItemaRemoveSala = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
         jMenu5 = new javax.swing.JMenu();
         jMenu6 = new javax.swing.JMenu();
@@ -1650,32 +1656,32 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         jMenuBar1.add(JMenuSala);
 
-        jMenu1.setText("                                                          ");
-        jMenu1.setEnabled(false);
+        jMenu1.setText("                                  ");
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Preferenza");
-        jMenuBar1.add(jMenu2);
-
-        jMenu3.setText("jMenu3");
+        jMenu3.setText("Esclusiva");
+        jMenu3.setFocusable(false);
         jMenuBar1.add(jMenu3);
 
-        jMenu4.setText("jMenu4");
+        jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/if_button-red_48578.png"))); // NOI18N
+        jMenuBar1.add(jMenu2);
+
+        jMenu4.setText("                Esigenza");
         jMenuBar1.add(jMenu4);
 
-        jMenu5.setText("jMenu5");
+        jMenu5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/if_button-light-blue_48576.png"))); // NOI18N
         jMenuBar1.add(jMenu5);
 
-        jMenu6.setText("jMenu6");
+        jMenu6.setText("               Preferenza");
         jMenuBar1.add(jMenu6);
 
-        jMenu7.setText("jMenu7");
+        jMenu7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/if_Green_button_131620.png"))); // NOI18N
         jMenuBar1.add(jMenu7);
 
-        jMenu8.setText("jMenu8");
+        jMenu8.setText("               Da Confermare");
         jMenuBar1.add(jMenu8);
 
-        jMenu9.setText("jMenu9");
+        jMenu9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/if_button-yellow_48580.png"))); // NOI18N
         jMenuBar1.add(jMenu9);
 
         setJMenuBar(jMenuBar1);

@@ -84,48 +84,56 @@
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu1">
           <Properties>
-            <Property name="text" type="java.lang.String" value="                                                          "/>
-            <Property name="enabled" type="boolean" value="false"/>
-          </Properties>
-        </Menu>
-        <Menu class="javax.swing.JMenu" name="jMenu2">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Preferenza"/>
+            <Property name="text" type="java.lang.String" value="                                  "/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu3">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu3"/>
+            <Property name="text" type="java.lang.String" value="Esclusiva"/>
+            <Property name="focusable" type="boolean" value="false"/>
+          </Properties>
+        </Menu>
+        <Menu class="javax.swing.JMenu" name="jMenu2">
+          <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/if_button-red_48578.png"/>
+            </Property>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu4"/>
+            <Property name="text" type="java.lang.String" value="                Esigenza"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu5">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu5"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/if_button-light-blue_48576.png"/>
+            </Property>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu6">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu6"/>
+            <Property name="text" type="java.lang.String" value="               Preferenza"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu7">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu7"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/if_Green_button_131620.png"/>
+            </Property>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu8">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu8"/>
+            <Property name="text" type="java.lang.String" value="               Da Confermare"/>
           </Properties>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu9">
           <Properties>
-            <Property name="text" type="java.lang.String" value="jMenu9"/>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/gui/if_button-yellow_48580.png"/>
+            </Property>
           </Properties>
         </Menu>
       </SubComponents>

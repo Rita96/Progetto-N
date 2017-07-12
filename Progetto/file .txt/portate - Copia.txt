@@ -1,4 +1,4 @@
-trevisana e scamorza, Primo
+﻿trevisana e scamorza, Primo
 funghi, Primo
 salsiccia, Primo
 arancia e gorgonzola, Primo
@@ -21,12 +21,12 @@ Trippa, Primo
 Minestrone, Primo
 Tagliata di scottona al pepe nero, Secondo
 Carpaccio di filetto con scaglie di grana, Secondo
-Roastbeef all'inglese, Secondo
+Roastbeef all inglese, Secondo
 Tartare di manzo, Secondo
 Vitello tonnato, Secondo
 Pollo nostrano arrosto ripieno, Secondo
 Pollo nostrano alla diavola, Secondo
-Pollo in umido alla cacciatora o ai profumi dell'orto, Secondo
+Pollo in umido alla cacciatora o ai profumi dell orto, Secondo
 Coniglio arrosto al limone, Secondo
 Coniglio in salmì, Secondo
 Spezzatino di manzo, Secondo

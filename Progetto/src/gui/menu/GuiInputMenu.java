@@ -7,6 +7,7 @@ package gui.menu;
 
 import databse.CreateDb;
 import gui.GuiPrincipale;
+import gui.nome.GuiNome;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiSetSale;
 import java.awt.event.WindowAdapter;
@@ -49,7 +50,8 @@ public void imprevisto(){
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
                     }  
-                }
+                }else
+                    setDefaultCloseOperation(GuiNome.DO_NOTHING_ON_CLOSE);
             }
         });
     }

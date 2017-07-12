@@ -120,6 +120,13 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         }
     }
+    public boolean controlloEsclusiva(){
+        boolean controllo = false;
+        for(Prenotazione p: Agriturismo.getPrenotazioni()){
+            
+        }
+        return controllo;
+    }
 
     
     @SuppressWarnings("unchecked")

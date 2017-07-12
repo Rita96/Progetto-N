@@ -45,7 +45,8 @@ public class GuiNome extends javax.swing.JFrame {
                     } catch (SQLException ex) {
                         JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
                     }  
-                }
+                }else
+                    setDefaultCloseOperation(GuiNome.DO_NOTHING_ON_CLOSE);
             }
         });
     }

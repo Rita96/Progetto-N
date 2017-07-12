@@ -523,10 +523,20 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
             agri.getPrenotazione().get(indice).setnAdulti(numeroAdulti);
             agri.getPrenotazione().get(indice).setSala(new Sala(s));
             agri.getPrenotazione().get(indice).setMenu(menuCliente);
+            if(jCheckBoxAttesa.isSelected())
+            attesa=1;
             agri.getPrenotazione().get(indice).setAttesa(attesa);
+            if(jCheckBoxDaConfermare.isSelected())
+            daConfermare=1;
             agri.getPrenotazione().get(indice).setDaConfermare(daConfermare);
+            if(jCheckBoxEsclusiva.isSelected())
+            esclusiva=1;
             agri.getPrenotazione().get(indice).setEsclusiva(esclusiva);
+            if(jCheckBoxEsigenza.isSelected())
+            esigenza=1;
             agri.getPrenotazione().get(indice).setEsigenza(esigenza);
+            if(jCheckBoxPreferenza.isSelected())
+            preferenza=1;
             agri.getPrenotazione().get(indice).setPreferenza(preferenza);
             agri.getPrenotazione().get(indice).setDate(data);
 
@@ -606,18 +616,15 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JDolceActionPerformed
 
     private void jCheckBoxEsclusivaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEsclusivaActionPerformed
-        if(jCheckBoxEsclusiva.isSelected())
-            esclusiva=1;
+       
     }//GEN-LAST:event_jCheckBoxEsclusivaActionPerformed
 
     private void jCheckBoxPreferenzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxPreferenzaActionPerformed
-        if(jCheckBoxPreferenza.isSelected())
-            preferenza=1;
+        
     }//GEN-LAST:event_jCheckBoxPreferenzaActionPerformed
 
     private void jCheckBoxEsigenzaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxEsigenzaActionPerformed
-        if(jCheckBoxEsigenza.isSelected())
-            esigenza=1;
+        
     }//GEN-LAST:event_jCheckBoxEsigenzaActionPerformed
 
     private void JSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JSalaActionPerformed
@@ -629,13 +636,11 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JTipoEventoActionPerformed
 
     private void jCheckBoxAttesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxAttesaActionPerformed
-        if(jCheckBoxAttesa.isSelected())
-            attesa=1;
+        
     }//GEN-LAST:event_jCheckBoxAttesaActionPerformed
 
     private void jCheckBoxDaConfermareActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBoxDaConfermareActionPerformed
-         if(jCheckBoxDaConfermare.isSelected())
-            daConfermare=1;
+         
     }//GEN-LAST:event_jCheckBoxDaConfermareActionPerformed
 
     private void JNumeroBambiniActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNumeroBambiniActionPerformed

@@ -12,6 +12,7 @@ import gui.sale.GuiAddSala;
 import gui.sale.GuiInputSale;
 import gui.sale.GuiRimuoviSala;
 import java.awt.AWTEventMulticaster;
+import java.awt.Component;
 import java.awt.ComponentOrientation;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -30,6 +31,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.Renderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableModel;
@@ -62,8 +64,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private ArrayList<JMenuItem> arrayItem = new ArrayList<>();
     private int id;
     private String nomePrenotazione;
-    
-    
+    ColorRowTable crt = new ColorRowTable();
     /**
      * Creates new form GUI
      */
@@ -76,6 +77,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jDateChooser.setDate(dataOdierna);
         numeroSale = createDb.getNumeroSale();
         inserisciSale(numeroSale);
+      
         
         impostaJSposta();
         impostaJModifica();
@@ -85,6 +87,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
         impostaAggiungiPortata();
         impostaRimuoviPortata();
         impostaRimuoviSala();
+        coloriRighe();
+        
         
     }
      public ArrayList<GestioneTabelle> getArrayJTable() {
@@ -922,6 +926,21 @@ public class GuiPrincipale extends javax.swing.JFrame {
             }  
         });
     }
+    public void coloriRighe(){
+        jTable1.setDefaultRenderer(Object.class, crt);
+        tavolo1.setDefaultRenderer(Object.class, crt);
+        tavolo2.setDefaultRenderer(Object.class, crt);
+        tavolo3.setDefaultRenderer(Object.class, crt);
+        tavolo4.setDefaultRenderer(Object.class, crt);
+        tavolo5.setDefaultRenderer(Object.class, crt);
+        tavolo6.setDefaultRenderer(Object.class, crt);
+        tavolo7.setDefaultRenderer(Object.class, crt);
+        tavolo8.setDefaultRenderer(Object.class, crt);
+        tavolo9.setDefaultRenderer(Object.class, crt);
+        tavolo10.setDefaultRenderer(Object.class, crt);
+        tavolo11.setDefaultRenderer(Object.class, crt);
+        tavolo12.setDefaultRenderer(Object.class, crt);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1002,6 +1021,15 @@ public class GuiPrincipale extends javax.swing.JFrame {
         JMenuSala = new javax.swing.JMenu();
         JItemAddSala = new javax.swing.JMenuItem();
         JItemaRemoveSala = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
+        jMenu8 = new javax.swing.JMenu();
+        jMenu9 = new javax.swing.JMenu();
 
         jModifica.setText("jMenuItem2");
         jMenuPrincipale.add(jModifica);
@@ -1622,6 +1650,34 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         jMenuBar1.add(JMenuSala);
 
+        jMenu1.setText("                                                          ");
+        jMenu1.setEnabled(false);
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Preferenza");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("jMenu3");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("jMenu4");
+        jMenuBar1.add(jMenu4);
+
+        jMenu5.setText("jMenu5");
+        jMenuBar1.add(jMenu5);
+
+        jMenu6.setText("jMenu6");
+        jMenuBar1.add(jMenu6);
+
+        jMenu7.setText("jMenu7");
+        jMenuBar1.add(jMenu7);
+
+        jMenu8.setText("jMenu8");
+        jMenuBar1.add(jMenu8);
+
+        jMenu9.setText("jMenu9");
+        jMenuBar1.add(jMenu9);
+
         setJMenuBar(jMenuBar1);
 
         pack();
@@ -1752,6 +1808,15 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelTotale;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenu jMenu8;
+    private javax.swing.JMenu jMenu9;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JPopupMenu jMenuPrincipale;

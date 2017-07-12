@@ -51,6 +51,10 @@ public class Agriturismo implements FunzioniPrincipali{
        return nome;
    }
 
+    public static ArrayList<Prenotazione> getPrenotazioni() {
+        return prenotazioni;
+    }
+
     
     
     public void addSala(Sala s){

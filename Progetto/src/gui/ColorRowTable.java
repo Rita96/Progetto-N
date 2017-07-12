@@ -20,7 +20,7 @@ public class ColorRowTable extends DefaultTableCellRenderer{
 
     @Override
     public Component getTableCellRendererComponent(JTable jtable, Object o, boolean bln, boolean bln1, int i, int i1) {
-       
+        setBackground(Color.WHITE);
        for(Prenotazione p: Agriturismo.getPrenotazioni()){
            if(o.equals(p.getCliente().getNome()) && p.getEsclusiva()==1){
                setBackground(Color.RED);
@@ -34,9 +34,7 @@ public class ColorRowTable extends DefaultTableCellRenderer{
            if(o.equals(p.getCliente().getNome()) && p.getPreferenza()==1){
                setBackground(Color.GREEN);
            }
-           if(p.getEsclusiva()==0 && p.getDaConfermare()==0 && p.getEsigenza()==0 && p.getPreferenza()==0 ){
-               setBackground(Color.WHITE);
-           }
+          
        }
         
         return super.getTableCellRendererComponent(jtable, o, bln, bln1, i, i1); //To change body of generated methods, choose Tools | Templates.

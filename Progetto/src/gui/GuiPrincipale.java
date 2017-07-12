@@ -948,6 +948,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         tavolo10.setDefaultRenderer(Object.class, crt);
         tavolo11.setDefaultRenderer(Object.class, crt);
         tavolo12.setDefaultRenderer(Object.class, crt);
+        tabellaAttesa.setDefaultRenderer(Object.class, crt);
     }
     
     @SuppressWarnings("unchecked")
@@ -1469,6 +1470,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jScrollPane6.setViewportView(tavolo5);
         if (tavolo5.getColumnModel().getColumnCount() > 0) {
             tavolo5.getColumnModel().getColumn(0).setPreferredWidth(100);
+            tavolo5.getColumnModel().getColumn(2).setPreferredWidth(40);
         }
 
         jPanel1.add(jScrollPane6);

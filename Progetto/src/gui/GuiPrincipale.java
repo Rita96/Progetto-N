@@ -148,9 +148,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
          for(GestioneTabelle t: arrayJTable){
             if(a.getSala().getNome().equals(t.getNomeSala())){
                 t.getDtm().addRow(object);
+                i = arrayJTable.get(0).getDtm().getRowCount();
                 if(!a.getSala().getNome().equalsIgnoreCase("Indifferente")){
                     arrayJTable.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
                     i = arrayJTable.get(0).getDtm().getRowCount();
+
                 }
             if(a.getAttesa()==1){
                 if(controllo){

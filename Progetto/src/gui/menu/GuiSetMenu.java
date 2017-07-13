@@ -144,18 +144,15 @@ public class GuiSetMenu extends javax.swing.JFrame {
             try {
                 IngredientsReading ir = new IngredientsReading();
                 ir.IngredientsReading(fileChooser.getPercorso());
-                
-                
-            //leggiPortate.letturaPortate(fileChooser.getPercorso());
-            createDb.addPortataFromFiletoDb();
-            createDb.addIngredienti();
-            GuiPrincipale guiProva = new GuiPrincipale();
-            JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
-            createDb.createTablePrenotazioni();
-            dispose();
-            guiProva.setVisible(true);
+                createDb.addPortataFromFiletoDb();
+                createDb.addIngredienti();
+                GuiPrincipale guiProva = new GuiPrincipale();
+                JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
+                createDb.createTablePrenotazioni();
+                dispose();
+                guiProva.setVisible(true);
             } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, ex);
+                JOptionPane.showMessageDialog(rootPane, ex);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato!");
             }

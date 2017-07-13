@@ -2,6 +2,7 @@ package funzionalita;
 
 import gui.guiPrenotazione.GestioneTabelle;
 import java.util.ArrayList;
+import java.util.Date;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,7 +20,8 @@ public interface FunzioniPrincipali {
     public void modificaPrenotazione();
     public void stampaAccoglienza(ArrayList<GestioneTabelle> gt);
     public void stampaCucina();
-    public void calcoloSpesa();
+    public void calcoloSpesaPortate(Date d1, Date d2);
+    public void calcoloSpesaIngredienti();
     
     
 }

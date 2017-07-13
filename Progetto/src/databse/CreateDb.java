@@ -339,17 +339,17 @@ public class CreateDb {
             Portata primoUno= new Portata(primo1, TipoPortata.Primo);
             menuCliente.getMenuCliente().add(primoUno);
             Portata primoDue= new Portata(primo2, TipoPortata.Primo);
-            menuCliente.getMenuCliente().add(primoUno);
+            menuCliente.getMenuCliente().add(primoDue);
             Portata primoTre= new Portata(primo3, TipoPortata.Primo);
-            menuCliente.getMenuCliente().add(primoUno);
+            menuCliente.getMenuCliente().add(primoTre);
             Portata secondoUno= new Portata(secondo1, TipoPortata.Secondo);
-            menuCliente.getMenuCliente().add(primoUno);
+            menuCliente.getMenuCliente().add(secondoUno);
             Portata secondoDue= new Portata(secondo2, TipoPortata.Secondo);
-            menuCliente.getMenuCliente().add(primoUno);
-            Portata SecondoTre= new Portata(secondo3, TipoPortata.Secondo);
-            menuCliente.getMenuCliente().add(primoUno);
+            menuCliente.getMenuCliente().add(secondoDue);
+            Portata secondoTre= new Portata(secondo3, TipoPortata.Secondo);
+            menuCliente.getMenuCliente().add(secondoTre);
             Portata dolcE= new Portata(dolce, TipoPortata.Dolce);
-            menuCliente.getMenuCliente().add(primoUno);
+            menuCliente.getMenuCliente().add(dolcE);
             
             prenotazione.setMenu(menuCliente);
             agri.aggiungiPrenotazione(prenotazione);

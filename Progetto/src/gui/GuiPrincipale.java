@@ -5,6 +5,7 @@ import gui.guiPrenotazione.GuiPrenotazione;
 import com.toedter.calendar.JDateChooser;
 import databse.CreateDb;
 import funzionalita.Prenotazione;
+import gui.calcoloSpesa.GuiCalcoloSpesa;
 import gui.guiPrenotazione.GestioneTabelle;
 import gui.menu.GuiAddPortata;
 import gui.menu.GuiModificaPortata;
@@ -171,7 +172,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
                 refreshNumber();
             }catch(NullPointerException e){}
         }
-
     }
     public void aggiungiTabelleArray(){    
         try{
@@ -1085,8 +1085,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
         label10sala = new javax.swing.JLabel();
         jScrollPane14 = new javax.swing.JScrollPane();
         tabellaAttesa = new javax.swing.JTable();
-        jButtonCalcolaSpesa = new javax.swing.JButton();
-        jButtonRefresh1 = new javax.swing.JButton();
+        jButtonRefresh = new javax.swing.JButton();
+        jButtoCalcoloSpesa = new javax.swing.JButton();
         jLabelTotale = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -1600,7 +1600,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(Prenota);
-        Prenota.setBounds(420, 50, 100, 23);
+        Prenota.setBounds(420, 50, 110, 23);
 
         tavolo2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -1689,23 +1689,23 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jPanel1.add(jScrollPane14);
         jScrollPane14.setBounds(1120, 140, 199, 564);
 
-        jButtonCalcolaSpesa.setText("Calcola Spesa");
-        jButtonCalcolaSpesa.addActionListener(new java.awt.event.ActionListener() {
+        jButtonRefresh.setText("Aggiorna");
+        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCalcolaSpesaActionPerformed(evt);
+                jButtonRefreshActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonCalcolaSpesa);
-        jButtonCalcolaSpesa.setBounds(690, 50, 120, 23);
+        jPanel1.add(jButtonRefresh);
+        jButtonRefresh.setBounds(550, 50, 120, 23);
 
-        jButtonRefresh1.setText("Aggiorna");
-        jButtonRefresh1.addActionListener(new java.awt.event.ActionListener() {
+        jButtoCalcoloSpesa.setText("Calcolo Spesa");
+        jButtoCalcoloSpesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRefresh1ActionPerformed(evt);
+                jButtoCalcoloSpesaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonRefresh1);
-        jButtonRefresh1.setBounds(550, 50, 110, 23);
+        jPanel1.add(jButtoCalcoloSpesa);
+        jButtoCalcoloSpesa.setBounds(690, 50, 120, 23);
 
         jLabelTotale.setText("0");
         jPanel1.add(jLabelTotale);
@@ -1818,12 +1818,12 @@ public class GuiPrincipale extends javax.swing.JFrame {
         aggiornaTabelle(date);
     }//GEN-LAST:event_JPastoActionPerformed
    
-    private void jButtonCalcolaSpesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalcolaSpesaActionPerformed
+    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
         date = rimuoviOrarioData(date);
         aggiornaTabelle(date);
         refreshNumber();
         
-    }//GEN-LAST:event_jButtonCalcolaSpesaActionPerformed
+    }//GEN-LAST:event_jButtonRefreshActionPerformed
  
     private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
         if(date!=dataOdierna){
@@ -1924,9 +1924,10 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
-    private void jButtonRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefresh1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonRefresh1ActionPerformed
+    private void jButtoCalcoloSpesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoCalcoloSpesaActionPerformed
+        GuiCalcoloSpesa gcs = new GuiCalcoloSpesa();
+        gcs.setVisible(true);
+    }//GEN-LAST:event_jButtoCalcoloSpesaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1938,8 +1939,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> JPasto;
     private javax.swing.JMenuItem JStampaItem;
     private javax.swing.JButton Prenota;
-    private javax.swing.JButton jButtonCalcolaSpesa;
-    private javax.swing.JButton jButtonRefresh1;
+    private javax.swing.JButton jButtoCalcoloSpesa;
+    private javax.swing.JButton jButtonRefresh;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JMenuItem jItemAddPortata;
     private javax.swing.JLabel jLabel1;

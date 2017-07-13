@@ -170,6 +170,7 @@ public class GuiModificaPortata extends javax.swing.JFrame {
         jComboPortate = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jLabelSfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -287,6 +288,9 @@ public class GuiModificaPortata extends javax.swing.JFrame {
         jLabel2.setText("Ingrediente");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 70, -1));
 
+        jLabel5.setText("Inserire gli ingredienti per dieci persone");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, 300, -1));
+
         jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 300));
 
@@ -393,6 +397,7 @@ public class GuiModificaPortata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabelSfondo;
     private javax.swing.JTextField jQnt1;
     private javax.swing.JTextField jQnt10;

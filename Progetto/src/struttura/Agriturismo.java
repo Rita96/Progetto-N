@@ -10,11 +10,17 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 import java.util.logging.Formatter;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
 import lettura.LeggiSala;
+import menu.Ingredient;
+import menu.MenuCompleto;
 import menu.Portata;
 
 /*
@@ -34,10 +40,15 @@ public class Agriturismo implements FunzioniPrincipali{
     private static String nome;
     public File file = new File("accoglienza.txt");
     private boolean controllo = true;
+    public static Set<Portata> portateSpesa = new HashSet<Portata>();
+    public static LinkedHashSet<Ingredient> ingSpesa = new LinkedHashSet<>();
+
+
     
     public Agriturismo (String nome){
         this.nome=nome;
-    }
+         
+   }
 
     public static void setNome(String nome) {
         Agriturismo.nome = nome;
@@ -118,8 +129,46 @@ public class Agriturismo implements FunzioniPrincipali{
     }
 
     @Override
-    public void calcoloSpesa() {
+    public void calcoloSpesaPortate(Date d1, Date d2) {
+        for(Prenotazione p: prenotazioni){
+            for(Portata pt: p.getMenu().getMenuCliente()){}
+                if(((p.getDate().after(d1) && p.getDate().before(d2))))
+                     for(Portata portata :p.getMenu().getMenuCliente()){
+                        for(Portata mc: MenuCompleto.menuCompleto){
+                            int np = mc.getPortataNp();
+                            if(portata.getNome().equals(mc.getNome())){
+                                mc.setPortataNp(p.getnAdulti()+np);
+                                portateSpesa.add(mc); 
+                            }     
+                        }  
+                }  
+           }
+    }
+
+    @Override
+    public void calcoloSpesaIngredienti() {
+        for(Portata p: portateSpesa){
+            for(Ingredient i: p.getIngredienti()){
+                boolean controllo = true;
+                i.setIngredientNp(p.getPortataNp());
+                int qAllIng = i.getIngredientNp();
+                if(i.getName()!=null){
+                       for(Ingredient is: ingSpesa){
+                           int qSingleIng= is.getIngredientNp();
+                            if(is.getName().equals(i.getName())){
+                               is.setIngredientNp(qSingleIng+qAllIng);
+                               controllo = false;
+                            }
+                        }if(controllo){
+                            ingSpesa.add(i);
+                            controllo=true;
+                        }
+                }         
+            }
+        }
+
     }
     
     
-}
+ }        
+        

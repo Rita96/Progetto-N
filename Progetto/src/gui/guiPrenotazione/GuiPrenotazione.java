@@ -441,6 +441,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
                 numeroBambini=0;
             else
                 numeroBambini = Integer.parseInt(JNumeroBambini.getText());
+           
             numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
             tipoEvento = JNumeroTelefono3.getText();
         
@@ -481,7 +482,8 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             createDb.addSinglePrenotazione(prenotazione);
             dispose();
             int id = createDb.selectMaxId();
-            prenotazione.setId(id);
+            prenotazione.setId(id);        
+            
             
         }catch(ExeptionNome ex){
             JOptionPane.showMessageDialog(rootPane, ex.getMessage());

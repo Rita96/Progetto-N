@@ -153,6 +153,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        jLabelNome1 = new javax.swing.JLabel();
         jLabelSfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -160,8 +161,8 @@ public class GuiAddPortata extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 25, 292, -1));
 
-        jLabelNome.setText("Nome");
-        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 5, -1, -1));
+        jLabelNome.setText("Inserire gli ingredienti per dieci persone");
+        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
 
         jLabelTipoPortata.setText("Tipo");
         getContentPane().add(jLabelTipoPortata, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 5, -1, -1));
@@ -277,6 +278,9 @@ public class GuiAddPortata extends javax.swing.JFrame {
 
         jLabel2.setText("Ingrediente");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 70, -1));
+
+        jLabelNome1.setText("Nome");
+        getContentPane().add(jLabelNome1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         getContentPane().add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 420, 300));
@@ -404,6 +408,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabelNome;
+    private javax.swing.JLabel jLabelNome1;
     private javax.swing.JLabel jLabelSfondo;
     private javax.swing.JLabel jLabelTipoPortata;
     private javax.swing.JTextField jQnt1;

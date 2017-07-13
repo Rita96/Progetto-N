@@ -13,6 +13,15 @@ public class Ingredient {
     
     private String name;
     private int quantity;
+    private int ingredientNp;
+
+    public int getIngredientNp() {
+        return ingredientNp;
+    }
+
+    public void setIngredientNp(int ingredientNp) {
+        this.ingredientNp = ingredientNp;
+    }
 
     public Ingredient(String name, int quantity) {
         this.name = name;

@@ -368,7 +368,6 @@ public class GuiModificaPortata extends javax.swing.JFrame {
     }//GEN-LAST:event_jQnt2ActionPerformed
 
     private void jComboPortateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPortateActionPerformed
-        initPortate();
     }//GEN-LAST:event_jComboPortateActionPerformed
         
   

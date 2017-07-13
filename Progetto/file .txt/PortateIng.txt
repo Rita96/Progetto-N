@@ -1,0 +1,5 @@
+Trevisana e scamorza	primo	burro 100, olio 50, cipolla 1, riso 700, trevisana 200, scamorza 200, vino 50, parmigiano 150, brodo 2
+Funghi	primo	burro 100, olio 50, cipolla 1, riso 700, funghi 100, parmigiano 150, brodo 2, zafferano 1
+Salsiccia	primo	burro 100, olio 50, cipolla 1, riso 700, salsiccia 200, parmigiano 150, brodo 2, zafferano 1
+Arancia e gorgonzola	primo	burro 100, olio 50, cipolla 1, riso 700, arancia 1, parmigiano 150, brodo 2, gorgonzola 200
+Pere e gorgonzola	primo	burro 100, olio 50, cipolla 1, riso 700, pere 2, parmigiano 150, brodo 2, gorgonzola 200

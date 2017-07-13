@@ -1,0 +1,51 @@
+﻿trevisana e scamorza	primo
+funghi	primo
+salsiccia	primo
+arancia e gorgonzola	primo
+pere e gorgonzola	primo
+crespelle alle verdure di stagione	primo
+crespelle spinaci e ricotta	primo
+crespelle prosciutto e formaggio	primo
+Ravioli di zucca al burro versato e amaretti	primo
+Ravioli di magro al burro versato e salvia	primo
+Ravioli di brasato al sugo	primo
+Ravioli gratinati	primo
+Ravioli in brodo	primo
+Pasta alla chitarra al pomodoro	primo
+Tagliatelle al ragu	primo
+Tagliatelle ai funghi	primo
+Pappardelle ai funghi	primo
+Lasagne al forno	primo
+Pasta e fagioli	primo
+Trippa	primo
+Minestrone	primo
+Tagliata di scottona al pepe nero	secondo
+Carpaccio di filetto con scaglie di grana	secondo
+Roastbeef all inglese	secondo
+Tartare di manzo	secondo
+Vitello tonnato	secondo
+Pollo nostrano arrosto ripieno	secondo
+Pollo nostrano alla diavola	secondo
+Pollo in umido alla cacciatora o ai profumi dell orto	secondo
+Coniglio arrosto al limone	secondo
+Coniglio in salmì	secondo
+Spezzatino di manzo	secondo
+Stracotto di manzo con polenta	secondo
+Brasato di manzo con polenta	secondo
+Stinco di vitello al forno	secondo
+Carrè di vitello fra castagne e mele renette	secondo
+Delizie di maiale alla brace	secondo
+Arista al forno con verdurine in agrodolce	secondo
+Lessi misti con purè salsa verde e mostarda	secondo
+Cassoeula con polenta	secondo
+Girasole alle mandorle	dolce
+Crostata cioccolato e pere	dolce
+Torta alle mandorle	dolce
+Croccante	dolce
+Budini	dolce
+Mille foglie	dolce
+Torta di mele	dolce
+Tiramisù	dolce
+Crostate con marmellate	dolce
+Crostata di frutta fresca	dolce
+Crostata ricotta e cioccolato	dolce

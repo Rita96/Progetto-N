@@ -17,6 +17,7 @@ import java.sql.Statement;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import menu.Ingredient;
 import menu.MenuCliente;
 import menu.MenuCompleto;
 import menu.Portata;
@@ -275,6 +276,12 @@ public class CreateDb {
            String nomePortata = rs.getString(" nome portata");
            String tipoPortata = rs.getString("tipo portata");
            Portata portata = new Portata(nomePortata, TipoPortata.valueOf(tipoPortata));
+
+           for(int i=1;i<=12;i++){
+               String ing = rs.getString("ingrediente"+i);
+               int qnt = rs.getInt("qnt"+i);
+               portata.getIngredienti().add(new Ingredient(ing, qnt));
+           }
            MenuCompleto.menuCompleto.add(portata);
         }
     }    
@@ -401,6 +408,27 @@ public class CreateDb {
          String query = "DELETE FROM `ristorante`.`sale` WHERE `nome`='"+nome+"'";
             stm.execute(query);
     }
+    public void modificaPortata(Portata p) throws SQLException{
+      
+        for(int i=1;i<=p.getIngredienti().size();i++){
+            String query = "UPDATE `ristorante`.`menu` SET "
+            + "`ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', "
+            + "`qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' "
+                + "WHERE ` nome portata`='"+p.getNome()+"';";
+                stm.executeUpdate(query);
+            }
+        for(int i=p.getIngredienti().size();i<=12;i++){
+            String query = "UPDATE `ristorante`.`menu` SET "
+            + "`ingrediente"+i+"`='', "
+            + "`qnt"+i+"`='"+0+"' "
+                + "WHERE ` nome portata`='"+p.getNome()+"';";
+                stm.executeUpdate(query);
+            }
+    }    
+     
+        
+    
+    
  }
         
         

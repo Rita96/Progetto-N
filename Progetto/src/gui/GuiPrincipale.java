@@ -7,6 +7,7 @@ import databse.CreateDb;
 import funzionalita.Prenotazione;
 import gui.guiPrenotazione.GestioneTabelle;
 import gui.menu.GuiAddPortata;
+import gui.menu.GuiModificaPortata;
 import gui.menu.GuiRimuoviPortata;
 import gui.sale.GuiAddSala;
 import gui.sale.GuiInputSale;
@@ -82,7 +83,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
       
         
         impostaJSposta();
-        impostaJModifica();
+        impostaJModificaPrenotazione();
         impostaRimuovi();
         impostaStampa();
         impostaAggiungiSala();
@@ -90,8 +91,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         impostaRimuoviPortata();
         impostaRimuoviSala();
         coloriRighe();
-        
-        
+        modificaPortata();
     }
      public ArrayList<GestioneTabelle> getArrayJTable() {
         return arrayJTable;
@@ -231,10 +231,10 @@ public class GuiPrincipale extends javax.swing.JFrame {
         return dataOdierna;
     }
     public void impostaMenu() throws SQLException{      
-        jModifica.setText("Modifica");
+        jModificaPrenotazione.setText("Modifica");
         jSposta.setText("Sposta");
         jRimuovi.setText("Rimuovi");
-        jMenuPrincipale.add(jModifica);
+        jMenuPrincipale.add(jModificaPrenotazione);
         jMenuPrincipale.add(jRimuovi);
         jMenuPrincipale.add(jSposta);
         int i = 0;
@@ -265,8 +265,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
             });
         }
     }
-    public void impostaJModifica() throws SQLException{
-        jModifica.addMouseListener(new MouseInputAdapter() {
+    public void impostaJModificaPrenotazione() throws SQLException{
+        jModificaPrenotazione.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
                 ModificaPrenotazione mp;
@@ -804,7 +804,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         }
         if(SwingUtilities.isRightMouseButton(evt)){
             
-          int[] coordinate = coordinateJTable(jtable);
+          int[] coordinate = coordinateMouse(jtable);
           
            jMenuPrincipale.show(this, coordinate[0]+evt.getX(), coordinate[1]+evt.getY());
         }
@@ -955,7 +955,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         tavolo12.setDefaultRenderer(Object.class, crt);
         tabellaAttesa.setDefaultRenderer(Object.class, crt);
     }
-    public int[] coordinateJTable(JTable j){
+    public int[] coordinateMouse(JTable j){
         int coordinate[] = new int[2];
         if(j.equals(jTable1)){
             coordinate[0]=35;
@@ -1002,12 +1002,28 @@ public class GuiPrincipale extends javax.swing.JFrame {
         }
         return coordinate;
     }
+    public void modificaPortata(){
+        jModificaPortata.addMouseListener(new MouseInputAdapter() {
+            @Override
+            public void mousePressed(MouseEvent me) {
+                
+                try {
+                    GuiModificaPortata gmp = new GuiModificaPortata();
+                    gmp.setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+                }
+               
+            }
+        });
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jMenuPrincipale = new javax.swing.JPopupMenu();
-        jModifica = new javax.swing.JMenuItem();
+        jModificaPrenotazione = new javax.swing.JMenuItem();
         jRimuovi = new javax.swing.JMenuItem();
         jSposta = new javax.swing.JMenuItem();
         jMenuSale = new javax.swing.JPopupMenu();
@@ -1069,7 +1085,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
         label10sala = new javax.swing.JLabel();
         jScrollPane14 = new javax.swing.JScrollPane();
         tabellaAttesa = new javax.swing.JTable();
-        jButtonRefresh = new javax.swing.JButton();
+        jButtonCalcolaSpesa = new javax.swing.JButton();
+        jButtonRefresh1 = new javax.swing.JButton();
         jLabelTotale = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -1078,6 +1095,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         JMenuPortata = new javax.swing.JMenu();
         jItemAddPortata = new javax.swing.JMenuItem();
         JItemRemovePortata = new javax.swing.JMenuItem();
+        jModificaPortata = new javax.swing.JMenuItem();
         JMenuSala = new javax.swing.JMenu();
         JItemAddSala = new javax.swing.JMenuItem();
         JItemaRemoveSala = new javax.swing.JMenuItem();
@@ -1091,8 +1109,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jMenu8 = new javax.swing.JMenu();
         jMenu9 = new javax.swing.JMenu();
 
-        jModifica.setText("jMenuItem2");
-        jMenuPrincipale.add(jModifica);
+        jModificaPrenotazione.setText("jMenuItem2");
+        jMenuPrincipale.add(jModificaPrenotazione);
 
         jRimuovi.setText("jMenuItem1");
         jMenuPrincipale.add(jRimuovi);
@@ -1671,14 +1689,23 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jPanel1.add(jScrollPane14);
         jScrollPane14.setBounds(1120, 140, 199, 564);
 
-        jButtonRefresh.setText("Aggiorna");
-        jButtonRefresh.addActionListener(new java.awt.event.ActionListener() {
+        jButtonCalcolaSpesa.setText("Calcola Spesa");
+        jButtonCalcolaSpesa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonRefreshActionPerformed(evt);
+                jButtonCalcolaSpesaActionPerformed(evt);
             }
         });
-        jPanel1.add(jButtonRefresh);
-        jButtonRefresh.setBounds(550, 50, 110, 23);
+        jPanel1.add(jButtonCalcolaSpesa);
+        jButtonCalcolaSpesa.setBounds(690, 50, 120, 23);
+
+        jButtonRefresh1.setText("Aggiorna");
+        jButtonRefresh1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRefresh1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(jButtonRefresh1);
+        jButtonRefresh1.setBounds(550, 50, 110, 23);
 
         jLabelTotale.setText("0");
         jPanel1.add(jLabelTotale);
@@ -1716,6 +1743,9 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         JItemRemovePortata.setText("Rimuovi Portata");
         JMenuPortata.add(JItemRemovePortata);
+
+        jModificaPortata.setText("Modifica Portata");
+        JMenuPortata.add(jModificaPortata);
 
         jMenuBar1.add(JMenuPortata);
 
@@ -1788,12 +1818,12 @@ public class GuiPrincipale extends javax.swing.JFrame {
         aggiornaTabelle(date);
     }//GEN-LAST:event_JPastoActionPerformed
    
-    private void jButtonRefreshActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefreshActionPerformed
+    private void jButtonCalcolaSpesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalcolaSpesaActionPerformed
         date = rimuoviOrarioData(date);
         aggiornaTabelle(date);
         refreshNumber();
         
-    }//GEN-LAST:event_jButtonRefreshActionPerformed
+    }//GEN-LAST:event_jButtonCalcolaSpesaActionPerformed
  
     private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
         if(date!=dataOdierna){
@@ -1894,6 +1924,10 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jLabel3MouseClicked
 
+    private void jButtonRefresh1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRefresh1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButtonRefresh1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem JItemAddSala;
@@ -1904,7 +1938,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> JPasto;
     private javax.swing.JMenuItem JStampaItem;
     private javax.swing.JButton Prenota;
-    private javax.swing.JButton jButtonRefresh;
+    private javax.swing.JButton jButtonCalcolaSpesa;
+    private javax.swing.JButton jButtonRefresh1;
     private com.toedter.calendar.JDateChooser jDateChooser;
     private javax.swing.JMenuItem jItemAddPortata;
     private javax.swing.JLabel jLabel1;
@@ -1923,7 +1958,8 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JMenu jMenuFile;
     private javax.swing.JPopupMenu jMenuPrincipale;
     private javax.swing.JPopupMenu jMenuSale;
-    private javax.swing.JMenuItem jModifica;
+    private javax.swing.JMenuItem jModificaPortata;
+    private javax.swing.JMenuItem jModificaPrenotazione;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuItem jRimuovi;
     private javax.swing.JScrollPane jScrollPane1;

@@ -26,7 +26,7 @@ import struttura.Agriturismo;
  *
  * @author luby9
  */
-public class GuiAddPortata extends javax.swing.JFrame {
+public class GuiModificaPortata extends javax.swing.JFrame {
 
     Agriturismo agri = new Agriturismo();
 
@@ -34,8 +34,6 @@ public class GuiAddPortata extends javax.swing.JFrame {
     String nome = null;
     TipoPortata tipoPortata = null;
     CreateDb createDb;
-    String tp = "Pranzo";
-    String query = "SELECT ` nome portata`,`tipo portata` FROM `ristorante`.`menu`";
     Portata p;
     
     String ing1;
@@ -63,12 +61,16 @@ public class GuiAddPortata extends javax.swing.JFrame {
     String ing12;
     int qnt12;
     private boolean controllo = true;
+    String portata;
     
     
     
-    public GuiAddPortata() throws SQLException {
+    public GuiModificaPortata() throws SQLException {
         initComponents();
         createDb = new CreateDb();
+        initPortate();
+        initFild();
+
     }
 
     public void setQntIng(JTextField jIng, JTextField jQnt, String ing, int qnt){
@@ -87,32 +89,51 @@ public class GuiAddPortata extends javax.swing.JFrame {
              controllo = false;
          }
     }
+    
+    public void initPortate(){
+        
+        for(Portata pt: MenuCompleto.menuCompleto){
+            jComboPortate.addItem(pt.getNome());
+        } 
+    }
+    
     public void initFild(){
-       jTextFieldNome.setText("");
-       jIngrediente1.setText("");
-       jQnt1.setText("");
-       jIngrediente2.setText("");
-       jQnt2.setText("");
-       jIngrediente3.setText("");
-       jQnt3.setText("");
-       jIngrediente4.setText("");
-       jQnt4.setText("");
-       jIngrediente5.setText("");
-       jQnt5.setText("");
-       jIngrediente6.setText("");
-       jQnt6.setText("");
-       jIngrediente7.setText("");
-       jQnt7.setText("");
-       jIngrediente8.setText("");
-       jQnt8.setText("");
-       jIngrediente9.setText("");
-       jQnt9.setText("");
-       jIngrediente10.setText("");
-       jQnt10.setText("");
-       jIngrediente11.setText("");
-       jQnt11.setText("");
-       jIngrediente12.setText("");
-       jQnt12.setText("");
+        portata = (String)jComboPortate.getSelectedItem();
+        for(Portata pt: MenuCompleto.menuCompleto ){
+            try{
+                if(pt.getNome().equals(portata)){
+                    jIngrediente1.setText(pt.getIngredienti().get(0).getName());
+                    jQnt1.setText(String.valueOf(pt.getIngredienti().get(0).getQuantity()));
+                    jIngrediente2.setText(pt.getIngredienti().get(1).getName());
+                    jQnt2.setText(String.valueOf(pt.getIngredienti().get(1).getQuantity()));
+                    jIngrediente3.setText(pt.getIngredienti().get(2).getName());
+                    jQnt3.setText(String.valueOf(pt.getIngredienti().get(2).getQuantity()));
+                    jIngrediente4.setText(pt.getIngredienti().get(3).getName());
+                    jQnt4.setText(String.valueOf(pt.getIngredienti().get(3).getQuantity()));
+                    jIngrediente5.setText(pt.getIngredienti().get(4).getName());
+                    jQnt5.setText(String.valueOf(pt.getIngredienti().get(4).getQuantity()));
+                    jIngrediente6.setText(pt.getIngredienti().get(5).getName());
+                    jQnt6.setText(String.valueOf(pt.getIngredienti().get(5).getQuantity()));
+                    jIngrediente7.setText(pt.getIngredienti().get(6).getName());
+                    jQnt7.setText(String.valueOf(pt.getIngredienti().get(6).getQuantity()));
+                    jIngrediente8.setText(pt.getIngredienti().get(7).getName());
+                    jQnt8.setText(String.valueOf(pt.getIngredienti().get(7).getQuantity()));
+                    jIngrediente9.setText(pt.getIngredienti().get(8).getName());
+                    jQnt9.setText(String.valueOf(pt.getIngredienti().get(8).getQuantity()));
+                    jIngrediente10.setText(pt.getIngredienti().get(9).getName());
+                    jQnt10.setText(String.valueOf(pt.getIngredienti().get(9).getQuantity()));
+                    jIngrediente11.setText(pt.getIngredienti().get(10).getName());
+                    jQnt11.setText(String.valueOf(pt.getIngredienti().get(10).getQuantity()));
+                    jIngrediente12.setText(pt.getIngredienti().get(11).getName());
+                    jQnt12.setText(String.valueOf(pt.getIngredienti().get(11).getQuantity()));
+                    p=pt;
+                }
+            }catch(IndexOutOfBoundsException ex){}
+            
+            
+        }
+        
+       
     }
    
     
@@ -120,12 +141,8 @@ public class GuiAddPortata extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextFieldNome = new javax.swing.JTextField();
-        jLabelNome = new javax.swing.JLabel();
-        jLabelTipoPortata = new javax.swing.JLabel();
-        jComboBoxTipoPortata = new javax.swing.JComboBox<>();
         jQnt1 = new javax.swing.JTextField();
-        jButtonAdd = new javax.swing.JButton();
+        jButtonModifica = new javax.swing.JButton();
         jIngrediente2 = new javax.swing.JTextField();
         jQnt2 = new javax.swing.JTextField();
         jIngrediente3 = new javax.swing.JTextField();
@@ -151,6 +168,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jIngrediente7 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
+        jComboPortate = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabelSfondo = new javax.swing.JLabel();
@@ -158,21 +176,6 @@ public class GuiAddPortata extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setLocation(new java.awt.Point(430, 100));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        getContentPane().add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 25, 292, -1));
-
-        jLabelNome.setText("Nome");
-        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(153, 5, -1, -1));
-
-        jLabelTipoPortata.setText("Tipo");
-        getContentPane().add(jLabelTipoPortata, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 5, -1, -1));
-
-        jComboBoxTipoPortata.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Primo", "Secondo", "Dolce" }));
-        jComboBoxTipoPortata.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxTipoPortataActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jComboBoxTipoPortata, new org.netbeans.lib.awtextra.AbsoluteConstraints(322, 25, 83, -1));
 
         jQnt1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,13 +184,13 @@ public class GuiAddPortata extends javax.swing.JFrame {
         });
         getContentPane().add(jQnt1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, 40, -1));
 
-        jButtonAdd.setText("Aggiungi");
-        jButtonAdd.addActionListener(new java.awt.event.ActionListener() {
+        jButtonModifica.setText("Modifica");
+        jButtonModifica.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAddActionPerformed(evt);
+                jButtonModificaActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonAdd, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 84, -1));
+        getContentPane().add(jButtonModifica, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 270, 84, -1));
 
         jIngrediente2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -272,6 +275,13 @@ public class GuiAddPortata extends javax.swing.JFrame {
         jLabel3.setText("Ingrediente");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 60, 70, -1));
 
+        jComboPortate.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboPortateActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jComboPortate, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 290, -1));
+
         jLabel4.setText("Quantità [g]");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 60, 70, -1));
 
@@ -284,16 +294,12 @@ public class GuiAddPortata extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
+    private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
         controllo = true;
-        tp = (String) jComboBoxTipoPortata.getSelectedItem();
-        nome = jTextFieldNome.getText();
         
-        if(!nome.isEmpty()){
-            this.tipoPortata = getTipoPortata();
             try {
-                MenuCompleto.menuCompleto.add(new Portata(nome,TipoPortata.valueOf(tp)));
-                p= new Portata(nome, tipoPortata);
+                p.getIngredienti().clear();
+
                 setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
                 setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
                 setQntIng(jIngrediente3, jQnt3, ing3, qnt3);
@@ -307,30 +313,19 @@ public class GuiAddPortata extends javax.swing.JFrame {
                 setQntIng(jIngrediente11, jQnt11, ing11, qnt11);
                 setQntIng(jIngrediente12, jQnt12, ing12, qnt12);
                 if(controllo){
-                    createDb.addSinglePortata(p);
-                    JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
-                    createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
-                    ModificaMenu.addElementoMenu(new Portata(nome, TipoPortata.valueOf(tp)));
+                    createDb.modificaPortata(p);
+                    JOptionPane.showMessageDialog(rootPane, "Portata modificata con successo!");
                     
-                    initFild();
                 }
             } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "La portata esiste già!");
+                JOptionPane.showMessageDialog(rootPane, "Non è possibile modificare la portata");
             }catch(NullPointerException e){}
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
-        }
-        if(controllo)
-            initFild();
+        
+       
+       
         
         
-    }//GEN-LAST:event_jButtonAddActionPerformed
-
-    private void jComboBoxTipoPortataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoPortataActionPerformed
-        
-
-    }//GEN-LAST:event_jComboBoxTipoPortataActionPerformed
+    }//GEN-LAST:event_jButtonModificaActionPerformed
 
     private void jIngrediente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIngrediente1ActionPerformed
         // TODO add your handling code here:
@@ -371,22 +366,17 @@ public class GuiAddPortata extends javax.swing.JFrame {
     private void jQnt2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jQnt2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jQnt2ActionPerformed
+
+    private void jComboPortateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPortateActionPerformed
+        initPortate();
+    }//GEN-LAST:event_jComboPortateActionPerformed
         
-    public TipoPortata getTipoPortata(){
-        if(tp.equals(TipoPortata.Primo.toString()))
-            tipoPortata = TipoPortata.Primo;
-        if(tp.equals(TipoPortata.Secondo.toString()))
-            tipoPortata = TipoPortata.Secondo;
-        if(tp.equals(TipoPortata.Dolce.toString()))
-            tipoPortata = TipoPortata.Dolce;
-        
-        return tipoPortata;
-    }
+  
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAdd;
-    private static javax.swing.JComboBox<String> jComboBoxTipoPortata;
+    private javax.swing.JButton jButtonModifica;
+    private javax.swing.JComboBox<String> jComboPortate;
     private javax.swing.JTextField jIngrediente1;
     private javax.swing.JTextField jIngrediente10;
     private javax.swing.JTextField jIngrediente11;
@@ -403,9 +393,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabelNome;
     private javax.swing.JLabel jLabelSfondo;
-    private javax.swing.JLabel jLabelTipoPortata;
     private javax.swing.JTextField jQnt1;
     private javax.swing.JTextField jQnt10;
     private javax.swing.JTextField jQnt11;
@@ -418,6 +406,5 @@ public class GuiAddPortata extends javax.swing.JFrame {
     private javax.swing.JTextField jQnt7;
     private javax.swing.JTextField jQnt8;
     private javax.swing.JTextField jQnt9;
-    private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables
 }

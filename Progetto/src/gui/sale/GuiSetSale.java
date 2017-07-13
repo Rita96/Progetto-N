@@ -143,7 +143,7 @@ public void imprevisto(){
 
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(rootPane, "Impossibile leggere il file");
-            }
+            }catch(NullPointerException ex){JOptionPane.showMessageDialog(rootPane, "File selezionato non valido!");}
                 if(agri.getSale().size()>0 && agri.getSale().size()<13){
                      try {
                          createDb.addSaleFromFileToDb();

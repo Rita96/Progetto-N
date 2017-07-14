@@ -91,8 +91,7 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
     public void riempiItemSale(){
         for(Sala s: agriturismo.getSale())
             JSala.addItem(s.getNome());
-    }
-    
+    }  
     public void riempiItemPrimi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Primo)){
@@ -102,8 +101,6 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             }
         }
     }
-    
-    
     public void riempiItemSecondi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Secondo)){
@@ -118,6 +115,101 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             if(p.getTipoPortata().equals(TipoPortata.Dolce)){
                 JDolce.addItem(p.getNome());
             }
+        }
+    }
+    public void impostaData(){
+        if(data==null){
+            data = guiProva.dataOdierda();
+            data = GuiPrincipale.rimuoviOrarioData(data);
+        }
+        data = GuiPrincipale.rimuoviOrarioData(data);
+        GuiPrincipale.rimuoviOrarioData(data);
+      
+         if(data!=dataOdierna){
+            data = JData.getDate();
+        }
+    }
+    public void okButton(){
+         try{            
+            nome = JNome.getText();
+            if(nome.isEmpty())
+                throw new ExeptionNome();
+            numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
+            if(JNumeroAdulti.getText().isEmpty()){
+                throw new ExeptionNumeroAdulti();
+            }if(data.before(GuiPrincipale.dataOdierna))
+                throw new ExeptionData();
+            String line;
+            line = JNumeroBambini.getText();
+            if(line.isEmpty())
+                numeroBambini=0;
+            else
+                numeroBambini = Integer.parseInt(JNumeroBambini.getText());
+            numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
+            tipoEvento = JTipoEvento.getText();
+            s = (String) JSala.getSelectedItem();
+            primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
+            primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
+            primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
+            secondo1 = new Portata((String) JSecondo1.getSelectedItem(), TipoPortata.Secondo);
+            secondo2 = new Portata((String) JSecondo2.getSelectedItem(), TipoPortata.Secondo);
+            secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
+            dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
+            note = jNote.getText();
+            for(int i = 0; i<menuCliente.getMenuCliente().size();i++){
+                agri.getPrenotazione().get(indice).getMenu().getMenuCliente().remove(i);
+            }
+            menuCliente.getMenuCliente().add(primo1);
+            menuCliente.getMenuCliente().add(primo2);
+            menuCliente.getMenuCliente().add(primo3);
+            menuCliente.getMenuCliente().add(secondo1);
+            menuCliente.getMenuCliente().add(secondo2);
+            menuCliente.getMenuCliente().add(secondo3);
+            menuCliente.getMenuCliente().add(dolce);
+            agri.getPrenotazione().get(indice).setDateDb(data);
+            agri.getPrenotazione().get(indice).setNote(note);
+            agri.getPrenotazione().get(indice).setMenu(menuCliente);
+            agri.getPrenotazione().get(indice).setTipoEvento(tipoEvento);
+            agri.getPrenotazione().get(indice).setnBambini(numeroBambini);
+            agri.getPrenotazione().get(indice).getCliente().setNome(nome);
+            agri.getPrenotazione().get(indice).getCliente().setNumTelefono(numeroTelefono);
+            agri.getPrenotazione().get(indice).setPasto(pasto);
+            agri.getPrenotazione().get(indice).setnAdulti(numeroAdulti);
+            agri.getPrenotazione().get(indice).setSala(new Sala(s));
+            agri.getPrenotazione().get(indice).setMenu(menuCliente);
+            if(jCheckBoxAttesa.isSelected())
+            attesa=1;
+            agri.getPrenotazione().get(indice).setAttesa(attesa);
+            if(jCheckBoxDaConfermare.isSelected())
+            daConfermare=1;
+            agri.getPrenotazione().get(indice).setDaConfermare(daConfermare);
+            if(jCheckBoxEsclusiva.isSelected())
+            esclusiva=1;
+            agri.getPrenotazione().get(indice).setEsclusiva(esclusiva);
+            if(jCheckBoxEsigenza.isSelected())
+            esigenza=1;
+            agri.getPrenotazione().get(indice).setEsigenza(esigenza);
+            if(jCheckBoxPreferenza.isSelected())
+            preferenza=1;
+            agri.getPrenotazione().get(indice).setPreferenza(preferenza);
+            agri.getPrenotazione().get(indice).setDate(data);  
+            dispose();
+            
+        }catch(ExeptionNome ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
+        }catch(ExeptionNumeroAdulti ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(rootPane, "Possibile errore nei campi: n.Adulti / numero di telefono /numero di bambini !");
+        }catch(ExeptionData ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+        try {
+            createDb.modificaPrenotazione(agri.getPrenotazione().get(indice));
+        } catch (SQLException ex) {
+            Logger.getLogger(GuiModificaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -474,91 +566,7 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JNumeroAdultiActionPerformed
 
     private void JOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOkActionPerformed
-         try{            
-            nome = JNome.getText();
-            if(nome.isEmpty())
-                throw new ExeptionNome();
-            numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
-            if(JNumeroAdulti.getText().isEmpty()){
-                throw new ExeptionNumeroAdulti();
-            }if(data.before(GuiPrincipale.dataOdierna))
-                throw new ExeptionData();
-            String line;
-            line = JNumeroBambini.getText();
-            if(line.isEmpty())
-                numeroBambini=0;
-            else
-                numeroBambini = Integer.parseInt(JNumeroBambini.getText());
-            numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
-            tipoEvento = JTipoEvento.getText();
-            s = (String) JSala.getSelectedItem();
-
-            primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
-            primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
-            primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
-            secondo1 = new Portata((String) JSecondo1.getSelectedItem(), TipoPortata.Secondo);
-            secondo2 = new Portata((String) JSecondo2.getSelectedItem(), TipoPortata.Secondo);
-            secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
-            dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
-            note = jNote.getText();
-        
-            for(int i = 0; i<menuCliente.getMenuCliente().size();i++){
-                agri.getPrenotazione().get(indice).getMenu().getMenuCliente().remove(i);
-            }
-            menuCliente.getMenuCliente().add(primo1);
-            menuCliente.getMenuCliente().add(primo2);
-            menuCliente.getMenuCliente().add(primo3);
-            menuCliente.getMenuCliente().add(secondo1);
-            menuCliente.getMenuCliente().add(secondo2);
-            menuCliente.getMenuCliente().add(secondo3);
-            menuCliente.getMenuCliente().add(dolce);
-            agri.getPrenotazione().get(indice).setDateDb(data);
-            agri.getPrenotazione().get(indice).setNote(note);
-            agri.getPrenotazione().get(indice).setMenu(menuCliente);
-            agri.getPrenotazione().get(indice).setTipoEvento(tipoEvento);
-            agri.getPrenotazione().get(indice).setnBambini(numeroBambini);
-            agri.getPrenotazione().get(indice).getCliente().setNome(nome);
-            agri.getPrenotazione().get(indice).getCliente().setNumTelefono(numeroTelefono);
-            agri.getPrenotazione().get(indice).setPasto(pasto);
-            agri.getPrenotazione().get(indice).setnAdulti(numeroAdulti);
-            agri.getPrenotazione().get(indice).setSala(new Sala(s));
-            agri.getPrenotazione().get(indice).setMenu(menuCliente);
-            if(jCheckBoxAttesa.isSelected())
-            attesa=1;
-            agri.getPrenotazione().get(indice).setAttesa(attesa);
-            if(jCheckBoxDaConfermare.isSelected())
-            daConfermare=1;
-            agri.getPrenotazione().get(indice).setDaConfermare(daConfermare);
-            if(jCheckBoxEsclusiva.isSelected())
-            esclusiva=1;
-            agri.getPrenotazione().get(indice).setEsclusiva(esclusiva);
-            if(jCheckBoxEsigenza.isSelected())
-            esigenza=1;
-            agri.getPrenotazione().get(indice).setEsigenza(esigenza);
-            if(jCheckBoxPreferenza.isSelected())
-            preferenza=1;
-            agri.getPrenotazione().get(indice).setPreferenza(preferenza);
-            agri.getPrenotazione().get(indice).setDate(data);
-
-            
-            dispose();
-            
-        }catch(ExeptionNome ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }catch(NullPointerException ex){
-            JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
-        }catch(ExeptionNumeroAdulti ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(rootPane, "Possibile errore nei campi: n.Adulti / numero di telefono /numero di bambini !");
-        }catch(ExeptionData ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }
-        try {
-            createDb.modificaPrenotazione(agri.getPrenotazione().get(indice));
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiModificaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        okButton();
     }//GEN-LAST:event_JOkActionPerformed
 
     private void JNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNomeActionPerformed
@@ -574,17 +582,7 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JPastoActionPerformed
 
     private void JDataPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDataPropertyChange
-
-        if(data==null){
-            data = guiProva.dataOdierda();
-            data = GuiPrincipale.rimuoviOrarioData(data);
-        }
-        data = GuiPrincipale.rimuoviOrarioData(data);
-        GuiPrincipale.rimuoviOrarioData(data);
-      
-         if(data!=dataOdierna){
-            data = JData.getDate();
-        }
+        impostaData();
     }//GEN-LAST:event_JDataPropertyChange
 
     private void JPrimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPrimo1ActionPerformed

@@ -61,7 +61,61 @@ public void imprevisto(){
             }
         });
     }
-  
+    
+    public void openGuiSale(){
+        if(jCheckBoxSaleGui.isSelected()){
+            guiInputSale.setVisible(true);
+            dispose();         
+        }
+    }
+    public void insertFileSale(){
+        if(jCheckBoxFile.isSelected()){
+            jButtonFileChooser.setEnabled(true);
+            try {
+                leggiSala.letturaSale(fileChooser.getPercorso());
+
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Impossibile leggere il file");
+            }catch(NullPointerException ex){JOptionPane.showMessageDialog(rootPane, "File selezionato non valido!");}
+                if(agri.getSale().size()>0 && agri.getSale().size()<13){
+                     try {
+                         createDb.addSaleFromFileToDb();
+                        JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
+                        dispose();
+                        guiInformationMenu.setVisible(true);
+                    }catch (SQLException ex) {
+                         JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
+                    } catch (NullPointerException ex) {
+                         JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato");
+                    }
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserite non è valido");
+                    System.out.println(agri.getSale().size());
+                    agri.getSale().clear();     
+                }    
+        }
+    
+    } 
+    public void emptySale(){
+        if(!jCheckBoxFile.isSelected() && !jCheckBoxSaleGui.isSelected()){
+            int choose;
+            choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
+            if(choose==JOptionPane.YES_OPTION){
+                try {
+                    if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
+                        dispose();
+                        guiInformationMenu.setVisible(true);
+                    }
+                    else
+                        JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
+                }
+                
+            }
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -127,59 +181,10 @@ public void imprevisto(){
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-        
+        openGuiSale();
+        insertFileSale();
+        emptySale();
 
-        if(jCheckBoxSaleGui.isSelected()){
-            guiInputSale.setVisible(true);
-            dispose();         
-        }
-   
-        
-        if(jCheckBoxFile.isSelected()){
-            jButtonFileChooser.setEnabled(true);
-           
-            try {
-                leggiSala.letturaSale(fileChooser.getPercorso());
-
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Impossibile leggere il file");
-            }catch(NullPointerException ex){JOptionPane.showMessageDialog(rootPane, "File selezionato non valido!");}
-                if(agri.getSale().size()>0 && agri.getSale().size()<13){
-                     try {
-                         createDb.addSaleFromFileToDb();
-                        JOptionPane.showMessageDialog(rootPane, "Inserimento completato con successo");
-                        dispose();
-                        guiInformationMenu.setVisible(true);
-                    }catch (SQLException ex) {
-                         JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
-                    } catch (NullPointerException ex) {
-                         JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato");
-                    }
-                }else{
-                    JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserite non è valido");
-                    System.out.println(agri.getSale().size());
-                   agri.getSale().clear();
-                    
-                }    
-            }
-        if(!jCheckBoxFile.isSelected() && !jCheckBoxSaleGui.isSelected()){
-            int choose;
-            choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
-            if(choose==JOptionPane.YES_OPTION){
-                try {
-                    if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
-                        dispose();
-                        guiInformationMenu.setVisible(true);
-                    }
-                    else
-                        JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
-                }
-                
-            }
-        }
-        
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFileChooserActionPerformed

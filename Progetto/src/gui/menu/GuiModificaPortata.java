@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.Ingredient;
 import menu.MenuCompleto;
-import menu.ModificaMenu;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
@@ -89,14 +88,13 @@ public class GuiModificaPortata extends javax.swing.JFrame {
          }
     }
     
-    public void initPortate(){
-        
+    public void initPortate(){   
         for(Portata pt: MenuCompleto.menuCompleto){
             jComboPortate.addItem(pt.getNome());
         } 
     }
     
-    public void initFild(){
+    public void initFields(){
         portata = (String)jComboPortate.getSelectedItem();
         for(Portata pt: MenuCompleto.menuCompleto ){
             try{
@@ -127,14 +125,33 @@ public class GuiModificaPortata extends javax.swing.JFrame {
                     jQnt12.setText(String.valueOf(pt.getIngredienti().get(11).getQuantity()));
                     p=pt;
                 }
-            }catch(IndexOutOfBoundsException ex){}
-            
-            
+            }catch(IndexOutOfBoundsException ex){}   
         }
-        
-       
     }
-   
+    public void getFields(){
+        controllo = true; 
+        try {
+            p.getIngredienti().clear();
+            setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
+            setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
+            setQntIng(jIngrediente3, jQnt3, ing3, qnt3);
+            setQntIng(jIngrediente4, jQnt4, ing4, qnt4);
+            setQntIng(jIngrediente5, jQnt5, ing5, qnt5);
+            setQntIng(jIngrediente6, jQnt6, ing6, qnt6);
+            setQntIng(jIngrediente7, jQnt7, ing7, qnt7);
+            setQntIng(jIngrediente8, jQnt8, ing8, qnt8);
+            setQntIng(jIngrediente9, jQnt9, ing9, qnt9);
+            setQntIng(jIngrediente10, jQnt10, ing10, qnt10);
+            setQntIng(jIngrediente11, jQnt11, ing11, qnt11);
+            setQntIng(jIngrediente12, jQnt12, ing12, qnt12);
+            if(controllo){
+                createDb.modificaPortata(p);
+                JOptionPane.showMessageDialog(rootPane, "Portata modificata con successo!");
+            }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Non è possibile modificare la portata");
+            }catch(NullPointerException e){}
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -298,36 +315,7 @@ public class GuiModificaPortata extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonModificaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonModificaActionPerformed
-        controllo = true;
-        
-            try {
-                p.getIngredienti().clear();
-
-                setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
-                setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
-                setQntIng(jIngrediente3, jQnt3, ing3, qnt3);
-                setQntIng(jIngrediente4, jQnt4, ing4, qnt4);
-                setQntIng(jIngrediente5, jQnt5, ing5, qnt5);
-                setQntIng(jIngrediente6, jQnt6, ing6, qnt6);
-                setQntIng(jIngrediente7, jQnt7, ing7, qnt7);
-                setQntIng(jIngrediente8, jQnt8, ing8, qnt8);
-                setQntIng(jIngrediente9, jQnt9, ing9, qnt9);
-                setQntIng(jIngrediente10, jQnt10, ing10, qnt10);
-                setQntIng(jIngrediente11, jQnt11, ing11, qnt11);
-                setQntIng(jIngrediente12, jQnt12, ing12, qnt12);
-                if(controllo){
-                    createDb.modificaPortata(p);
-                    JOptionPane.showMessageDialog(rootPane, "Portata modificata con successo!");
-                    
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Non è possibile modificare la portata");
-            }catch(NullPointerException e){}
-        
-       
-       
-        
-        
+        getFields();
     }//GEN-LAST:event_jButtonModificaActionPerformed
 
     private void jIngrediente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIngrediente1ActionPerformed
@@ -372,7 +360,7 @@ public class GuiModificaPortata extends javax.swing.JFrame {
 
     private void jComboPortateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboPortateActionPerformed
        
-        initFild();
+        initFields();
     }//GEN-LAST:event_jComboPortateActionPerformed
         
   

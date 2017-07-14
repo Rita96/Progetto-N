@@ -56,6 +56,16 @@ public void imprevisto(){
         });
     }
     
+    public void indietroButton(){
+        dispose();
+        GuiSetMenu guiSetMenu;
+         try {
+             guiSetMenu = new GuiSetMenu();
+             guiSetMenu.setVisible(true);
+         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+         }
+    }
     
     
     @SuppressWarnings("unchecked")
@@ -129,17 +139,7 @@ public void imprevisto(){
     }//GEN-LAST:event_jTableMenuPropertyChange
 
     private void jButtonIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndietroActionPerformed
-         dispose();
-        GuiSetMenu guiSetMenu;
-         try {
-             guiSetMenu = new GuiSetMenu();
-             guiSetMenu.setVisible(true);
-         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-         }
-        
-        
-        
+        indietroButton();  
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed

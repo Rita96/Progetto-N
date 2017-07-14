@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lettura.IngredientsReading;
-import lettura.LeggiPortate;
 import menu.Ingredient;
 import menu.MenuCompleto;
 import menu.Portata;
@@ -38,8 +37,6 @@ public class GuiSetMenu extends javax.swing.JFrame {
     private FileChooser fileChooser;
     CreateDb createDb;
     private GuiInputMenu guiInputMenu;
-    private LeggiPortate leggiPortate = new LeggiPortate();
-    
     public GuiSetMenu() throws SQLException {
         initComponents();
         fileChooser = new FileChooser();
@@ -49,23 +46,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
         imprevisto();
     }
 
-  public void imprevisto(){
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent we) {
-                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
-                if(i==JOptionPane.YES_OPTION){
-                    try {
-                        createDb.DropSchema();
-                        dispose();
-                    } catch (SQLException ex) {
-                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
-                    }  
-                }else
-                    setDefaultCloseOperation(GuiNome.DO_NOTHING_ON_CLOSE);
-            }
-        });
-    }
+  
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -129,23 +110,19 @@ public class GuiSetMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-      
-
+    
+    public void openGuiMenu(){
         if(jCheckBoxMenuGui.isSelected()){
             guiInputMenu.setVisible(true);
             dispose();         
-        }
-   
-        
+        } 
+    }
+    public void insertFileMenu(){
         if(jCheckBoxFile.isSelected()){
             jButtonFileChooser.setEnabled(true);
             try {
                 IngredientsReading ir = new IngredientsReading();
-                ir.IngredientsReading(fileChooser.getPercorso());
-                
-                
+                ir.IngredientsReading(fileChooser.getPercorso());   
             //leggiPortate.letturaPortate(fileChooser.getPercorso());
             createDb.addPortataFromFiletoDb();
             createDb.addIngredienti();
@@ -160,7 +137,9 @@ public class GuiSetMenu extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(rootPane, "Nessun file selezionato!");
             }
         }
-        if(!jCheckBoxFile.isSelected() && !jCheckBoxMenuGui.isSelected()){
+    }
+    public  void emptyMenu(){
+         if(!jCheckBoxFile.isSelected() && !jCheckBoxMenuGui.isSelected()){
             int choose;
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
@@ -178,8 +157,29 @@ public class GuiSetMenu extends javax.swing.JFrame {
                 }
             }
         }
-      
-      
+    }
+    public void imprevisto(){
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent we) {
+                int i = JOptionPane.showConfirmDialog(rootPane, "Sei sicuro di voler uscire?");
+                if(i==JOptionPane.YES_OPTION){
+                    try {
+                        createDb.DropSchema();
+                        dispose();
+                    } catch (SQLException ex) {
+                        JOptionPane.showMessageDialog(rootPane, "Impossibile raggiungere il Database!");
+                    }  
+                }else
+                    setDefaultCloseOperation(GuiNome.DO_NOTHING_ON_CLOSE);
+            }
+        });
+    }
+    
+    private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+        openGuiMenu();
+        insertFileMenu();
+        emptyMenu();
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jButtonFileChooserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFileChooserActionPerformed

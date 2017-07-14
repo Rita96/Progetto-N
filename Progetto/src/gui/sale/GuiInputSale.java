@@ -11,12 +11,8 @@ import gui.nome.GuiNome;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import menu.MenuCompleto;
-import menu.Portata;
+
 
 /**
  *
@@ -24,7 +20,6 @@ import menu.Portata;
  */
 public class GuiInputSale extends javax.swing.JFrame {
 
-//     public DefaultTableModel jtm = null;
      GuiAddSala guiAddSala;
      CreateDb createDb;
      
@@ -36,7 +31,7 @@ public class GuiInputSale extends javax.swing.JFrame {
         createDb = new CreateDb();
         imprevisto();
     }
-public void imprevisto(){
+    public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -53,6 +48,36 @@ public void imprevisto(){
             }
         });
     }
+    public void indietroButton(){
+        dispose();
+        GuiSetSale guiSetSale;
+        try {
+            guiSetSale = new GuiSetSale();
+            guiSetSale.setVisible(true);
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+        }
+
+    }
+    public void avantiButton(){
+        try {
+             if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
+                 try {
+                     GuiInformationMenu guiInformationMenu = new GuiInformationMenu();
+                     dispose();
+                     guiInformationMenu.setVisible(true);
+                     guiAddSala.dispose();
+                 } catch (SQLException ex) {
+                     JOptionPane.showMessageDialog(rootPane, "Sala già esistente");
+                 }
+             }
+             else
+                JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
+                 } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
+            }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -124,35 +149,11 @@ public void imprevisto(){
     }//GEN-LAST:event_jTableSalePropertyChange
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-         try {
-             if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){
-                 try {
-                     GuiInformationMenu guiInformationMenu = new GuiInformationMenu();
-                     dispose();
-                     guiInformationMenu.setVisible(true);
-                     guiAddSala.dispose();
-                 } catch (SQLException ex) {
-                     JOptionPane.showMessageDialog(rootPane, "Sala già esistente");
-                 }
-             }
-             else
-                JOptionPane.showMessageDialog(rootPane, "Il numero di sale inserito non è valido!");
-                 } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
-         }
-       
+         avantiButton();
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jButtonIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndietroActionPerformed
-        dispose();
-        GuiSetSale guiSetSale;
-         try {
-             guiSetSale = new GuiSetSale();
-             guiSetSale.setVisible(true);
-         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-         }
-        
+       indietroButton();
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
     /**

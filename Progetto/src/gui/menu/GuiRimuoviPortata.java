@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.MenuCompleto;
-import menu.ModificaMenu;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
@@ -42,6 +41,24 @@ public class GuiRimuoviPortata extends javax.swing.JFrame {
        for(Portata p :MenuCompleto.menuCompleto){
             jComboBoxPortate.addItem(p.getNome());
       }
+   }
+   public void rimuoviPortate(){
+       String portata = (String) jComboBoxPortate.getSelectedItem();
+        int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+portata+" ?");
+        if(choose==JOptionPane.YES_OPTION){
+            try {
+                for(int i=0;i<MenuCompleto.menuCompleto.size();i++){
+                    if(portata.equals(MenuCompleto.menuCompleto.get(i).getNome()))
+                    MenuCompleto.menuCompleto.remove(i);
+                }
+                createDb.deletePortataFromMenu(portata);
+                JOptionPane.showMessageDialog(rootPane, "Portata cancellata!");
+                dispose();
+            
+            } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Impossibile connettersi al Database!");
+            }
+        }
    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -77,25 +94,7 @@ public class GuiRimuoviPortata extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRimuoviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRimuoviActionPerformed
-        String portata = (String) jComboBoxPortate.getSelectedItem();
-        int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+portata+" ?");
-        if(choose==JOptionPane.YES_OPTION){
-            try {
-                for(int i=0;i<MenuCompleto.menuCompleto.size();i++){
-                    if(portata.equals(MenuCompleto.menuCompleto.get(i).getNome()))
-                    MenuCompleto.menuCompleto.remove(i);
-                }
-                createDb.deletePortataFromMenu(portata);
-                JOptionPane.showMessageDialog(rootPane, "Portata cancellata!");
-                dispose();
-            
-            } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Impossibile connettersi al Database!");
-            }
-        }
-        
-        
-     
+        rimuoviPortate();
     }//GEN-LAST:event_jButtonRimuoviActionPerformed
 
     private void jComboBoxPortateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxPortateActionPerformed

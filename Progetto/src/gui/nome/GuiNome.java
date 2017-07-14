@@ -50,6 +50,32 @@ public class GuiNome extends javax.swing.JFrame {
             }
         });
     }
+    public void avantiButton(){
+         String nome = jTextNome.getText();
+        if(nome.isEmpty())
+            JOptionPane.showMessageDialog(rootPane, warning);
+        else{ 
+         Agriturismo agri = new Agriturismo();
+         agri.setNome(nome);
+            try {
+                CreateDb createDb = new CreateDb();
+                createDb.CreateSchema();
+                createDb.createTableDatiRistorante();
+                createDb.insertDatiRistorante();
+                dispose();
+            } catch (SQLException ex) {
+                JOptionPane.showConfirmDialog(rootPane, "Errore nel database !");
+            }
+         GuiInformationSale guiInformation;
+            try {
+                guiInformation = new GuiInformationSale();
+                guiInformation.setVisible(true);
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "Errore in SQL !");
+            }
+        } 
+    }
+    
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -95,30 +121,7 @@ public class GuiNome extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextNomeActionPerformed
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
-        String nome = jTextNome.getText();
-        
-        if(nome.isEmpty())
-            JOptionPane.showMessageDialog(rootPane, warning);
-        else{ 
-         Agriturismo agri = new Agriturismo(nome);
-            try {
-                CreateDb createDb = new CreateDb();
-                createDb.CreateSchema();
-                createDb.createTableDatiRistorante();
-                createDb.insertDatiRistorante();
-                dispose();
-            } catch (SQLException ex) {
-                JOptionPane.showConfirmDialog(rootPane, "Errore nel database !");
-            }
-         GuiInformationSale guiInformation;
-            try {
-                guiInformation = new GuiInformationSale();
-                guiInformation.setVisible(true);
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "Errore in SQL !");
-            }
-         
-        } 
+        avantiButton();
     }//GEN-LAST:event_jButtonAvantiActionPerformed
 
 

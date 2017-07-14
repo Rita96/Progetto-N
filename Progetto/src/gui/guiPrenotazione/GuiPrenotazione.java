@@ -120,8 +120,89 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         }
     }
-    
+    public void impostaData(){
+         if(data==null){
+            data = guiProva.dataOdierda();
+            data = GuiPrincipale.rimuoviOrarioData(data);
+        }
+        data = GuiPrincipale.rimuoviOrarioData(data);
+        GuiPrincipale.rimuoviOrarioData(data);
+      
+         if(data!=dataOdierna){
+            data = JData.getDate();
+        }
+    }
+    public void okButton(){
+        try{            
+            nome = JNome.getText();
+            if(nome.isEmpty())
+                throw new ExeptionNome();
+            numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
+            if(JNumeroAdulti.getText().isEmpty()){
+                throw new ExeptionNumeroAdulti();
+            }if(data.before(GuiPrincipale.dataOdierna))
+                throw new ExeptionData();
+            String line;
+            line = JNumeroBambini.getText();
+            if(line.isEmpty())
+                numeroBambini=0;
+            else
+                numeroBambini = Integer.parseInt(JNumeroBambini.getText());
+           
+            numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
+            tipoEvento = JNumeroTelefono3.getText();
+        
+            primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
+            primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
+            primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
+            secondo1 = new Portata((String) JSecondo1.getSelectedItem(), TipoPortata.Secondo);
+            secondo2 = new Portata((String) JSecondo2.getSelectedItem(), TipoPortata.Secondo);
+            secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
+            dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
+            note = jNote.getText();
+            cliente = new Cliente(nome, numeroTelefono);
+        
+            menuCliente.getMenuCliente().add(primo1);
+            menuCliente.getMenuCliente().add(primo2);
+            menuCliente.getMenuCliente().add(primo3);
+            menuCliente.getMenuCliente().add(secondo1);
+            menuCliente.getMenuCliente().add(secondo2);
+            menuCliente.getMenuCliente().add(secondo3);
+            menuCliente.getMenuCliente().add(dolce);
+            prenotazione = new Prenotazione(numeroAdulti, data, pasto, cliente);
+            prenotazione.setDateDb(data);
+            prenotazione.setNote(note);
+            prenotazione.setMenu(menuCliente);
+            prenotazione.setTipoEvento(tipoEvento);
+            prenotazione.setnBambini(numeroBambini);
+            prenotazione.setSala(new Sala(s));
+            prenotazione.setMenu(menuCliente);
+            prenotazione.setAttesa(attesa);
+            prenotazione.setDaConfermare(daConfermare);
+            prenotazione.setEsclusiva(esclusiva);
+            prenotazione.setEsigenza(esigenza);
+            prenotazione.setPreferenza(preferenza);
+            prenotazione.setDate(data);
 
+            agriturismo.aggiungiPrenotazione(prenotazione);
+            createDb.addSinglePrenotazione(prenotazione);
+            dispose();
+            int id = createDb.selectMaxId();
+            prenotazione.setId(id);             
+        }catch(ExeptionNome ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NullPointerException ex){
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
+        }catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, ex);
+        }catch(ExeptionNumeroAdulti ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }catch(NumberFormatException ex){
+            JOptionPane.showMessageDialog(rootPane, "Possibile errore nei campi: n.Adulti / numero di telefono /numero di bambini !");
+        }catch(ExeptionData ex){
+            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -425,81 +506,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JNumeroAdultiActionPerformed
 
     private void JOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JOkActionPerformed
-          
-        try{            
-            nome = JNome.getText();
-            if(nome.isEmpty())
-                throw new ExeptionNome();
-            numeroAdulti = Integer.valueOf(JNumeroAdulti.getText());
-            if(JNumeroAdulti.getText().isEmpty()){
-                throw new ExeptionNumeroAdulti();
-            }if(data.before(GuiPrincipale.dataOdierna))
-                throw new ExeptionData();
-            String line;
-            line = JNumeroBambini.getText();
-            if(line.isEmpty())
-                numeroBambini=0;
-            else
-                numeroBambini = Integer.parseInt(JNumeroBambini.getText());
-           
-            numeroTelefono = Long.parseLong(JNumeroTelefono.getText());
-            tipoEvento = JNumeroTelefono3.getText();
-        
-            primo1 = new Portata((String) JPrimo1.getSelectedItem(), TipoPortata.Primo);
-            primo2 = new Portata((String) JPrimo2.getSelectedItem(), TipoPortata.Primo);
-            primo3 = new Portata((String) JPrimo3.getSelectedItem(), TipoPortata.Primo);
-            secondo1 = new Portata((String) JSecondo1.getSelectedItem(), TipoPortata.Secondo);
-            secondo2 = new Portata((String) JSecondo2.getSelectedItem(), TipoPortata.Secondo);
-            secondo3 = new Portata((String) JSecondo3.getSelectedItem(), TipoPortata.Secondo);
-            dolce = new Portata((String) JDolce.getSelectedItem(), TipoPortata.Dolce);
-            note = jNote.getText();
-            cliente = new Cliente(nome, numeroTelefono);
-        
-            menuCliente.getMenuCliente().add(primo1);
-            menuCliente.getMenuCliente().add(primo2);
-            menuCliente.getMenuCliente().add(primo3);
-            menuCliente.getMenuCliente().add(secondo1);
-            menuCliente.getMenuCliente().add(secondo2);
-            menuCliente.getMenuCliente().add(secondo3);
-            menuCliente.getMenuCliente().add(dolce);
-            prenotazione = new Prenotazione(numeroAdulti, data, pasto, cliente);
-            prenotazione.setDateDb(data);
-            prenotazione.setNote(note);
-            prenotazione.setMenu(menuCliente);
-            prenotazione.setTipoEvento(tipoEvento);
-            prenotazione.setnBambini(numeroBambini);
-       
-            prenotazione.setSala(new Sala(s));
-            prenotazione.setMenu(menuCliente);
-            prenotazione.setAttesa(attesa);
-            prenotazione.setDaConfermare(daConfermare);
-            prenotazione.setEsclusiva(esclusiva);
-            prenotazione.setEsigenza(esigenza);
-            prenotazione.setPreferenza(preferenza);
-            prenotazione.setDate(data);
-
-            agriturismo.aggiungiPrenotazione(prenotazione);
-            createDb.addSinglePrenotazione(prenotazione);
-            dispose();
-            int id = createDb.selectMaxId();
-            prenotazione.setId(id);        
-            
-            
-        }catch(ExeptionNome ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }catch(NullPointerException ex){
-            JOptionPane.showMessageDialog(rootPane, "Non hai inserito la data!");
-        }catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, ex);
-        }catch(ExeptionNumeroAdulti ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }catch(NumberFormatException ex){
-            JOptionPane.showMessageDialog(rootPane, "Possibile errore nei campi: n.Adulti / numero di telefono /numero di bambini !");
-        }catch(ExeptionData ex){
-            JOptionPane.showMessageDialog(rootPane, ex.getMessage());
-        }
-        
-        
+        okButton();
     }//GEN-LAST:event_JOkActionPerformed
 
     private void JNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JNomeActionPerformed
@@ -515,17 +522,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     }//GEN-LAST:event_JPastoActionPerformed
 
     private void JDataPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDataPropertyChange
-       
-        if(data==null){
-            data = guiProva.dataOdierda();
-            data = GuiPrincipale.rimuoviOrarioData(data);
-        }
-        data = GuiPrincipale.rimuoviOrarioData(data);
-        GuiPrincipale.rimuoviOrarioData(data);
-      
-         if(data!=dataOdierna){
-            data = JData.getDate();
-        }
+        impostaData();
     }//GEN-LAST:event_JDataPropertyChange
 
     private void JPrimo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPrimo1ActionPerformed

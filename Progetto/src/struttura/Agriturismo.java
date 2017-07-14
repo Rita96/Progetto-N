@@ -66,22 +66,25 @@ public class Agriturismo implements FunzioniPrincipali{
         return prenotazioni;
     }
 
-    
-    
     public void addSala(Sala s){
         sale.add(s);
+    }
+    public void removeSala(Sala s){
+        sale.remove(s);
     }
     
     public ArrayList<Sala> getSale() {
         return sale;
     }
 
-
     public ArrayList<Prenotazione> getPrenotazione() {
         return prenotazioni;
     }
 
-    public int getContatorePersone() {
+    public int getContatorePersone(Date d) {
+        for(Prenotazione p: prenotazioni)
+            if(p.getDate().equals(d))
+                contatorePersone += p.getnAdulti()+p.getnBambini();
         return contatorePersone;
     }
     
@@ -91,12 +94,8 @@ public class Agriturismo implements FunzioniPrincipali{
     }
 
     @Override
-    public void rimnuoviPrenotazione() {
-        
-    }
-
-    @Override
-    public void modificaPrenotazione() {
+    public void rimnuoviPrenotazione(Prenotazione p) {
+        prenotazioni.remove(p);
     }
 
     @Override
@@ -121,13 +120,6 @@ public class Agriturismo implements FunzioniPrincipali{
             }
         }    
     }
-        
-    
-
-    @Override
-    public void stampaCucina() {
-    }
-
     @Override
     public void calcoloSpesaPortate(Date d1, Date d2) {
         for(Prenotazione p: prenotazioni){

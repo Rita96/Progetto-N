@@ -15,11 +15,10 @@ import java.util.Date;
  * @author luby
  */
 public interface FunzioniPrincipali {
+    
     public void aggiungiPrenotazione(Prenotazione p);
-    public void rimnuoviPrenotazione();
-    public void modificaPrenotazione();
+    public void rimnuoviPrenotazione(Prenotazione p);
     public void stampaAccoglienza(ArrayList<GestioneTabelle> gt);
-    public void stampaCucina();
     public void calcoloSpesaPortate(Date d1, Date d2);
     public void calcoloSpesaIngredienti();
     

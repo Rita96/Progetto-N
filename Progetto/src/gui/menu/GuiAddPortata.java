@@ -17,7 +17,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.Ingredient;
 import menu.MenuCompleto;
-import menu.ModificaMenu;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
@@ -113,6 +112,54 @@ public class GuiAddPortata extends javax.swing.JFrame {
        jQnt11.setText("");
        jIngrediente12.setText("");
        jQnt12.setText("");
+    }
+    public void addButton(){
+        controllo = true;
+        tp = (String) jComboBoxTipoPortata.getSelectedItem();
+        nome = jTextFieldNome.getText();
+        
+        if(!nome.isEmpty()){
+            this.tipoPortata = getTipoPortata();
+            try {
+                p= new Portata(nome, tipoPortata);
+                setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
+                setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
+                setQntIng(jIngrediente3, jQnt3, ing3, qnt3);
+                setQntIng(jIngrediente4, jQnt4, ing4, qnt4);
+                setQntIng(jIngrediente5, jQnt5, ing5, qnt5);
+                setQntIng(jIngrediente6, jQnt6, ing6, qnt6);
+                setQntIng(jIngrediente7, jQnt7, ing7, qnt7);
+                setQntIng(jIngrediente8, jQnt8, ing8, qnt8);
+                setQntIng(jIngrediente9, jQnt9, ing9, qnt9);
+                setQntIng(jIngrediente10, jQnt10, ing10, qnt10);
+                setQntIng(jIngrediente11, jQnt11, ing11, qnt11);
+                setQntIng(jIngrediente12, jQnt12, ing12, qnt12);
+                if(controllo){
+                    createDb.addSinglePortata(p);
+                    JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
+                    createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
+                    MenuCompleto.menuCompleto.add(p);
+                    initFild();
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(rootPane, "La portata esiste già!");
+            }catch(NullPointerException e){}
+        }
+        else{
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
+        }
+        if(controllo)
+            initFild();
+    }
+    public TipoPortata getTipoPortata(){
+        if(tp.equals(TipoPortata.Primo.toString()))
+            tipoPortata = TipoPortata.Primo;
+        if(tp.equals(TipoPortata.Secondo.toString()))
+            tipoPortata = TipoPortata.Secondo;
+        if(tp.equals(TipoPortata.Dolce.toString()))
+            tipoPortata = TipoPortata.Dolce;
+        
+        return tipoPortata;
     }
    
     
@@ -289,49 +336,11 @@ public class GuiAddPortata extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        controllo = true;
-        tp = (String) jComboBoxTipoPortata.getSelectedItem();
-        nome = jTextFieldNome.getText();
-        
-        if(!nome.isEmpty()){
-            this.tipoPortata = getTipoPortata();
-            try {
-                p= new Portata(nome, tipoPortata);
-                setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
-                setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
-                setQntIng(jIngrediente3, jQnt3, ing3, qnt3);
-                setQntIng(jIngrediente4, jQnt4, ing4, qnt4);
-                setQntIng(jIngrediente5, jQnt5, ing5, qnt5);
-                setQntIng(jIngrediente6, jQnt6, ing6, qnt6);
-                setQntIng(jIngrediente7, jQnt7, ing7, qnt7);
-                setQntIng(jIngrediente8, jQnt8, ing8, qnt8);
-                setQntIng(jIngrediente9, jQnt9, ing9, qnt9);
-                setQntIng(jIngrediente10, jQnt10, ing10, qnt10);
-                setQntIng(jIngrediente11, jQnt11, ing11, qnt11);
-                setQntIng(jIngrediente12, jQnt12, ing12, qnt12);
-                if(controllo){
-                    createDb.addSinglePortata(p);
-                    JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
-                    createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
-                    MenuCompleto.menuCompleto.add(p);
-                    initFild();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(rootPane, "La portata esiste già!");
-            }catch(NullPointerException e){}
-        }
-        else{
-            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
-        }
-        if(controllo)
-            initFild();
-        
-        
+            addButton();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jComboBoxTipoPortataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoPortataActionPerformed
-        
-
+   
     }//GEN-LAST:event_jComboBoxTipoPortataActionPerformed
 
     private void jIngrediente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jIngrediente1ActionPerformed
@@ -374,16 +383,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jQnt2ActionPerformed
         
-    public TipoPortata getTipoPortata(){
-        if(tp.equals(TipoPortata.Primo.toString()))
-            tipoPortata = TipoPortata.Primo;
-        if(tp.equals(TipoPortata.Secondo.toString()))
-            tipoPortata = TipoPortata.Secondo;
-        if(tp.equals(TipoPortata.Dolce.toString()))
-            tipoPortata = TipoPortata.Dolce;
-        
-        return tipoPortata;
-    }
+    
   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

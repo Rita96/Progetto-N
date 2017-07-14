@@ -28,7 +28,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         imprevisto();
     }
 
-public void imprevisto(){
+    public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -46,6 +46,17 @@ public void imprevisto(){
             }
         });
     }
+    public void avantiButton(){
+    try {
+            guiSetMenu = new GuiSetMenu();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+        }
+        dispose();
+        guiSetMenu.setVisible(true);
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,7 +64,7 @@ public void imprevisto(){
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jButtonAvanti = new javax.swing.JButton();
         jLabelSfondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -70,13 +81,13 @@ public void imprevisto(){
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 390, 100));
 
-        jButton1.setText("Avanti");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAvanti.setText("Avanti");
+        jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAvantiActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 70, -1));
+        jPanel1.add(jButtonAvanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 70, -1));
 
         jLabelSfondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         jPanel1.add(jLabelSfondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 440, 300));
@@ -95,22 +106,13 @@ public void imprevisto(){
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    CreateDb createDb = new CreateDb();
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            guiSetMenu = new GuiSetMenu();
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-        }
-        dispose();
-        guiSetMenu.setVisible(true);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+        avantiButton();      
+    }//GEN-LAST:event_jButtonAvantiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAvanti;
     private javax.swing.JLabel jLabelSfondo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

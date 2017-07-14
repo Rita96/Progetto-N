@@ -17,7 +17,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.MenuCompleto;
-import menu.ModificaMenu;
 import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
@@ -31,9 +30,7 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
 
     Agriturismo agri = new Agriturismo();
     CreateDb createDb;
-
-    
-    
+   
     public GuiRimuoviSala() throws SQLException {
         initComponents();
         createDb = new CreateDb();
@@ -44,6 +41,26 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
        for(Sala s :agri.getSale()){
             jComboBoxSala.addItem(s.getNome());
       }
+   }
+   
+   public void removeSala(){
+       String sala = (String) jComboBoxSala.getSelectedItem();
+       int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+sala+" ?");
+        if(choose==JOptionPane.YES_OPTION){
+            try {
+                for(int i=0;i<agri.getSale().size();i++){
+                    if(sala.equals(agri.getSale().get(i).getNome()))
+                    agri.removeSala(agri.getSale().get(i));
+                }
+                createDb.deleteSalaFromMenu(sala);
+                JOptionPane.showMessageDialog(rootPane, "Sala cancellata!");
+                JOptionPane.showMessageDialog(rootPane, "Le modifiche saranno disponibili dopo il riavvio del programma!");
+                dispose();
+            
+            } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Impossibile connettersi al Database!");
+            }
+        }
    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -79,26 +96,7 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRimuoviActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRimuoviActionPerformed
-        String sala = (String) jComboBoxSala.getSelectedItem();
-        int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+sala+" ?");
-        if(choose==JOptionPane.YES_OPTION){
-            try {
-                for(int i=0;i<agri.getSale().size();i++){
-                    if(sala.equals(agri.getSale().get(i).getNome()))
-                    agri.getSale().remove(i);
-                }
-                createDb.deleteSalaFromMenu(sala);
-                JOptionPane.showMessageDialog(rootPane, "Sala cancellata!");
-                JOptionPane.showMessageDialog(rootPane, "Le modifiche saranno disponibili dopo il riavvio del programma!");
-                dispose();
-            
-            } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Impossibile connettersi al Database!");
-            }
-        }
-        
-        
-     
+        removeSala();
     }//GEN-LAST:event_jButtonRimuoviActionPerformed
 
     private void jComboBoxSalaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxSalaActionPerformed

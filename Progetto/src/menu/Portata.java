@@ -16,7 +16,7 @@ public class Portata {
     private String nome;
     private TipoPortata tipoPortata;
     private ArrayList<Ingredient> ingredienti;
-    private int portataNp = 0;
+    private int portataNp=0;
 
     public int getPortataNp() {
         return portataNp;

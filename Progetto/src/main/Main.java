@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package test;
+package main;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import gui.nome.GuiNome;
@@ -13,14 +13,13 @@ import gui.GuiPrincipale;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Date;
-import lettura.LeggiPortate;
 import lettura.LeggiSala;
 
 /**
  *
  * @author luby9
  */
-public class Tester {
+public class Main {
 
     /**
      * @param args the command line arguments

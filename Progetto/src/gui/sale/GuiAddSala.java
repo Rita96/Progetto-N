@@ -43,6 +43,28 @@ public class GuiAddSala extends javax.swing.JFrame {
         createDb = new CreateDb();
     }
 
+    public void addButton(){
+        nome = jTextFieldNome.getText(); 
+        if(!nome.isEmpty()){
+            if(agri.getSale().size()>=0 && agri.getSale().size()<12){
+                 try {
+                    createDb.addSingleSala(nome);
+                    JOptionPane.showMessageDialog(rootPane, "Sala aggiunta con successo!");
+                    createDb.riempiTabella(GuiInputSale.jTableSale, query);
+                    agri.addSala(new Sala(nome));
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
+            }
+            catch(NullPointerException e){}
+            }else{
+                JOptionPane.showMessageDialog(rootPane, "Il numero massimo di sale è stato raggiunto!");
+                agri.getSale().clear();
+            }
+        }else 
+            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
+        jTextFieldNome.setText("");
+    }
+    
    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -82,26 +104,7 @@ public class GuiAddSala extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAddActionPerformed
-        nome = jTextFieldNome.getText();
-        
-        if(!nome.isEmpty()){
-            if(agri.getSale().size()>=0 && agri.getSale().size()<12){
-                 try {
-                    createDb.addSingleSala(nome);
-                    JOptionPane.showMessageDialog(rootPane, "Sala aggiunta con successo!");
-                    createDb.riempiTabella(GuiInputSale.jTableSale, query);
-                    agri.addSala(new Sala(nome));
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(rootPane, "La sala è già esistente");
-            }
-            catch(NullPointerException e){}
-            }else{
-                JOptionPane.showMessageDialog(rootPane, "Il numero massimo di sale è stato raggiunto!");
-                agri.getSale().clear();
-            }
-        }else 
-            JOptionPane.showMessageDialog(rootPane, "Non hai inserito nulla!");
-        jTextFieldNome.setText("");
+        addButton();
     }//GEN-LAST:event_jButtonAddActionPerformed
 
     private void jTextFieldNomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldNomeActionPerformed

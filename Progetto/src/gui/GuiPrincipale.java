@@ -2,7 +2,6 @@ package gui;
 
 import gui.guiPrenotazione.GuiModificaPrenotazione;
 import gui.guiPrenotazione.GuiPrenotazione;
-import com.toedter.calendar.JDateChooser;
 import databse.CreateDb;
 import funzionalita.Prenotazione;
 import gui.calcoloSpesa.GuiCalcoloSpesa;
@@ -11,13 +10,7 @@ import gui.menu.GuiAddPortata;
 import gui.menu.GuiModificaPortata;
 import gui.menu.GuiRimuoviPortata;
 import gui.sale.GuiAddSala;
-import gui.sale.GuiInputSale;
 import gui.sale.GuiRimuoviSala;
-import java.awt.AWTEventMulticaster;
-import java.awt.Component;
-import java.awt.ComponentOrientation;
-import java.awt.Point;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -30,17 +23,12 @@ import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.Renderer;
 import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 import javax.swing.table.DefaultTableModel;
-import lettura.LeggiSala;
 import struttura.Agriturismo;
-import struttura.Sala;
 
 
 
@@ -55,7 +43,7 @@ import struttura.Sala;
  * @author Marcello
  */
 public class GuiPrincipale extends javax.swing.JFrame {
-    private Agriturismo agri = new Agriturismo();
+    private Agriturismo agri;
     protected Date date = new Date();
     public static Date dataOdierna = new Date();
     private String pasto="Pranzo";
@@ -72,6 +60,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
      * Creates new form GUI
      */
     public GuiPrincipale() throws SQLException {
+        agri = new Agriturismo();
         createDb = new CreateDb();
         initComponents();
         setLocationRelativeTo(null);
@@ -79,11 +68,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         aggiungiTabelleArray();
         jDateChooser.setDate(dataOdierna);
         numeroSale = createDb.getNumeroSale();
-        inserisciSale(numeroSale);
-        
-      
-        
-        impostaJSposta();
+        inserisciSale(numeroSale); 
         impostaJModificaPrenotazione();
         impostaRimuovi();
         impostaStampa();
@@ -94,9 +79,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         coloriRighe();
         modificaPortata();
     }
-     public ArrayList<GestioneTabelle> getArrayJTable() {
-        return arrayJTable;
-    }
+    
     public void inizializzo(){
         jScrollPane13.setVisible(false);
         jScrollPane3.setVisible(false);
@@ -152,19 +135,18 @@ public class GuiPrincipale extends javax.swing.JFrame {
                 if(!a.getSala().getNome().equalsIgnoreCase("Indifferente")){
                     arrayJTable.get(0).getDtm().addRow(object); //aggiungo i tavoli anche alla tabella principale
                     i = arrayJTable.get(0).getDtm().getRowCount();
-
                 }
-            if(a.getAttesa()==1){
-                if(controllo){
-                    try{
-                        arrayJTable.get(1).getDtm().addRow(object); 
-                        arrayJTable.get(0).getDtm().removeRow(i-1);
-                        t.getDtm().removeRow(i-1);
-                        controllo=false;
-                    }catch(ArrayIndexOutOfBoundsException s){}
+                if(a.getAttesa()==1){
+                    if(controllo){
+                        try{
+                            arrayJTable.get(1).getDtm().addRow(object); 
+                            arrayJTable.get(0).getDtm().removeRow(i-1);
+                            t.getDtm().removeRow(i-1);
+                            controllo=false;
+                        }catch(ArrayIndexOutOfBoundsException s){}
+                    }
                 }
             }
-        }
             try{
                 refreshNumber();
             }catch(NullPointerException e){}
@@ -220,48 +202,29 @@ public class GuiPrincipale extends javax.swing.JFrame {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND,0);
         return cal.getTime();
-    }
-    
+    } 
     public Date dataOdierda(){
         Calendar cal = Calendar.getInstance();
         dataOdierna= cal.getTime();
         dataOdierna = rimuoviOrarioData(dataOdierna);
         return dataOdierna;
     }
+    public void impostaData(){
+        if(date!=dataOdierna){
+            date = jDateChooser.getDate();
+        }
+        if(date==null){
+            date = dataOdierda();
+        }
+        date = rimuoviOrarioData(date);
+        aggiornaTabelle(date);
+    }
     public void impostaMenu() throws SQLException{      
         jModificaPrenotazione.setText("Modifica");
-        jSposta.setText("Sposta");
         jRimuovi.setText("Rimuovi");
         jMenuPrincipale.add(jModificaPrenotazione);
         jMenuPrincipale.add(jRimuovi);
-        jMenuPrincipale.add(jSposta);
-        int i = 0;
-//        jMenuSale.removeAll();
-//        for(Sala s: agri.getSale()){
-//            JMenuItem itemSala = new JMenuItem(s.getNome());
-//            arrayItem.add(itemSala);
-//            JMenuSala.add(itemSala);
-//            i++;
-//        }
 
-    }
-    public void impostaJSposta(){
-         jSposta.addMouseListener(new MouseInputAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent me) {
-                try{
-                    jMenuSale.show(me.getComponent(), me.getX(), me.getY());
-                }catch(java.awt.IllegalComponentStateException e){}
-            }
-        });
-        for(JMenuItem jmi: arrayItem){
-            jmi.addMouseListener(new MouseInputAdapter() {
-                @Override
-                public void mouseExited(MouseEvent me) {
-                }
-   
-            });
-        }
     }
     public void impostaJModificaPrenotazione() throws SQLException{
         jModificaPrenotazione.addMouseListener(new MouseInputAdapter() {
@@ -1015,6 +978,15 @@ public class GuiPrincipale extends javax.swing.JFrame {
             }
         });
     }
+    public void prenotaButton(){
+        GuiPrenotazione guiPrenotazione = null;
+        try {
+            guiPrenotazione = new GuiPrenotazione();
+        } catch (SQLException ex) {
+            Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        guiPrenotazione.setVisible(true);
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -1023,7 +995,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jMenuPrincipale = new javax.swing.JPopupMenu();
         jModificaPrenotazione = new javax.swing.JMenuItem();
         jRimuovi = new javax.swing.JMenuItem();
-        jSposta = new javax.swing.JMenuItem();
         jMenuSale = new javax.swing.JPopupMenu();
         jPanel1 = new javax.swing.JPanel();
         labelnp3 = new javax.swing.JLabel();
@@ -1112,9 +1083,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
 
         jRimuovi.setText("jMenuItem1");
         jMenuPrincipale.add(jRimuovi);
-
-        jSposta.setText("jMenuItem3");
-        jMenuPrincipale.add(jSposta);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation(new java.awt.Point(0, 0));
@@ -1791,24 +1759,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void JDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_JDateChooserPropertyChange
-         if(date!=dataOdierna){
-            date = jDateChooser.getDate();
-        }
-        if(date==null){
-            date = dataOdierda();
-        }
-        date = rimuoviOrarioData(date);
-        aggiornaTabelle(date);
+        impostaData();
     }//GEN-LAST:event_JDateChooserPropertyChange
 
     private void PrenotaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_PrenotaActionPerformed
-        GuiPrenotazione guiPrenotazione = null;
-        try {
-            guiPrenotazione = new GuiPrenotazione();
-        } catch (SQLException ex) {
-            Logger.getLogger(GuiPrincipale.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        guiPrenotazione.setVisible(true);
+        prenotaButton();
     }//GEN-LAST:event_PrenotaActionPerformed
 
     private void JPastoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JPastoActionPerformed
@@ -1824,15 +1779,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonRefreshActionPerformed
  
     private void jDateChooserPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooserPropertyChange
-        if(date!=dataOdierna){
-            date = jDateChooser.getDate();
-        }
-        if(date==null){
-            date = dataOdierda();
-        }
-        date = rimuoviOrarioData(date);
-        aggiornaTabelle(date);
-        
+        impostaData();
     }//GEN-LAST:event_jDateChooserPropertyChange
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -1900,14 +1847,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     }//GEN-LAST:event_JStampaItemMouseClicked
 
     private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        
-       
-          
-                 
-            
-       
-       
-        
+
     }//GEN-LAST:event_formMouseClicked
 
     private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
@@ -1975,7 +1915,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JMenuItem jSposta;
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel label10sala;
     private javax.swing.JLabel label11sala;

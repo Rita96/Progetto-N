@@ -3,3 +3,47 @@ Funghi	primo	burro 100, olio 50, cipolla 1, riso 700, funghi 100, parmigiano 150
 Salsiccia	primo	burro 100, olio 50, cipolla 1, riso 700, salsiccia 200, parmigiano 150, brodo 2, zafferano 1
 Arancia e gorgonzola	primo	burro 100, olio 50, cipolla 1, riso 700, arancia 1, parmigiano 150, brodo 2, gorgonzola 200
 Pere e gorgonzola	primo	burro 100, olio 50, cipolla 1, riso 700, pere 2, parmigiano 150, brodo 2, gorgonzola 200
+Crespelle alle verdure di stagione	primo	uova 2, farina 100, latte 500, asparagi 200, ricotta 200, parmigiano 200, latte 1000, farina 60, burro 100, parmigiano 50
+Crespelle spinaci e ricotta	primo	uova 2, farina 100, latte 500, spinaci 200, ricotta 200, parmigiano 200, latte 1000, farina 60, burro 100, parmigiano 50
+Crespelle prosciutto e formaggio	primo	uova 2, farina 100, latte 500, prosciutto 200, ricotta 200, parmigiano 200, latte 1000, farina 60, burro 100, parmigiano 50
+Ravioli di zucca al burro versato e amaretti	primo	farina 400, semola 100, uova 4, zucca 1000, ricotta 200, parmigiano 150, burro 50, parmigiano 100, amaretti 2
+Ravioli di magro al burro versato e salvia	primo	farina 400, semola 100, uova 4, spinaci 1000, ricotta 200, parmigiano 150, burro 50, parmigiano 100, salvia 5
+Ravioli di brasato al sugo	primo	brasato 100, prosciutto_crudo 50, bolliti 50, parmigiano 200, uovo 1, pomodoro 200, cipolla 1, olio 50
+Ravioli gratinati	primo	brasato 100, prosciutto_crudo 50, bolliti 50, parmigiano 200, uovo 1, latte 1000, farina 60, burro 100
+Ravioli in brodo	primo	farina 400, semola 100, uova 4, brasato 100, prosciutto_crudo 50, bolliti 50, parmigiano 200, uovo 1, brodo 3
+Pasta alla chitarra al pomodoro	primo	farina 400, uova 2, acqua 100, semola 100, pomodoro 200, cipolla 1, olio 50
+Tagliatelle al ragu	primo	farina 400, semola 100, uova 4, pomodoro 200, cipolla 1, olio 50, carne_macinata 200
+Lasagne al forno	primo	farina 400, semola 100, uova 4, pomodoro 200, cipolla 1, olio 50, carne_macinata 200, latte 1000, farina 80, burro 100
+Pasta e fagioli	primo	lardo 50, rosmarino 50, carote 50, sedano 50, cipolla 50, cannellini 1000, alloro 4, olio 50, maltagliata 50
+Trippa	primo	cipolla 1, carota 2, sedano 3, verza 1, zucchine 2, trippa 1000, brodo 2, olio 50, aglio 1
+Minestrone	primo	cipolla 1, carote 2, sedano 2, zucchina 1, verza 250, zucca 250, fagioli 100, patate 2, pomodori 2, dadi 2
+Tagliata di scottona al pepe nero	secondo	roastbeef 300, rosmarino 1, olio 30, pepe_nero 5
+Carpaccio di filetto con scaglie di grana	secondo	filetto 200, olio 50, parmigiano 30, limone 1
+Roastbeef all’inglese	secondo	roastbeef 1000, sale_grosso 2000
+Tartare di manzo	secondo	fesa_francese 300, olio 50, limomi 2, alici 10, capperi 10, cipolline 10, oliva 10, peperoncino 10, cetriolini 10
+Vitello tonnato	secondo	magatello 300, uovo 1, olio_cuore 100, tonno 100, alici 2, capperi 10, cipolla 1, carota 1, sedano 1
+Pollo nostrano arrosto ripieno	secondo	pollo 3500, parmigiano 150, pangrattato 50, uova 2, castagne 50, prugne 50, uvetta 20, mela_renetta 1
+Pollo nostrano alla diavola	secondo	pollo 3500, peperoncino 10
+Pollo in umido alla cacciatora o ai profumi dell’orto	secondo	pollo 3500, profumi_orto 500
+Coniglio arrosto al limone	secondo	coniglio 3000, limone 2, olio 50
+Coniglio in salmi	secondo	Coniglio 3000, vino_roche 1, carota 1, sedano 1, cipolla 1, chiodi_di_garofano 5, bacche_di_ginepro 5, olio 50, cacao_amaro 10
+Spezzatino di manzo	secondo	manzo 300, aromi_orto 500
+Stracotto di manzo con polenta	secondo	manzo 1000, aromi_orto 500, farina 500
+Brasato di manzo con polenta	secondo	manzo 1000, vino_roche 1, carota 1, sedano 1, cipolla 1, chiodi_di_garofano 5, bacche_di_ginepro 5, olio 50, farina 500
+Stinco di vitello al forno	secondo	stinco 1500, olio 50, burro 50, vino_bianco 1
+Carre di vitello fra castagne e mele renette	secondo	carre_di_vitello 1500, olio 50, burro 50, vino_bianco 1, mele_renette 3, castagne 150
+Delizie di maiale alla brace	secondo	puntine 10, braciole 5, salsiccia 200
+Arista al forno con verdurine in agrodolce	secondo	arista 1500, cipolle_borrettane 1000, carote 500, sedano 300, patate 300
+Lessi misti con pure salsa verde e mostarda	secondo	cotechino 2, lingua_vitello 1, testina 1, gallina 3000, manzo 1000, guanciale 300, prezzemolo 200, uova 2, alici 2, capperi 10, olio 50, mostarda 150
+Cassoeula con polenta	secondo	puntine 20, piedino_di_maiale 1, olio 50, aromi_orto 500, vino_bianco 1, verze 2, salsiccia 500, farina 500
+Crostate con marmellate di nostra produzione	dolce	farina 150, fecola 150, tuorli 3, zucchero 150, burro 150, vanillina 1, marmellata 500
+Crostata di frutta fresca	dolce	farina 150, fecola 150, tuorli 3, zucchero 150, burro 150, vanillina 1, crema_pasticcera 100, fragole 200
+Crostata ricotta e cioccolato	dolce	farina 150, fecola 150, tuorli 3, zucchero 150, burro 150, vanillina 1, nutella 300, ricotta 300
+Girasole alle mandorle	dolce	savoiardi 2, crema_pasticcera 500, mandorle 100, caffe 100 
+Crostata cioccolato e pere	dolce	farina 150, fecola 150, tuorli 3, zucchero 150, burro 150, vanillina 1, nutella 300, ricotta 300, pere 200
+Torta alle mandorle	dolce	farina 150, fecola 150, tuorli 3, zucchero 150, burro 150, vanillina 1, mandorle 200
+Croccante	dolce	zucchero 100, mandorle 200
+Budini	dolce	scatole 2
+Mille foglie	dolce	pasta_sfoglia 1000, crema_pasticcera 400, latte 500, farina 80, zucchero 200, tuorli 6
+Torta di mele	dolce	farina 200, zucchero 200, uova 2, vanellina 1, latte 500, mele_renette 1000
+Tiramisu	dolce	savoiardi 2, caffe 100, mascarpone 1000, uova 2, zucchero 100, cacao 20

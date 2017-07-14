@@ -36,6 +36,33 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
         data.add(Calendar.DAY_OF_MONTH, giorno);
         return data.getTime();
     }
+    public void impostaData(){
+        date1 = jDateChooser1.getDate();
+        date1 = GuiPrincipale.rimuoviOrarioData(date1);
+        date2 = jDateChooser2.getDate();
+        date2 = GuiPrincipale.rimuoviOrarioData(date2);
+    }
+    public void calcolaSpesaButton(){
+        if(date2.before(date1)){
+            JOptionPane.showMessageDialog(rootPane, "Intervallo di date non valido!");
+        }else{
+            date1 = intervalloDate(date1, -1);
+            date2 = intervalloDate(date2, +1);
+            Agriturismo agri = new Agriturismo();
+        
+            for(Portata p: Agriturismo.portateSpesa){
+                p.setPortataNp(0);
+            }
+            agri.calcoloSpesaPortate(date1, date2);  
+            for(Ingredient i: Agriturismo.ingSpesa){
+                i.setIngredientNp(0);
+            }
+            agri.calcoloSpesaIngredienti();
+            GuiOutputSpesa gos = new GuiOutputSpesa();
+            gos.setVisible(true);
+            dispose();
+        }
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -99,36 +126,8 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
     }//GEN-LAST:event_jDateChooser2PropertyChange
 
     private void jButtonCalcolaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCalcolaActionPerformed
-        date1 = jDateChooser1.getDate();
-        date1 = GuiPrincipale.rimuoviOrarioData(date1);
-        date2 = jDateChooser2.getDate();
-        date2 = GuiPrincipale.rimuoviOrarioData(date2);
-        
-        if(date2.before(date1)){
-            JOptionPane.showMessageDialog(rootPane, "Intervallo di date non valido!");
-        }else{
-            date1 = intervalloDate(date1, -1);
-            date2 = intervalloDate(date2, +1);
-
-            Agriturismo agri = new Agriturismo();
-        
-            for(Portata p: Agriturismo.portateSpesa){
-                p.setPortataNp(0);
-            }
-            agri.calcoloSpesaPortate(date1, date2);  
-            for(Ingredient i: Agriturismo.ingSpesa){
-                i.setIngredientNp(0);
-            }
-            agri.calcoloSpesaIngredienti();
-           
-            GuiOutputSpesa gos = new GuiOutputSpesa();
-            gos.setVisible(true);
-            dispose();
-        
-        }
-        
-        
-        
+        impostaData();
+        calcolaSpesaButton();
     }//GEN-LAST:event_jButtonCalcolaActionPerformed
 
   

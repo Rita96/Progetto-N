@@ -45,6 +45,28 @@ public class GuiInformationSale extends javax.swing.JFrame {
             }
         });
     }
+    public void avantiButton(){
+        try {
+            guiSetSale = new GuiSetSale();
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+        }
+        dispose();
+        guiSetSale.setVisible(true);
+    }
+    public void indietroButton(){
+        dispose();
+        GuiNome guiNome = new GuiNome();
+        try {
+            CreateDb createDb = new CreateDb();
+            createDb.DropSchema();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
+        }
+        guiNome.setVisible(true);
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -52,7 +74,7 @@ public class GuiInformationSale extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
-        jButton1 = new javax.swing.JButton();
+        jButtonAvanti = new javax.swing.JButton();
         jButtonIndietro = new javax.swing.JButton();
         jLabelSfondo = new javax.swing.JLabel();
 
@@ -70,13 +92,13 @@ public class GuiInformationSale extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 390, 190));
 
-        jButton1.setText("Avanti");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonAvanti.setText("Avanti");
+        jButtonAvanti.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                jButtonAvantiActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 70, -1));
+        jPanel1.add(jButtonAvanti, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 70, -1));
 
         jButtonIndietro.setText("Indietro");
         jButtonIndietro.addActionListener(new java.awt.event.ActionListener() {
@@ -103,33 +125,17 @@ public class GuiInformationSale extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            guiSetSale = new GuiSetSale();
-            
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-        }
-        dispose();
-        guiSetSale.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
+        avantiButton();
+    }//GEN-LAST:event_jButtonAvantiActionPerformed
 
     private void jButtonIndietroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIndietroActionPerformed
-        dispose();
-        GuiNome guiNome = new GuiNome();
-        try {
-            CreateDb createDb = new CreateDb();
-            createDb.DropSchema();
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(rootPane, "Errore in SQL");
-        }
-        guiNome.setVisible(true);
-        
+        indietroButton();
     }//GEN-LAST:event_jButtonIndietroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAvanti;
     private javax.swing.JButton jButtonIndietro;
     private javax.swing.JLabel jLabelSfondo;
     private javax.swing.JPanel jPanel1;

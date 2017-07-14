@@ -44,7 +44,11 @@ public class GuiSetSale extends javax.swing.JFrame {
         createDb.createTableSale();
         imprevisto();
     }
-public void imprevisto(){
+
+    /**
+     * Viene visualizzato quando non è stata ancora completata l'inizializzazione del db
+     */
+    public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -68,6 +72,10 @@ public void imprevisto(){
             dispose();         
         }
     }
+
+    /**
+     * Per inserire i dati delle sale tramite file nel db
+     */
     public void insertFileSale(){
         if(jCheckBoxFile.isSelected()){
             jButtonFileChooser.setEnabled(true);
@@ -96,6 +104,10 @@ public void imprevisto(){
         }
     
     } 
+
+    /**
+     * Se non viene inserita alcuna sala
+     */
     public void emptySale(){
         if(!jCheckBoxFile.isSelected() && !jCheckBoxSaleGui.isSelected()){
             int choose;

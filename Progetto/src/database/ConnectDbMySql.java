@@ -8,8 +8,6 @@ package database;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import javax.swing.JOptionPane;
-import menu.MenuCompleto;
-import menu.Portata;
 
 /**
  *
@@ -18,7 +16,10 @@ import menu.Portata;
 public class ConnectDbMySql {
    public static Connection connection = null;
 
-
+    /**
+     * Metodo per connettersi al db, contiene tutti dati per il login
+     * @return
+     */
     public static Connection ConnectDB(){
         if(connection==null){
         try{

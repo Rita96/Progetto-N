@@ -5,21 +5,10 @@
  */
 package gui.sale;
 
-import gui.menu.*;
 import database.CreateDb;
 import funzionalita.Prenotazione;
-import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import menu.MenuCompleto;
-import menu.Portata;
-import menu.TipoPortata;
 import struttura.Agriturismo;
 import struttura.Sala;
 
@@ -38,13 +27,21 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
         riempiItemSala();
     }
 
-   public void riempiItemSala(){
+    /**
+     * Popola il menu a tendina
+     */
+    public void riempiItemSala(){
        for(Sala s :agri.getSale()){
             jComboBoxSala.addItem(s.getNome());
       }
    }
    
-   public void refreshSalaDeleted(String sala) throws SQLException{
+    /**
+     * Quando viene rimossa una sala, le prenotazioni esistenti per quella sala vengono impostate su indifferente
+     * @param sala
+     * @throws SQLException
+     */
+    public void refreshSalaDeleted(String sala) throws SQLException{
        for(Prenotazione p:agri.getPrenotazione()){
            if(p.getSala().getNome().equals(sala)){
                p.setSala(new Sala("Indifferente"));
@@ -53,7 +50,10 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
        }
    }
    
-   public void removeSala(){
+    /**
+     * Rimuove la sala dal db
+     */
+    public void removeSala(){
        String sala = (String) jComboBoxSala.getSelectedItem();
        int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+sala+" ?");
         if(choose==JOptionPane.YES_OPTION){

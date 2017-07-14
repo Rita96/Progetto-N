@@ -10,7 +10,7 @@ package exception;
  * @author luby9
  */
 public class ExeptionNome extends Exception{
-
+    //Messaggio che esce quando tenti di prenotare senza aver inserito un nome
     @Override
     public String getMessage() {
         return "Non hai compilato il campo 'nome' !";

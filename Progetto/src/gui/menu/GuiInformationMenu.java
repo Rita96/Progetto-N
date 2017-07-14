@@ -28,6 +28,9 @@ public class GuiInformationMenu extends javax.swing.JFrame {
         imprevisto();
     }
 
+    /**
+     * Metodo che interviene in caso di chiusura anticipata del programma
+     */
     public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
@@ -46,6 +49,10 @@ public class GuiInformationMenu extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Errore quando si immettono dati errati nel db
+     */
     public void avantiButton(){
     try {
             guiSetMenu = new GuiSetMenu();

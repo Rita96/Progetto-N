@@ -6,18 +6,10 @@
 package gui.menu;
 
 import database.CreateDb;
-import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
 import menu.MenuCompleto;
 import menu.Portata;
-import menu.TipoPortata;
 import struttura.Agriturismo;
 
 /**
@@ -37,12 +29,19 @@ public class GuiRimuoviPortata extends javax.swing.JFrame {
         riempiItemPortate();
     }
 
-   public void riempiItemPortate(){
+    /**
+     * Popola il menu a tendina con le portate
+     */
+    public void riempiItemPortate(){
        for(Portata p :MenuCompleto.menuCompleto){
             jComboBoxPortate.addItem(p.getNome());
       }
    }
-   public void rimuoviPortate(){
+
+    /**
+     * Rimuove la portata selezionata e setta a indifferente le prenotazioni che avevano quella portata prenotata
+     */
+    public void rimuoviPortate(){
        String portata = (String) jComboBoxPortate.getSelectedItem();
         int choose = JOptionPane.showConfirmDialog(rootPane, "Vuoi cancellare la portata "+portata+" ?");
         if(choose==JOptionPane.YES_OPTION){

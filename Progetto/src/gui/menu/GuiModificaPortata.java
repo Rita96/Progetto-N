@@ -71,6 +71,13 @@ public class GuiModificaPortata extends javax.swing.JFrame {
 
     }
 
+    /**
+     * Permette di modificare gli ingredienti e le quantità di una determinata portata
+     * @param jIng
+     * @param jQnt
+     * @param ing
+     * @param qnt
+     */
     public void setQntIng(JTextField jIng, JTextField jQnt, String ing, int qnt){
          try{
              if(jIng.getText().isEmpty() || jQnt.getText().isEmpty()){
@@ -94,6 +101,9 @@ public class GuiModificaPortata extends javax.swing.JFrame {
         } 
     }
     
+    /**
+     * Inizializza l'interfaccia per la modifica delle portate
+     */
     public void initFields(){
         portata = (String)jComboPortate.getSelectedItem();
         for(Portata pt: MenuCompleto.menuCompleto ){
@@ -128,6 +138,10 @@ public class GuiModificaPortata extends javax.swing.JFrame {
             }catch(IndexOutOfBoundsException ex){}   
         }
     }
+
+    /**
+     * Modifica le portate
+     */
     public void getFields(){
         controllo = true; 
         try {

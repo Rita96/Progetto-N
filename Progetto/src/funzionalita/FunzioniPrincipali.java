@@ -15,11 +15,34 @@ import java.util.Date;
  * @author luby
  */
 public interface FunzioniPrincipali {
-    
-    public void aggiungiPrenotazione(Prenotazione p);
+    /**
+     * Funzione che aggiunge una prenotazione
+     * @param p
+     */
+        public void aggiungiPrenotazione(Prenotazione p);
+
+    /**
+     * Funzione rimuovi una prenotazione effettuata
+     * @param p
+     */
     public void rimnuoviPrenotazione(Prenotazione p);
+
+    /**
+     * Funzione di stampa per l'accoglienza dei clienti in base alle prenotazioni
+     * @param gt
+     */
     public void stampaAccoglienza(ArrayList<GestioneTabelle> gt);
+
+    /**
+     * Calcola le portate in base alle persone prenotate
+     * @param d1
+     * @param d2
+     */
     public void calcoloSpesaPortate(Date d1, Date d2);
+
+    /**
+     * Calcola le quantità degli ingredienti in base alle portate prenotate
+     */
     public void calcoloSpesaIngredienti();
     
     

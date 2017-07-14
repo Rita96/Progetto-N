@@ -11,6 +11,7 @@ package exception;
  */
 public class ExeptionData extends Exception{
 
+    //Errore che viene mostrato quando tenti di prenotare per un giorno passato
     @Override
     public String getMessage() {
         return "La data inserita non è valida !";

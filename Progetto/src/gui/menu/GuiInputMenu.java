@@ -38,7 +38,10 @@ public class GuiInputMenu extends javax.swing.JFrame {
         imprevisto();
     }
     
-public void imprevisto(){
+    /**
+     * Interviene quando si esce prematuramente dal programma o ci sono problemi di connessione col db
+     */
+    public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent we) {
@@ -56,6 +59,9 @@ public void imprevisto(){
         });
     }
     
+    /**
+     * Ti permette di tornare alla pagina precedente
+     */
     public void indietroButton(){
         dispose();
         GuiSetMenu guiSetMenu;

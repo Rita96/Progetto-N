@@ -5,21 +5,12 @@ import database.CreateDb;
 import gui.FileChooser;
 import gui.GuiPrincipale;
 import gui.nome.GuiNome;
-import gui.sale.GuiInformationSale;
-import gui.sale.GuiSetSale;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lettura.IngredientsReading;
-import menu.Ingredient;
-import menu.MenuCompleto;
-import menu.Portata;
-import struttura.Agriturismo;
-import struttura.Sala;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -117,6 +108,10 @@ public class GuiSetMenu extends javax.swing.JFrame {
             dispose();         
         } 
     }
+
+    /**
+     * Popola la tabella menu tramite file
+     */
     public void insertFileMenu(){
         if(jCheckBoxFile.isSelected()){
             jButtonFileChooser.setEnabled(true);
@@ -138,6 +133,10 @@ public class GuiSetMenu extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Metodo che interviene quando non si inserisce nulla nella tabella menu
+     */
     public  void emptyMenu(){
          if(!jCheckBoxFile.isSelected() && !jCheckBoxMenuGui.isSelected()){
             int choose;
@@ -158,6 +157,10 @@ public class GuiSetMenu extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Interviene quando si sta uscendo dal programma prima della completa inizializzazione del db
+     */
     public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override

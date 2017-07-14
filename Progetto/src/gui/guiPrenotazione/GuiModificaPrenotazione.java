@@ -77,6 +77,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
     Agriturismo agri = new Agriturismo();
     GuiPrincipale guiProva = new GuiPrincipale();
     
+    /**
+     * Contiene tutti i metodi che inizializzano l'interfaccia
+     * @throws SQLException
+     */
     public GuiModificaPrenotazione() throws SQLException {
         createDb = new CreateDb();
         initComponents();
@@ -88,10 +92,17 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
 
     }
     
+    /**
+     * Riempie il menu a tendina delle sale
+     */
     public void riempiItemSale(){
         for(Sala s: agriturismo.getSale())
             JSala.addItem(s.getNome());
     }  
+
+    /**
+     * Riempie il menu a tendina dei primi piatti
+     */
     public void riempiItemPrimi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Primo)){
@@ -101,6 +112,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Riempie il menu a tendina con i secondi piatti trovati nel db
+     */
     public void riempiItemSecondi(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Secondo)){
@@ -110,6 +125,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Visualizza nel menu a tendina i dolci salvati nel db
+     */
     public void riempItemiDolci(){
         for(Portata p: MenuCompleto.menuCompleto){
             if(p.getTipoPortata().equals(TipoPortata.Dolce)){
@@ -117,6 +136,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             }
         }
     }
+
+    /**
+     * Gestisce la data della prenotazione
+     */
     public void impostaData(){
         if(data==null){
             data = guiProva.dataOdierda();
@@ -129,6 +152,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
             data = JData.getDate();
         }
     }
+
+    /**
+     * Se i dati sono tutti corretti, salva nel db la prenotazione e la visualizza nell'interfaccia
+     */
     public void okButton(){
          try{            
             nome = JNome.getText();
@@ -213,6 +240,10 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Crea la prenotazione
+     * @param id
+     */
     public void setDataField(int id){
         for(int i = 0; i<agri.getPrenotazione().size(); i++){
             if(agri.getPrenotazione().get(i).getId()==id){

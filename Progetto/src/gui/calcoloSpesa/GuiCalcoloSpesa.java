@@ -22,6 +22,9 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
    private Date date1;
    private Date date2;
     
+    /**
+     * Metodo per la visualizzazione delle date
+     */
     public GuiCalcoloSpesa() {
         pack();
         setLocationRelativeTo(null);
@@ -30,18 +33,32 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
         jDateChooser2.setDate(GuiPrincipale.dataOdierna);
     }
 
+    /**
+     * Scelta delle date da calendario
+     * @param d
+     * @param giorno
+     * @return
+     */
     public Date intervalloDate(Date d, int giorno){
         Calendar data = Calendar.getInstance();
         data.setTime(d);
         data.add(Calendar.DAY_OF_MONTH, giorno);
         return data.getTime();
     }
+
+    /**
+     * Imposta le date
+     */
     public void impostaData(){
         date1 = jDateChooser1.getDate();
         date1 = GuiPrincipale.rimuoviOrarioData(date1);
         date2 = jDateChooser2.getDate();
         date2 = GuiPrincipale.rimuoviOrarioData(date2);
     }
+
+    /**
+     * Metodo che calcola la spesa da fare in quelle date specificate
+     */
     public void calcolaSpesaButton(){
         if(date2.before(date1)){
             JOptionPane.showMessageDialog(rootPane, "Intervallo di date non valido!");

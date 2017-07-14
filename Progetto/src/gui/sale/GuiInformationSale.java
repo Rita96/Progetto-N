@@ -27,6 +27,9 @@ public class GuiInformationSale extends javax.swing.JFrame {
         imprevisto();
     }
 
+    /**
+     * Quando chiudo il programma o il db smette di funzionare
+     */
     public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
@@ -45,6 +48,10 @@ public class GuiInformationSale extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     *Si avanza nel processo di inizializzazione del programma
+     */
     public void avantiButton(){
         try {
             guiSetSale = new GuiSetSale();

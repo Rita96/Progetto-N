@@ -31,6 +31,10 @@ public class GuiInputSale extends javax.swing.JFrame {
         createDb = new CreateDb();
         imprevisto();
     }
+
+    /**
+     * Nel momento in cui viene chiuso il programma prima della fine del processo di inizializzazione
+     */
     public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
@@ -48,6 +52,10 @@ public class GuiInputSale extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Ti permette di tornare nella schermata precedente
+     */
     public void indietroButton(){
         dispose();
         GuiSetSale guiSetSale;
@@ -59,6 +67,10 @@ public class GuiInputSale extends javax.swing.JFrame {
         }
 
     }
+
+    /**
+     * Salva le modifiche
+     */
     public void avantiButton(){
         try {
              if(createDb.verificaTabella("sale")>0 && createDb.verificaTabella("sale")<13){

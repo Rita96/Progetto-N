@@ -6,13 +6,7 @@
 package gui.menu;
 
 import database.CreateDb;
-import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import menu.Ingredient;
@@ -63,13 +57,22 @@ public class GuiAddPortata extends javax.swing.JFrame {
     int qnt12;
     private boolean controllo = true;
     
-    
-    
+    /**
+     * Costruttore
+     * @throws SQLException
+     */
     public GuiAddPortata() throws SQLException {
         initComponents();
         createDb = new CreateDb();
     }
 
+    /**
+     * Setta la qnt dell'ingrediente che si vuole aggiungere
+     * @param jIng
+     * @param jQnt
+     * @param ing
+     * @param qnt
+     */
     public void setQntIng(JTextField jIng, JTextField jQnt, String ing, int qnt){
          try{
              if(jIng.getText().isEmpty() || jQnt.getText().isEmpty()){
@@ -86,6 +89,10 @@ public class GuiAddPortata extends javax.swing.JFrame {
              controllo = false;
          }
     }
+
+    /**
+     * Inizializza l'interfaccia
+     */
     public void initFild(){
        jTextFieldNome.setText("");
        jIngrediente1.setText("");
@@ -113,6 +120,10 @@ public class GuiAddPortata extends javax.swing.JFrame {
        jIngrediente12.setText("");
        jQnt12.setText("");
     }
+
+    /**
+     * Conferma l'aggiunta dell'ingrediente
+     */
     public void addButton(){
         controllo = true;
         tp = (String) jComboBoxTipoPortata.getSelectedItem();
@@ -151,6 +162,11 @@ public class GuiAddPortata extends javax.swing.JFrame {
         if(controllo)
             initFild();
     }
+
+    /**
+     * Menu a tendina con tipo piatto(primo,secondo,dolce)
+     * @return
+     */
     public TipoPortata getTipoPortata(){
         if(tp.equals(TipoPortata.Primo.toString()))
             tipoPortata = TipoPortata.Primo;

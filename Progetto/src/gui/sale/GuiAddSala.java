@@ -5,19 +5,9 @@
  */
 package gui.sale;
 
-import gui.menu.*;
 import database.CreateDb;
-import java.awt.HeadlessException;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import menu.MenuCompleto;
-import menu.Portata;
 import menu.TipoPortata;
 import struttura.Agriturismo;
 import struttura.Sala;
@@ -43,6 +33,9 @@ public class GuiAddSala extends javax.swing.JFrame {
         createDb = new CreateDb();
     }
 
+    /**
+     * Per poter aggiungere una sala
+     */
     public void addButton(){
         nome = jTextFieldNome.getText(); 
         if(!nome.isEmpty()){

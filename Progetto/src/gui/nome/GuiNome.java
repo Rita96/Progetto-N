@@ -32,6 +32,9 @@ public class GuiNome extends javax.swing.JFrame {
         imprevisto();
     }
 
+    /**
+     * Nel caso in cui si esca prima di aver impostato il nome del db
+     */
     public void imprevisto(){
         addWindowListener(new WindowAdapter() {
             @Override
@@ -50,6 +53,10 @@ public class GuiNome extends javax.swing.JFrame {
             }
         });
     }
+
+    /**
+     * Salva il nome del ristorante nel db
+     */
     public void avantiButton(){
          String nome = jTextNome.getText();
         if(nome.isEmpty())

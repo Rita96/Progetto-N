@@ -28,17 +28,27 @@ public class GuiOutputSpesa extends javax.swing.JFrame {
         riempiTabellaIngredienti();
     }
 
+    /**
+     * Inizializza le tabelle del calcolo delle portate e degli ingredienti
+     */
     public void initTable(){
         tabellaPortate = (DefaultTableModel) jTablePortate.getModel();
         tabellaIngredienti = (DefaultTableModel) jTableIngredienti.getModel();
     }
     
+    /**
+     * Inserisce i dati nella tabella portate dell'interfaccia
+     */
     public void riempiTabellaPortate(){
         for(Portata p: Agriturismo.portateSpesa){
             object = new Object[]{p.getNome(),p.getPortataNp()};
             tabellaPortate.addRow(object);
         }
     }
+
+    /**
+     * Inserisce i dati nella tabella ingredienti dell'interfaccia
+     */
     public void riempiTabellaIngredienti(){
         for(Ingredient i: Agriturismo.ingSpesa){
             double qnt = ((double)i.getIngredientNp()*(double)i.getQuantity()/10);

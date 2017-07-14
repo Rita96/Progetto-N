@@ -13,6 +13,7 @@ import java.sql.SQLException;
  */
 public class ExeptionDatabase extends SQLException{
 
+    //Messaggio che ti esce quando non c'è connessione col db
     @Override
     public String getMessage() {
         return "Problemi con il database !";

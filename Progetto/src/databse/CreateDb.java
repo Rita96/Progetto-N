@@ -421,6 +421,31 @@ public class CreateDb {
                         + "WHERE `sala`='"+sala+"';";
          stm.executeUpdate(query);
     }
+     public void refreshPortataDeletedDb(Portata p) throws SQLException{
+         if(p.getTipoPortata().equals(TipoPortata.Primo)){
+             for(int i=1;i<=3;i++){
+                 String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                        + "`primo"+i+"`='Indifferente' "
+                        + "WHERE `primo"+i+"`='"+p.getNome()+"';";
+                stm.execute(query);
+             }
+         }
+         if(p.getTipoPortata().equals(TipoPortata.Secondo)){
+             for(int i=1;i<=3;i++){
+                 String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                        + "`secondo"+i+"`='Indifferente' "
+                        + "WHERE `secondo"+i+"`='"+p.getNome()+"';";
+                stm.execute(query);
+             }
+         }
+         if(p.getTipoPortata().equals(TipoPortata.Dolce)){
+                 String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                        + "`dolce`='Indifferente' "
+                        + "WHERE `dolce`='"+p.getNome()+"';";
+                stm.execute(query);
+        }
+                
+    }
      
         
     

@@ -50,6 +50,7 @@ public class GuiRimuoviPortata extends javax.swing.JFrame {
                 for(int i=0;i<MenuCompleto.menuCompleto.size();i++){
                     if(portata.equals(MenuCompleto.menuCompleto.get(i).getNome()))
                     MenuCompleto.menuCompleto.remove(i);
+                    createDb.refreshPortataDeletedDb(MenuCompleto.menuCompleto.get(i));
                 }
                 createDb.deletePortataFromMenu(portata);
                 JOptionPane.showMessageDialog(rootPane, "Portata cancellata!");

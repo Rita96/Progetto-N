@@ -96,6 +96,7 @@ public class GuiNome extends javax.swing.JFrame {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
         String nome = jTextNome.getText();
+        
         if(nome.isEmpty())
             JOptionPane.showMessageDialog(rootPane, warning);
         else{ 

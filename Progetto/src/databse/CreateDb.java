@@ -88,17 +88,17 @@ public class CreateDb {
         stm.executeUpdate(query);
     }
     public void insertDatiRistorante() throws SQLException{
-        String query = "INSERT INTO `ristorante`.`dati` (`nome`) VALUES ('"+agri.getNome()+"')";;
+        String query = "INSERT INTO `ristorante`.`dati` (`nome`) VALUES ('"+agri.getNome().replace("'", "''")+"')";;
         stm.executeUpdate(query);
     } 
     public void addSaleFromFileToDb() throws SQLException{
         for(Sala s: agri.getSale()){
-        String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+s.getNome()+"')";
+        String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+s.getNome().replace("'", "''")+"')";
             stm.executeUpdate(query);
         }
     }
     public void addSingleSala(String nomeSala) throws SQLException{
-        String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+nomeSala+"');";
+        String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+nomeSala.replace("'", "''")+"');";
         stm.execute(query);
     }   
     public void removeSchema() throws SQLException{
@@ -146,44 +146,34 @@ public class CreateDb {
     }
     public void addPortataFromFiletoDb() throws SQLException{
           for(Portata p: MenuCompleto.menuCompleto){
-            String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+p.getNome()+"', '"+p.getTipoPortata()+"');";
+            String query = "INSERT INTO `ristorante`.`menu` (` nome portata`,"
+                    + " `tipo portata`) VALUES "
+                    + "('"+p.getNome().replace("'", "''")+"', '"+p.getTipoPortata()+"');";
             stm.executeUpdate(query);
         }
     }
     public void addSinglePortata(Portata p) throws SQLException{
-        String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES ('"+p.getNome()+"', '"+p.getTipoPortata().toString()+"');";;
+        String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES "
+                + "('"+p.getNome().replace("'", "''")+"', '"+p.getTipoPortata().toString()+"');";;
         stm.execute(query);
         for(int i=1;i<=p.getIngredienti().size();i++){
-                String query1 = "UPDATE `ristorante`.`menu` SET `ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', `qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' WHERE ` nome portata`='"+p.getNome()+"';";
-  
-                
+                String query1 = "UPDATE `ristorante`.`menu` SET "
+                        + "`ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName().replace("'", "''")+"', "
+                        + "`qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' "
+                        + "WHERE ` nome portata`='"+p.getNome().replace("'", "''")+"';";
                 stm.executeUpdate(query1);
             }
         
         
     }  
-    public void modificaIngrediente(String nomePortata, TipoPortata tipoPortata, String newIngrediente, String oldIngrediente) throws SQLException{
-        
-        for(int i=1;i<11;i++){
-            String query = "SELECT `ingrediente"+i+"`,`idmenu` from `"+agri.getNome()+"`.`menu` WHERE `nomeportata`= "+nomePortata+" AND `ingrediente"+i+"`= "+oldIngrediente+";";
-            ResultSet rs = stm.executeQuery(query);
-            if(rs.next()){
-                String id = rs.getString(2);            
-                System.out.println(id);
-                query = "UPDATE `"+agri.getNome()+"`.`menu` SET `ingrediente"+i+"` = "+newIngrediente+" WHERE `idmenu` = "+id+" AND `ingrediente"+i+"`='"+oldIngrediente+"';";
-                stm.execute(query);
-            }else{
-                continue;  
-            }  
-        }
-    }  
     public void addIngredienti() throws SQLException{
          for(Portata p: MenuCompleto.menuCompleto){
         
             for(int i=1;i<=p.getIngredienti().size();i++){
-                String query = "UPDATE `ristorante`.`menu` SET `ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', `qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' WHERE ` nome portata`='"+p.getNome()+"';";
-  
-                
+                String query = "UPDATE `ristorante`.`menu` SET "
+                        + "`ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName().replace("'", "''")+"', "
+                        + "`qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' "
+                        + "WHERE ` nome portata`='"+p.getNome().replace("'", "''")+"';";
                 stm.executeUpdate(query);
             }
         }
@@ -237,24 +227,24 @@ public class CreateDb {
                 + ", `lista attesa`, `esigenza sala`, `preferenza sala`"
                 + ", `esclusiva sala`, `da confermare`, `tipo di evento`, `data`, `numero di telefono`) VALUES "
                 + "('"+p.getPasto()+"', "
-                + "'"+p.getCliente().getNome()+"', "
+                + "'"+p.getCliente().getNome().replace("'", "''")+"', "
                 + "'"+p.getnAdulti()+"', "
-                + "'"+p.getSala().getNome()+"', "
+                + "'"+p.getSala().getNome().replace("'", "''")+"', "
                 + "'"+p.getnBambini()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(0).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(1).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(2).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(3).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(4).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(5).getNome()+"', "
-                + "'"+p.getMenu().getMenuCliente().get(6).getNome()+"' ,"
-                + "'"+p.getNote()+"' ,"
+                + "'"+p.getMenu().getMenuCliente().get(0).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(1).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(2).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(3).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(4).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(5).getNome().replace("'", "''")+"', "
+                + "'"+p.getMenu().getMenuCliente().get(6).getNome().replace("'", "''")+"' ,"
+                + "'"+p.getNote().replace("'", "''")+"' ,"
                 + "'"+p.getAttesa()+"' ,"
                 + "'"+p.getEsigenza()+"' ,"
                 + "'"+p.getPreferenza()+"' ,"
                 + "'"+p.getEsclusiva()+"' ,"
                 + "'"+p.getDaConfermare()+"' ,"
-                + "'"+p.getTipoEvento()+"' ,"
+                + "'"+p.getTipoEvento().replace("'", "''")+"' ,"
                 + "'"+p.getDateDb()+"' ,"
                 + "'"+p.getCliente().getNumTelefono()+"');";
         stm.execute(query);
@@ -267,7 +257,6 @@ public class CreateDb {
            String nomeSala =rs.getString("nome");
            agri.addSala(new Sala(nomeSala));
         }
-        
     }
     public void toJavaFromDbPortate() throws SQLException{
         String query = "SELECT * FROM `ristorante`.`menu`";
@@ -365,23 +354,24 @@ public class CreateDb {
         }  
     public void modificaPrenotazione(Prenotazione p) throws SQLException{
             String query = "UPDATE `ristorante`.`prenotazioni` SET "
-                    + "`note`='"+p.getNote()+"', `nome`='"+p.getCliente().getNome()+"' ,"
+                    + "`note`='"+p.getNote().replace("'", "''")+"', "
+                    + "`nome`='"+p.getCliente().getNome().replace("'", "''")+"' ,"
                     + "`numero di telefono`='"+p.getCliente().getNumTelefono()+"', "
                     + "`pasto`='"+p.getPasto()+"' ,`data`='"+p.getDateDb()+"' ,"
                     + "`numero di adulti`='"+p.getnAdulti()+"' ,`numero di bambini`='"+p.getnBambini()+"' ,"
-                    + " `sala`='"+p.getSala().getNome()+"' ,"
-                    + "`tipo di evento`='"+p.getTipoEvento()+"' ,"
+                    + " `sala`='"+p.getSala().getNome().replace("'", "''")+"' ,"
+                    + "`tipo di evento`='"+p.getTipoEvento().replace("'", "''")+"' ,"
                     + "`esigenza sala`='"+p.getEsigenza()+"' ,"
                     + "`lista attesa`='"+p.getAttesa()+"' ,"
                     + "`preferenza sala`='"+p.getPreferenza()+"' ,"
                     + "`esclusiva sala`='"+p.getEsclusiva()+"' ,"
-                    + "`primo1`='"+p.getMenu().getMenuCliente().get(0).getNome()+"' ,"
-                    + "`primo2`='"+p.getMenu().getMenuCliente().get(1).getNome()+"' ,"
-                    + "`primo3`='"+p.getMenu().getMenuCliente().get(2).getNome()+"' ,"
-                    + "`secondo1`='"+p.getMenu().getMenuCliente().get(3).getNome()+"' ,"
-                    + "`secondo2`='"+p.getMenu().getMenuCliente().get(4).getNome()+"' ,"
-                    + "`secondo3`='"+p.getMenu().getMenuCliente().get(5).getNome()+"' ,"
-                    + "`dolce`='"+p.getMenu().getMenuCliente().get(6).getNome()+"' ,"
+                    + "`primo1`='"+p.getMenu().getMenuCliente().get(0).getNome().replace("'", "''")+"' ,"
+                    + "`primo2`='"+p.getMenu().getMenuCliente().get(1).getNome().replace("'", "''")+"' ,"
+                    + "`primo3`='"+p.getMenu().getMenuCliente().get(2).getNome().replace("'", "''")+"' ,"
+                    + "`secondo1`='"+p.getMenu().getMenuCliente().get(3).getNome().replace("'", "''")+"' ,"
+                    + "`secondo2`='"+p.getMenu().getMenuCliente().get(4).getNome().replace("'", "''")+"' ,"
+                    + "`secondo3`='"+p.getMenu().getMenuCliente().get(5).getNome().replace("'", "''")+"' ,"
+                    + "`dolce`='"+p.getMenu().getMenuCliente().get(6).getNome().replace("'", "''")+"' ,"
                     + "`da confermare`='"+p.getDaConfermare()+"'"
                     + " WHERE `idprenotazioni`='"+p.getId()+"'";
            
@@ -389,7 +379,7 @@ public class CreateDb {
     }
     public void deletePrenotazione(int id, String nomePrenotazione) throws SQLException{
             String query = "DELETE FROM `ristorante`.`prenotazioni` WHERE `idprenotazioni`='"+id+"' "
-                    + "and`nome`='"+nomePrenotazione+"'";
+                    + "and`nome`='"+nomePrenotazione.replace("'", "''")+"'";
             stm.execute(query);
         }
     public int selectMaxId() throws SQLException{
@@ -401,27 +391,27 @@ public class CreateDb {
         return max;
     }
     public void deletePortataFromMenu(String nome) throws SQLException{
-         String query = "DELETE FROM `ristorante`.`menu` WHERE ` nome portata`='"+nome+"'";
+         String query = "DELETE FROM `ristorante`.`menu` WHERE ` nome portata`='"+nome.replace("'", "''")+"'";
             stm.execute(query);
     }
     public void deleteSalaFromMenu(String nome) throws SQLException{
-         String query = "DELETE FROM `ristorante`.`sale` WHERE `nome`='"+nome+"'";
+         String query = "DELETE FROM `ristorante`.`sale` WHERE `nome`='"+nome.replace("'", "''")+"'";
             stm.execute(query);
     }
     public void modificaPortata(Portata p) throws SQLException{
       
         for(int i=1;i<=p.getIngredienti().size();i++){
             String query = "UPDATE `ristorante`.`menu` SET "
-            + "`ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName()+"', "
+            + "`ingrediente"+i+"`='"+p.getIngredienti().get(i-1).getName().replace("'", "''")+"', "
             + "`qnt"+i+"`='"+p.getIngredienti().get(i-1).getQuantity()+"' "
-                + "WHERE ` nome portata`='"+p.getNome()+"';";
+                + "WHERE ` nome portata`='"+p.getNome().replace("'", "''")+"';";
                 stm.executeUpdate(query);
             }
         for(int i=p.getIngredienti().size();i<=12;i++){
             String query = "UPDATE `ristorante`.`menu` SET "
             + "`ingrediente"+i+"`='', "
             + "`qnt"+i+"`='"+0+"' "
-                + "WHERE ` nome portata`='"+p.getNome()+"';";
+                + "WHERE ` nome portata`='"+p.getNome().replace("'", "''")+"';";
                 stm.executeUpdate(query);
             }
     }    

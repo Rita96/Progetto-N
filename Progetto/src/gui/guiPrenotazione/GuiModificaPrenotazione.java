@@ -33,7 +33,7 @@ import struttura.Sala;
  *
  * @author luby
  */
-public class ModificaPrenotazione extends javax.swing.JFrame {
+public class GuiModificaPrenotazione extends javax.swing.JFrame {
 
     private Date data = new Date();
     private Date dataOdierna = new Date();
@@ -77,7 +77,7 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
     Agriturismo agri = new Agriturismo();
     GuiPrincipale guiProva = new GuiPrincipale();
     
-    public ModificaPrenotazione() throws SQLException {
+    public GuiModificaPrenotazione() throws SQLException {
         createDb = new CreateDb();
         initComponents();
         riempiItemPrimi();
@@ -557,7 +557,7 @@ public class ModificaPrenotazione extends javax.swing.JFrame {
         try {
             createDb.modificaPrenotazione(agri.getPrenotazione().get(indice));
         } catch (SQLException ex) {
-            Logger.getLogger(ModificaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GuiModificaPrenotazione.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_JOkActionPerformed
 

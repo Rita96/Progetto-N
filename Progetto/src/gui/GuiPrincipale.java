@@ -1,6 +1,6 @@
 package gui;
 
-import gui.guiPrenotazione.ModificaPrenotazione;
+import gui.guiPrenotazione.GuiModificaPrenotazione;
 import gui.guiPrenotazione.GuiPrenotazione;
 import com.toedter.calendar.JDateChooser;
 import databse.CreateDb;
@@ -132,9 +132,6 @@ public class GuiPrincipale extends javax.swing.JFrame {
         labelnp11.setVisible(false);
         labelnp12.setVisible(false);
         
-        
-        
-        
     }
     public void aggiornaTabelle(Date d){  
         rimuoviRigheTabellaSala();
@@ -224,6 +221,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         cal.set(Calendar.MILLISECOND,0);
         return cal.getTime();
     }
+    
     public Date dataOdierda(){
         Calendar cal = Calendar.getInstance();
         dataOdierna= cal.getTime();
@@ -269,9 +267,9 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jModificaPrenotazione.addMouseListener(new MouseInputAdapter() {
             @Override
             public void mousePressed(MouseEvent me) {
-                ModificaPrenotazione mp;
+                GuiModificaPrenotazione mp;
                 try {
-                    mp = new ModificaPrenotazione();
+                    mp = new GuiModificaPrenotazione();
                     mp.setDataField(id);
                     mp.setVisible(true);
                 } catch (SQLException ex) {

@@ -162,7 +162,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
         getContentPane().add(jTextFieldNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 25, 292, -1));
 
         jLabelNome.setText("Inserire gli ingredienti per dieci persone");
-        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, -1, -1));
+        getContentPane().add(jLabelNome, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
         jLabelTipoPortata.setText("Tipo");
         getContentPane().add(jLabelTipoPortata, new org.netbeans.lib.awtextra.AbsoluteConstraints(351, 5, -1, -1));
@@ -296,7 +296,6 @@ public class GuiAddPortata extends javax.swing.JFrame {
         if(!nome.isEmpty()){
             this.tipoPortata = getTipoPortata();
             try {
-                MenuCompleto.menuCompleto.add(new Portata(nome,TipoPortata.valueOf(tp)));
                 p= new Portata(nome, tipoPortata);
                 setQntIng(jIngrediente1, jQnt1, ing1, qnt1);
                 setQntIng(jIngrediente2, jQnt2, ing2, qnt2);
@@ -314,8 +313,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
                     createDb.addSinglePortata(p);
                     JOptionPane.showMessageDialog(rootPane, "Portata aggiunta con successo!");
                     createDb.riempiTabella(GuiInputMenu.jTableMenu, query);
-                    ModificaMenu.addElementoMenu(new Portata(nome, TipoPortata.valueOf(tp)));
-                    
+                    MenuCompleto.menuCompleto.add(p);
                     initFild();
                 }
             } catch (SQLException ex) {

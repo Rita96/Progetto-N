@@ -6,7 +6,7 @@
 package gui.nome;
 
 import gui.sale.GuiInformationSale;
-import databse.CreateDb;
+import database.CreateDb;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

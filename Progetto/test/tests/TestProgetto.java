@@ -5,7 +5,7 @@
  */
 package tests;
 
-import databse.CreateDb;
+import database.CreateDb;
 import java.sql.SQLException;
 import org.junit.Test;
 import static org.junit.Assert.*;

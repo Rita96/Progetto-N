@@ -7,8 +7,8 @@ package main;
 
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException;
 import gui.nome.GuiNome;
-import databse.ConnectDbMySql;
-import databse.CreateDb;
+import database.ConnectDbMySql;
+import database.CreateDb;
 import gui.GuiPrincipale;
 import java.io.IOException;
 import java.sql.SQLException;

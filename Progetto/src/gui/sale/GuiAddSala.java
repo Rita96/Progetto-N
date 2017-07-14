@@ -6,7 +6,7 @@
 package gui.sale;
 
 import gui.menu.*;
-import databse.CreateDb;
+import database.CreateDb;
 import java.awt.HeadlessException;
 import java.sql.SQLException;
 import java.util.logging.Level;

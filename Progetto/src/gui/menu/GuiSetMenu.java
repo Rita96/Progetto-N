@@ -1,7 +1,7 @@
 package gui.menu;
 
 
-import databse.CreateDb;
+import database.CreateDb;
 import gui.FileChooser;
 import gui.GuiPrincipale;
 import gui.nome.GuiNome;

@@ -5,7 +5,7 @@
  */
 package gui.sale;
 
-import databse.CreateDb;
+import database.CreateDb;
 import gui.menu.*;
 import gui.nome.GuiNome;
 import java.awt.event.WindowAdapter;

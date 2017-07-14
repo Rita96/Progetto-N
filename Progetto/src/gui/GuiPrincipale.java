@@ -2,7 +2,7 @@ package gui;
 
 import gui.guiPrenotazione.GuiModificaPrenotazione;
 import gui.guiPrenotazione.GuiPrenotazione;
-import databse.CreateDb;
+import database.CreateDb;
 import funzionalita.Prenotazione;
 import gui.calcoloSpesa.GuiCalcoloSpesa;
 import gui.guiPrenotazione.GestioneTabelle;

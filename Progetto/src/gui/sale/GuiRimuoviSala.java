@@ -52,7 +52,7 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
                     if(sala.equals(agri.getSale().get(i).getNome()))
                     agri.removeSala(agri.getSale().get(i));
                 }
-                createDb.deleteSalaFromMenu(sala);
+                createDb.deleteSalaFromDb(sala);
                 JOptionPane.showMessageDialog(rootPane, "Sala cancellata!");
                 JOptionPane.showMessageDialog(rootPane, "Le modifiche saranno disponibili dopo il riavvio del programma!");
                 dispose();

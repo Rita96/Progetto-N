@@ -13,6 +13,9 @@ package struttura;
 public class Sala {
     private String nome;
 
+    public Sala() {
+    }
+   
     public Sala(String nome) {
         this.nome = nome;
     }

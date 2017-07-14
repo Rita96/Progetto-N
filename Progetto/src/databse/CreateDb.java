@@ -577,7 +577,13 @@ public class CreateDb {
                 + "WHERE ` nome portata`='"+p.getNome().replace("'", "''")+"';";
                 stm.executeUpdate(query);
             }
-    }    
+    }
+    public void refreshSalaDeletedDb(String sala) throws SQLException{
+         String query = "UPDATE `ristorante`.`prenotazioni` SET "
+                        + "`sala`='Indifferente' "
+                        + "WHERE `sala`='"+sala+"';";
+         stm.executeUpdate(query);
+    }
      
     /**
      * Metodo che ci è servito per controllare che scrivesse effettivamente nel db una sala aggiunta dal junit test

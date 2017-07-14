@@ -120,9 +120,7 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
                 i.setIngredientNp(0);
             }
             agri.calcoloSpesaIngredienti();
-            for(Ingredient i: Agriturismo.ingSpesa){
-                System.out.println(i.getName()+" "+" "+i.getIngredientNp()+" "+i.getQuantity());
-            }
+           
             GuiOutputSpesa gos = new GuiOutputSpesa();
             gos.setVisible(true);
             dispose();

@@ -11,12 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import menu.Ingredient;
-import menu.Ingredient;
-import menu.MenuCompleto;
 import menu.MenuCompleto;
 import menu.Portata;
-import menu.Portata;
-import menu.TipoPortata;
 import menu.TipoPortata;
 
 /**
@@ -26,6 +22,13 @@ import menu.TipoPortata;
 public class IngredientsReading {
     MenuCompleto menuCompleto = new MenuCompleto();
     
+    /**
+     * Legge le portate con i relativi ingredienti da file
+     * @param path
+     * @throws FileNotFoundException
+     * @throws IOException
+     * @throws IndexOutOfBoundsException
+     */
     public void IngredientsReading(String path) throws FileNotFoundException, IOException,
     IndexOutOfBoundsException{
         

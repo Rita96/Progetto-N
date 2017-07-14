@@ -5,20 +5,14 @@ import funzionalita.Prenotazione;
 import gui.guiPrenotazione.GestioneTabelle;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.logging.Formatter;
 import java.util.logging.Level;
-import java.util.logging.LogRecord;
 import java.util.logging.Logger;
-import lettura.LeggiSala;
 import menu.Ingredient;
 import menu.MenuCompleto;
 import menu.Portata;
@@ -66,9 +60,18 @@ public class Agriturismo implements FunzioniPrincipali{
         return prenotazioni;
     }
 
+    /**
+     * Aggiunge le sale da Sala
+     * @param s
+     */
     public void addSala(Sala s){
         sale.add(s);
     }
+
+    /**
+     * Rimuove le sale da Sala
+     * @param s
+     */
     public void removeSala(Sala s){
         sale.remove(s);
     }
@@ -81,6 +84,11 @@ public class Agriturismo implements FunzioniPrincipali{
         return prenotazioni;
     }
 
+    /**
+     * Conta le persone prenotate
+     * @param d
+     * @return
+     */
     public int getContatorePersone(Date d) {
         for(Prenotazione p: prenotazioni)
             if(p.getDate().equals(d))

@@ -1,6 +1,0 @@
-**Requisiti Funzionali**
-
-* Il sistema deve permettere di aggiungere, rimuovere e modificare una prenotazione;
-* Il sistema deve permettere all’utente di monitorare la situazione di un gruppo di prenotazioni selezionate;
-* Il sistema deve permettere all’utente di fare una stima di tutti gli alimenti che servono per preparare le varie portate selezionando l'intervallo di tempo in cui le portate sono comprese;
-* La prenotazione deve essere salvata in un Database;

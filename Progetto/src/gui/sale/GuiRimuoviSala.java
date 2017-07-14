@@ -64,6 +64,7 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
                 }
                 createDb.deleteSalaFromMenu(sala);
                 refreshSalaDeleted(sala);
+                createDb.deleteSalaFromDb(sala);
                 JOptionPane.showMessageDialog(rootPane, "Sala cancellata!");
                 JOptionPane.showMessageDialog(rootPane, "Le modifiche saranno disponibili dopo il riavvio del programma!");
                 dispose();

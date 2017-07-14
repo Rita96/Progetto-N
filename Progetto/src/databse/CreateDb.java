@@ -8,14 +8,13 @@ package databse;
 import cliente.Cliente;
 import funzionalita.Prenotazione;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Date;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import menu.Ingredient;
 import menu.MenuCliente;
@@ -39,15 +38,24 @@ public class CreateDb {
    private Agriturismo agri = new Agriturismo();
    private MenuCompleto menuCompleto = new MenuCompleto();
    
-
-    
+    /**
+     * Metodo per la connessione con il db
+     * @throws SQLException
+     */
     public CreateDb() throws SQLException{
         conn = ConnectDbMySql.ConnectDB();
         stm = conn.createStatement();
     }
+    
     public Statement getStm() {
         return stm;
-    }   
+    } 
+    
+    /**
+     * Controllo del primo accesso
+     * @return controllo: a true non è il primo accesso, a false bisogna creare il db
+     * @throws SQLException
+     */
     public boolean FirstAccess() throws SQLException{
         boolean controllo = false;
         String query = "SELECT * FROM `ristorante`.`dati`";
@@ -58,19 +66,39 @@ public class CreateDb {
         }
         return controllo;
     }
+    
+    /**
+     * Inizializza lo schema al primo accesso
+     * @throws SQLException
+     */
     public void CreateSchema() throws SQLException{
         String query = "CREATE SCHEMA IF NOT EXISTS `ristorante`";
         stm.execute(query);
     }
+
+    /**
+     * Cancella lo schema dal db 
+     * @throws SQLException
+     */
     public void DropSchema() throws SQLException{
         String query = "DROP SCHEMA IF EXISTS `ristorante`";
         stm.execute(query);
     }
+
+    /**
+     * Chiude la connessione
+     * @throws SQLException
+     */
     public void closeConnection() throws SQLException{
             stm.close(); // rilascio le risorse
             pstmt.close(); // rilascio le risorse
             conn.close(); // termino la connessione
     }
+
+    /**
+     * Crea la tabella delle sale del ristorante nel db
+     * @throws SQLException
+     */
     public void createTableSale() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`sale` (\n" +
                 "  `idsale` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -79,6 +107,11 @@ public class CreateDb {
                 "  UNIQUE INDEX `nomi_UNIQUE` (`nome` ASC));";
         stm.executeUpdate(query);
     }   
+
+    /**
+     * Crea la tabella con i dati del ristorante nel db
+     * @throws SQLException
+     */
     public void createTableDatiRistorante() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`dati` (\n" +
                 "  `iddati` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -87,29 +120,52 @@ public class CreateDb {
                 "  UNIQUE INDEX `nomi_UNIQUE` (`nome` ASC));";
         stm.executeUpdate(query);
     }
+
+    /**
+     * Inizializza la tabella dei dati del ristorante al primo accesso
+     * @throws SQLException
+     */
     public void insertDatiRistorante() throws SQLException{
         String query = "INSERT INTO `ristorante`.`dati` (`nome`) VALUES ('"+agri.getNome().replace("'", "''")+"')";;
         stm.executeUpdate(query);
     } 
+    
+    /**
+     * Metodo che inserisce le sale nel db tramita lettura da file
+     * @throws SQLException
+     */
     public void addSaleFromFileToDb() throws SQLException{
         for(Sala s: agri.getSale()){
         String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+s.getNome().replace("'", "''")+"')";
             stm.executeUpdate(query);
         }
     }
+
+    /**
+     * Popola la tabella delle sale da interfaccia grafica
+     * @param nomeSala
+     * @throws SQLException
+     */
     public void addSingleSala(String nomeSala) throws SQLException{
         String query = "INSERT INTO `ristorante`.`sale` (`nome`) VALUES ('"+nomeSala.replace("'", "''")+"');";
         stm.execute(query);
     }   
-    public void removeSchema() throws SQLException{
-        String query = "DROP SCHEMA IF EXISTS  `ristorante`";
-        stm.execute(query);
-    }
+
+    /**
+     * Elimina la tabella delle sale dal db
+     * @throws SQLException
+     */
+    
     public void DropTableSale() throws SQLException{
         String query = "DROP TABLE IF EXISTS `ristorante`.`sale`";
         stm.executeUpdate(query);
     
     } 
+
+    /**
+     * Crea la tabella menu
+     * @throws SQLException
+     */
     public void createTableMenu() throws SQLException{
        
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`menu` (\n" +
@@ -144,6 +200,11 @@ public class CreateDb {
                     "  UNIQUE INDEX ` nome portata_UNIQUE` (` nome portata` ASC));";
         stm.executeUpdate(query);
     }
+
+    /**
+     * Popola la tabella menu da file
+     * @throws SQLException
+     */
     public void addPortataFromFiletoDb() throws SQLException{
           for(Portata p: MenuCompleto.menuCompleto){
             String query = "INSERT INTO `ristorante`.`menu` (` nome portata`,"
@@ -152,6 +213,12 @@ public class CreateDb {
             stm.executeUpdate(query);
         }
     }
+
+    /**
+     * Popola la tabella menu tramite interfaccia
+     * @param p è la classe portata
+     * @throws SQLException
+     */
     public void addSinglePortata(Portata p) throws SQLException{
         String query = "INSERT INTO `ristorante`.`menu` (` nome portata`, `tipo portata`) VALUES "
                 + "('"+p.getNome().replace("'", "''")+"', '"+p.getTipoPortata().toString()+"');";;
@@ -166,6 +233,11 @@ public class CreateDb {
         
         
     }  
+
+    /**
+     * Aggiunge gli ingredienti alle portate
+     * @throws SQLException
+     */
     public void addIngredienti() throws SQLException{
          for(Portata p: MenuCompleto.menuCompleto){
         
@@ -178,11 +250,25 @@ public class CreateDb {
             }
         }
     }    
+
+    /**
+     * Metodo generico che permette di aggiungere campi alla tabella
+     * @param table a cui vuoi aggiungere dati
+     * @param query che devi fare per poter aggiungere i dati alla tabella
+     * @throws SQLException
+     */
     public void riempiTabella(JTable table, String query) throws SQLException{
          pstmt = conn.prepareStatement(query);
          rs = pstmt.executeQuery();
          table.setModel(DbUtils.resultSetToTableModel(rs));
      }  
+
+    /**
+     * Conteggia i dati in una determinata tabella
+     * @param tabella di cui si vogliono conteggiare i dati
+     * @return
+     * @throws SQLException
+     */
     public int verificaTabella(String tabella) throws SQLException{
         String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`"+tabella+"`;";
         rs=stm.executeQuery(query);
@@ -190,6 +276,11 @@ public class CreateDb {
         int i = rs.getInt("Numero");
        return i;
     }  
+
+    /**
+     * Crea la tabella delle prenotazioni
+     * @throws SQLException
+     */
     public void createTablePrenotazioni() throws SQLException{
         String query = "CREATE TABLE IF NOT EXISTS `ristorante`.`prenotazioni` (\n" +
                         "  `idprenotazioni` INT NOT NULL AUTO_INCREMENT,\n" +
@@ -219,6 +310,12 @@ public class CreateDb {
         
         stm.executeUpdate(query);
     }    
+
+    /**
+     * Aggiunge una prenotazione nella relativa tabella del db
+     * @param p è la classe prenotazione
+     * @throws SQLException
+     */
     public void addSinglePrenotazione(Prenotazione p) throws SQLException{
         String query = "INSERT INTO `ristorante`.`prenotazioni` (`pasto`, "
                 + "`nome`, `numero di adulti`, `sala`, `numero di bambini`"
@@ -250,6 +347,11 @@ public class CreateDb {
         stm.execute(query);
     
     }   
+
+    /**
+     * Metodo che prende i dati dalla tabella sale del db per popolare l'interfaccia
+     * @throws SQLException
+     */
     public void toJavaFromDbSale() throws SQLException{
         String query = "SELECT * FROM `ristorante`.`sale` ORDER BY `sale`.`idsale`";
         rs = stm.executeQuery(query);
@@ -258,6 +360,11 @@ public class CreateDb {
            agri.addSala(new Sala(nomeSala));
         }
     }
+
+    /**
+     * Prende le portate dalla tabella menu e le mostra nell'interfaccia
+     * @throws SQLException
+     */
     public void toJavaFromDbPortate() throws SQLException{
         String query = "SELECT * FROM `ristorante`.`menu`";
         rs = stm.executeQuery(query);
@@ -274,14 +381,27 @@ public class CreateDb {
            MenuCompleto.menuCompleto.add(portata);
         }
     }    
-    public void toJavaFromDbNome() throws SQLException{
+    
+    /**
+     * Prende i dati del ristorante dal db
+     * @return nomeRistorante che serve per testare che il nome scritto nel db sia corretto
+     * @throws SQLException
+     */
+    public String toJavaFromDbNome() throws SQLException{
+       String nomeRistorante = null;
         String query = "SELECT * FROM `ristorante`.`dati`";
         rs = stm.executeQuery(query);
         while(rs.next()){
-           String nomeRistorante = rs.getString("nome");
+           nomeRistorante = rs.getString("nome");
            agri.setNome(nomeRistorante);
         }
+        return nomeRistorante;
     }    
+
+    /**
+     * Prende i dati della tabella prenotazioni e li carica nell'interfaccia
+     * @throws SQLException
+     */
     public void toJavaFromDbPrenotazioni() throws SQLException{
         int i = 0;
         String query = "SELECT * FROM `ristorante`.`prenotazioni` ORDER BY `idprenotazioni`";
@@ -345,6 +465,12 @@ public class CreateDb {
             
             }    
         }
+    
+    /**
+     * Query che permette di sapere quante sale ci sono salvate nel db
+     * @return numeroSale per relativo controllo e modifica dell'interfaccia
+     * @throws SQLException
+     */
     public int getNumeroSale() throws SQLException{
             String query = "SELECT COUNT(*) AS 'Numero' FROM `ristorante`.`sale`;";
             rs=stm.executeQuery(query);
@@ -352,6 +478,12 @@ public class CreateDb {
             int numeroSale = rs.getInt("Numero");
             return numeroSale;
         }  
+
+    /**
+     * Permette di modificare una prenotazione effettuata
+     * @param p classe prenotazione
+     * @throws SQLException
+     */
     public void modificaPrenotazione(Prenotazione p) throws SQLException{
             String query = "UPDATE `ristorante`.`prenotazioni` SET "
                     + "`note`='"+p.getNote().replace("'", "''")+"', "
@@ -377,11 +509,24 @@ public class CreateDb {
            
                 stm.executeUpdate(query);
     }
+
+    /**
+     * Cancella una prenotazione dato il suo id e nome
+     * @param id della prenotazione al momento della conferma
+     * @param nomePrenotazione dato dal Cliente al momento della prenotazione
+     * @throws SQLException
+     */
     public void deletePrenotazione(int id, String nomePrenotazione) throws SQLException{
             String query = "DELETE FROM `ristorante`.`prenotazioni` WHERE `idprenotazioni`='"+id+"' "
                     + "and`nome`='"+nomePrenotazione.replace("'", "''")+"'";
             stm.execute(query);
         }
+
+    /**
+     * Prende l'id dell'ultima prenotazione effettuata
+     * @return l'id della prenotazione
+     * @throws SQLException
+     */
     public int selectMaxId() throws SQLException{
         int max;
         String query = "SELECT MAX(idprenotazioni) AS 'max' FROM ristorante.prenotazioni";
@@ -390,14 +535,32 @@ public class CreateDb {
         max = rs.getInt("max");
         return max;
     }
+
+    /**
+     * Cancella le portate dalla tabella menu dato il nome
+     * @param nome della portata che si vuole cancellare
+     * @throws SQLException
+     */
     public void deletePortataFromMenu(String nome) throws SQLException{
          String query = "DELETE FROM `ristorante`.`menu` WHERE ` nome portata`='"+nome.replace("'", "''")+"'";
             stm.execute(query);
     }
-    public void deleteSalaFromMenu(String nome) throws SQLException{
+
+    /**
+     * Cancella una sala dalla relativa tabella
+     * @param nome
+     * @throws SQLException
+     */
+    public void deleteSalaFromDb(String nome) throws SQLException{
          String query = "DELETE FROM `ristorante`.`sale` WHERE `nome`='"+nome.replace("'", "''")+"'";
             stm.execute(query);
     }
+
+    /**
+     * Metodo per modificare un piatto
+     * @param p classe portata
+     * @throws SQLException
+     */
     public void modificaPortata(Portata p) throws SQLException{
       
         for(int i=1;i<=p.getIngredienti().size();i++){
@@ -447,7 +610,30 @@ public class CreateDb {
                 
     }
      
+    /**
+     * Metodo che ci è servito per controllare che scrivesse effettivamente nel db una sala aggiunta dal junit test
+     * @return
+     * @throws SQLException
+     */
+    public ArrayList selectSale() throws SQLException{
+        ArrayList sl = new ArrayList();
+        String query = "SELECT * FROM `ristorante`.`sale` ORDER BY `sale`.`idsale`";
+        rs = stm.executeQuery(query);
+        while(rs.next()){
+           String nomeSala =rs.getString("nome");
+           sl.add(nomeSala);
+        }
+        return sl;
+    }
         
+    /**
+     * Modifica i dati del ristorante nella relativa tabella
+     * @throws SQLException
+     */
+        public void modificaDatiRistorante() throws SQLException{
+        String query = "UPDATE `ristorante`.`dati` SET `nome` = '"+agri.getNome()+"';";
+        stm.executeUpdate(query);
+    }    
     
     
  }

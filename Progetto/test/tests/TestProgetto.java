@@ -5,10 +5,8 @@
  */
 package tests;
 
-import databse.ConnectDbMySql;
 import databse.CreateDb;
 import java.sql.SQLException;
-import menu.TipoPortata;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import struttura.Agriturismo;
@@ -17,25 +15,48 @@ import struttura.Agriturismo;
  *
  * @author Stefania
  */
-public class TestProgetto {
+public class TestProgetto {    
+        
+    //public TestProgetto() {
+    //}
     
-    
-    
-    public TestProgetto() {
-    }
-
-    
+    //Test che modifica il nome del ristorante nel db
     @Test
-    public void aggiungiIngredienteTest() throws SQLException{
-        ConnectDbMySql db = new ConnectDbMySql();
+    public void nomeTest() throws SQLException{
         Agriturismo agri = new Agriturismo();
-        CreateDb cdb = new CreateDb(); 
-        
-        
-        agri.setNome("agriturismo");
-       // cdb.addIngredienti("Muffin", TipoPortata.Dolce, "Uova", 4);
-        
+        CreateDb cdb = new CreateDb();        
+
+        Agriturismo.setNome("Stefania Party");  
+        cdb.modificaDatiRistorante();
+        assertEquals(agri.getNome(), cdb.toJavaFromDbNome());
     }
+    //Test che aggiunge e toglie una sala dal db
+    @Test
+    public void addSalaTest() throws SQLException{
+        boolean test = false;
+        boolean test1 = false;
+        CreateDb cdb = new CreateDb();       
+        
+        cdb.addSingleSala("Sala Nuova");
+        cdb.selectSale();
+         
+            if(cdb.selectSale().contains("Sala Nuova")){
+               test = true;
+               assertEquals(true, test);
+            }
+            
+        cdb.deleteSalaFromDb("Sala Nuova");
+            if(!(cdb.selectSale().contains("Sala Nuova"))){
+                test1 = true;
+                assertEquals(true, test);
+            }     
+    }
+    //Test di verifica di una portata
+    @Test
+    public void addPortataTest() throws SQLException{
+        CreateDb cdb = new CreateDb();        
+    }
+    
     
     // TODO add test methods here.
     // The methods must be annotated with annotation @Test. For example:

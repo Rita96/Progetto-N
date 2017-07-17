@@ -5,13 +5,15 @@
  */
 package tests;
 
+import cliente.Cliente;
 import database.CreateDb;
-import gui.GuiPrincipale;
+import funzionalita.Prenotazione;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import menu.Ingredient;
+import menu.MenuCliente;
 import menu.MenuCompleto;
 import menu.Portata;
 import org.junit.Test;
@@ -65,22 +67,29 @@ public class TestProgetto {
         Agriturismo agri = new Agriturismo();
         Portata por = null;
         Ingredient ing = null;
+        Prenotazione pre = null;
+        MenuCliente menuCliente = new MenuCliente();
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
         Date data1 = formatter.parse("17-07-2017");
         Date data2 = formatter.parse("19-07-2017");
+        Cliente c = new Cliente("Giuseppe", 254669874);
         
         
         cdb.toJavaFromDbSale();
         cdb.toJavaFromDbPortate();
         cdb.toJavaFromDbNome();
-        cdb.toJavaFromDbPrenotazioni();
-        agri.calcoloSpesaPortate(data1, data2);
-        agri.calcoloSpesaIngredienti();
-        for(Portata p: Agriturismo.portateSpesa){
+       
+        for(Portata p: MenuCompleto.menuCompleto){
             if(p.getNome().equalsIgnoreCase("Ravioli gratinati")){
                 por = p;
             }
         }
+        pre= new Prenotazione(4, formatter.parse("18-07-2017"), "Pranzo", c);
+        agri.aggiungiPrenotazione(pre);
+        menuCliente.getMenuCliente().add(por);
+        pre.setMenu(menuCliente);
+        agri.calcoloSpesaPortate(data1, data2);
+        agri.calcoloSpesaIngredienti();
         
         for(Ingredient ingr: Agriturismo.ingSpesa){
             if(ingr.getName().equalsIgnoreCase("brasato")){

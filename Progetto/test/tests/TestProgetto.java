@@ -85,6 +85,7 @@ public class TestProgetto {
             }
         }
         pre= new Prenotazione(4, formatter.parse("18-07-2017"), "Pranzo", c);
+        agri.getPrenotazione().clear();
         agri.aggiungiPrenotazione(pre);
         menuCliente.getMenuCliente().add(por);
         pre.setMenu(menuCliente);

@@ -143,14 +143,10 @@ public class GuiSetMenu extends javax.swing.JFrame {
             choose = JOptionPane.showConfirmDialog(rootPane, "Nessuna scelta effettuata! Continuare?");
             if(choose==JOptionPane.YES_OPTION){
                 try {
-                    if(createDb.verificaTabella("menu")!=0){
                         dispose();
                         createDb.createTablePrenotazioni();
                         GuiPrincipale guiProva = new GuiPrincipale();
                         guiProva.setVisible(true);
-                    }
-                    else
-                        JOptionPane.showMessageDialog(rootPane, "Inserire almeno una portata!");
                 } catch (SQLException ex) {
                     JOptionPane.showMessageDialog(rootPane, "Problemi con il Database!");
                 }

@@ -323,7 +323,6 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         JDolce = new javax.swing.JComboBox<>();
-        jSeparator1 = new javax.swing.JSeparator();
         jCheckBoxEsclusiva = new javax.swing.JCheckBox();
         jCheckBoxPreferenza = new javax.swing.JCheckBox();
         jCheckBoxEsigenza = new javax.swing.JCheckBox();
@@ -503,8 +502,6 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
         });
         getContentPane().add(JDolce);
         JDolce.setBounds(312, 436, 217, 30);
-        getContentPane().add(jSeparator1);
-        jSeparator1.setBounds(49, 472, 790, 2);
 
         jCheckBoxEsclusiva.setText(" Esclusiva");
         jCheckBoxEsclusiva.addActionListener(new java.awt.event.ActionListener() {
@@ -714,6 +711,5 @@ public class GuiModificaPrenotazione extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextArea jNote;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }

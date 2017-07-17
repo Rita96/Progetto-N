@@ -51,7 +51,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private CreateDb createDb;
     private ArrayList<GestioneTabelle> arrayJTable = new ArrayList<>();
     private int numeroSale;
-    private int[] numPplPerRoom = new int[13];
+    private int[] numPplPerRoom = new int[14];
     private ArrayList<JMenuItem> arrayItem = new ArrayList<>();
     private int id;
     private String nomePrenotazione;
@@ -811,6 +811,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         updateNumPeople(jScrollPane12,tavolo11,labelnp11,10);
         updateNumPeople(jScrollPane13,tavolo12,labelnp12,11);
         updateNumPeople(jScrollPane1,jTable1,jLabelTotale,12);
+        updateNumPeople(jScrollPane1,tabellaAttesa,lblAttesa,13);
     }
     public void updateNumPeople(JScrollPane j,JTable t,JLabel l,int index){
         for(int k = 0 ; k<numPplPerRoom.length ; k++){
@@ -1057,6 +1058,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jButtonRefresh = new javax.swing.JButton();
         jButtoCalcoloSpesa = new javax.swing.JButton();
         jLabelTotale = new javax.swing.JLabel();
+        lblAttesa = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenuFile = new javax.swing.JMenu();
@@ -1089,11 +1091,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(1344, 850));
         setSize(new java.awt.Dimension(1344, 850));
         addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 formMouseClicked(evt);
+            }
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                formMousePressed(evt);
             }
         });
         getContentPane().setLayout(null);
@@ -1677,6 +1679,11 @@ public class GuiPrincipale extends javax.swing.JFrame {
         jPanel1.add(jLabelTotale);
         jLabelTotale.setBounds(170, 120, 40, 14);
 
+        lblAttesa.setText("0");
+        lblAttesa.setPreferredSize(new java.awt.Dimension(25, 16));
+        jPanel1.add(lblAttesa);
+        lblAttesa.setBounds(1290, 120, 30, 16);
+
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/gui/Texture seamless parquet rovere chiaro simo-3d.jpg"))); // NOI18N
         jLabel3.setToolTipText("");
         jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1685,7 +1692,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
             }
         });
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(0, 0, 1410, 1080);
+        jLabel3.setBounds(0, 0, 1420, 1080);
 
         getContentPane().add(jPanel1);
         jPanel1.setBounds(0, 0, 1344, 850);
@@ -1941,6 +1948,7 @@ public class GuiPrincipale extends javax.swing.JFrame {
     private javax.swing.JLabel labelnp7;
     private javax.swing.JLabel labelnp8;
     private javax.swing.JLabel labelnp9;
+    private javax.swing.JLabel lblAttesa;
     private javax.swing.JTable tabellaAttesa;
     private javax.swing.JTable tavolo1;
     private javax.swing.JTable tavolo10;

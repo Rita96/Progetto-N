@@ -150,15 +150,11 @@ public class GuiInputMenu extends javax.swing.JFrame {
 
     private void jButtonAvantiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAvantiActionPerformed
          try {
-             if(createDb.verificaTabella("menu")!=0){
                 dispose();
                 guiAddPortata.dispose();
                 createDb.createTablePrenotazioni();
                 GuiPrincipale guiProva = new GuiPrincipale();
                 guiProva.setVisible(true);
-             }
-             else
-                 JOptionPane.showMessageDialog(rootPane, "Inserire almeno una portata!");
          } catch (SQLException ex) {
             JOptionPane.showMessageDialog(rootPane, "Problemi con il Database");
          }

@@ -251,10 +251,12 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         setMinimumSize(new java.awt.Dimension(920, 720));
         getContentPane().setLayout(null);
 
+        jLabel1.setForeground(new java.awt.Color(255, 0, 0));
         jLabel1.setText("Data");
         getContentPane().add(jLabel1);
         jLabel1.setBounds(49, 35, 75, 30);
 
+        jLabel2.setForeground(new java.awt.Color(255, 0, 0));
         jLabel2.setText("Pasto");
         getContentPane().add(jLabel2);
         jLabel2.setBounds(312, 43, 71, 14);
@@ -268,6 +270,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         getContentPane().add(JPasto);
         JPasto.setBounds(387, 35, 118, 30);
 
+        jLabel3.setForeground(new java.awt.Color(255, 0, 0));
         jLabel3.setText("N. Adulti");
         getContentPane().add(jLabel3);
         jLabel3.setBounds(312, 79, 70, 14);
@@ -280,6 +283,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         getContentPane().add(JNumeroAdulti);
         JNumeroAdulti.setBounds(387, 71, 118, 30);
 
+        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
         jLabel4.setText("Nome");
         getContentPane().add(jLabel4);
         jLabel4.setBounds(49, 79, 70, 14);
@@ -292,6 +296,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
         getContentPane().add(JNome);
         JNome.setBounds(139, 71, 142, 30);
 
+        jLabel5.setForeground(new java.awt.Color(255, 0, 0));
         jLabel5.setText("N. Telefono");
         getContentPane().add(jLabel5);
         jLabel5.setBounds(542, 79, 90, 14);
@@ -422,7 +427,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jCheckBoxEsclusiva);
-        jCheckBoxEsclusiva.setBounds(139, 144, 128, 23);
+        jCheckBoxEsclusiva.setBounds(140, 150, 128, 23);
 
         jCheckBoxPreferenza.setText(" Preferenza");
         jCheckBoxPreferenza.addActionListener(new java.awt.event.ActionListener() {
@@ -431,7 +436,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jCheckBoxPreferenza);
-        jCheckBoxPreferenza.setBounds(415, 144, 110, 23);
+        jCheckBoxPreferenza.setBounds(510, 150, 110, 23);
 
         jCheckBoxEsigenza.setText(" Esigenza");
         jCheckBoxEsigenza.addActionListener(new java.awt.event.ActionListener() {
@@ -440,7 +445,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jCheckBoxEsigenza);
-        jCheckBoxEsigenza.setBounds(293, 144, 100, 23);
+        jCheckBoxEsigenza.setBounds(340, 150, 100, 23);
 
         jLabel12.setText("Tipo di evento");
         getContentPane().add(jLabel12);
@@ -468,7 +473,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jCheckBoxAttesa);
-        jCheckBoxAttesa.setBounds(542, 144, 100, 23);
+        jCheckBoxAttesa.setBounds(630, 40, 100, 23);
 
         jCheckBoxDaConfermare.setText("Da confermare");
         jCheckBoxDaConfermare.addActionListener(new java.awt.event.ActionListener() {
@@ -477,7 +482,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jCheckBoxDaConfermare);
-        jCheckBoxDaConfermare.setBounds(674, 144, 128, 23);
+        jCheckBoxDaConfermare.setBounds(680, 150, 128, 23);
 
         jLabel13.setText("N. Bambini");
         getContentPane().add(jLabel13);

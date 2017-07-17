@@ -23,16 +23,7 @@
 
 
 INDIFFERENTE
-ciao                                  3
-
-
-giuseppe                                  8
-
-
-ss                                  3
-
-
-MARIONE                                  5
+francesco                                  5
 
 
 
@@ -59,35 +50,7 @@ MARIONE                                  5
 
 
 
-CORTE
-ciao                                  3
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-GARDEN 
-giuseppe                                  8
+VERDE
+francesco                                  5
 
 

@@ -130,6 +130,7 @@ public class Agriturismo implements FunzioniPrincipali{
     }
     @Override
     public void calcoloSpesaPortate(Date d1, Date d2) {
+        portateSpesa.clear();
         for(Prenotazione p: prenotazioni){
             for(Portata pt: p.getMenu().getMenuCliente()){}
                 if(((p.getDate().after(d1) && p.getDate().before(d2))))
@@ -147,6 +148,7 @@ public class Agriturismo implements FunzioniPrincipali{
 
     @Override
     public void calcoloSpesaIngredienti() {
+        ingSpesa.clear();
         for(Portata p: portateSpesa){
             for(Ingredient i: p.getIngredienti()){
                 boolean controllo = true;

@@ -6,7 +6,14 @@
 package tests;
 
 import database.CreateDb;
+import gui.GuiPrincipale;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import menu.Ingredient;
+import menu.MenuCompleto;
+import menu.Portata;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import struttura.Agriturismo;
@@ -51,11 +58,42 @@ public class TestProgetto {
                 assertEquals(true, test);
             }     
     }
-    //Test di verifica di una portata
+    //Test di verifica della funzione Calcola portata
     @Test
-    public void addPortataTest() throws SQLException{
-        CreateDb cdb = new CreateDb();        
+    public void testGestioneSpesa() throws SQLException, ParseException{
+        CreateDb cdb = new CreateDb();  
+        Agriturismo agri = new Agriturismo();
+        Portata por = null;
+        Ingredient ing = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        Date data1 = formatter.parse("17-07-2017");
+        Date data2 = formatter.parse("19-07-2017");
+        
+        
+        cdb.toJavaFromDbSale();
+        cdb.toJavaFromDbPortate();
+        cdb.toJavaFromDbNome();
+        cdb.toJavaFromDbPrenotazioni();
+        agri.calcoloSpesaPortate(data1, data2);
+        agri.calcoloSpesaIngredienti();
+        for(Portata p: Agriturismo.portateSpesa){
+            if(p.getNome().equalsIgnoreCase("Ravioli gratinati")){
+                por = p;
+            }
+        }
+        
+        for(Ingredient ingr: Agriturismo.ingSpesa){
+            if(ingr.getName().equalsIgnoreCase("brasato")){
+                ing = ingr;
+            }
+        }
+        
+        assertEquals("4", String.valueOf(por.getPortataNp())); 
+        assertEquals("40.0",String.valueOf((double)ing.getIngredientNp()*(double)ing.getQuantity()/10));
+            
     }
+    
+
     
     
     // TODO add test methods here.

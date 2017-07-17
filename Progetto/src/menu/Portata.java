@@ -1,6 +1,7 @@
 package menu;
 
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -20,7 +21,7 @@ public class Portata {
 
     public int getPortataNp() {
         return portataNp;
-    }
+    }  
 
     public void setPortataNp(int portataNp) {
         this.portataNp = portataNp;

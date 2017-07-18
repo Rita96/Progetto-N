@@ -25,6 +25,7 @@ public class GuiRimuoviPortata extends javax.swing.JFrame {
     
     public GuiRimuoviPortata() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         createDb = new CreateDb();
         riempiItemPortate();
     }

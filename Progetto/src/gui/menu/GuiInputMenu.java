@@ -33,6 +33,7 @@ public class GuiInputMenu extends javax.swing.JFrame {
     
     public GuiInputMenu() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         guiAddPortata = new GuiAddPortata();
         createDb = new CreateDb();
         imprevisto();

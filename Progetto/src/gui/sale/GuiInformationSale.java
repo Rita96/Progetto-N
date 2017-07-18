@@ -24,6 +24,7 @@ public class GuiInformationSale extends javax.swing.JFrame {
             
     public GuiInformationSale() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         imprevisto();
     }
 

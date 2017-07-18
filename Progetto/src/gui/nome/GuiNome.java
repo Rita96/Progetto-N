@@ -29,6 +29,7 @@ public class GuiNome extends javax.swing.JFrame {
      */
     public GuiNome() {
         initComponents();
+        setLocationRelativeTo(null);
         imprevisto();
     }
 

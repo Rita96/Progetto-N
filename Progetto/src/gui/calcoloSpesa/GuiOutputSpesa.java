@@ -23,6 +23,7 @@ public class GuiOutputSpesa extends javax.swing.JFrame {
     public GuiOutputSpesa() {
         
         initComponents();
+        setLocationRelativeTo(null);
         initTable();
         riempiTabellaPortate();
         riempiTabellaIngredienti();

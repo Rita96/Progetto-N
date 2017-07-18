@@ -29,6 +29,7 @@ public class GuiCalcoloSpesa extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
         initComponents();
+        setLocationRelativeTo(null);
         jDateChooser1.setDate(GuiPrincipale.dataOdierna);
         jDateChooser2.setDate(GuiPrincipale.dataOdierna);
     }

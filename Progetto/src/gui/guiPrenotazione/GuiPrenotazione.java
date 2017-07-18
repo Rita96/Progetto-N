@@ -79,6 +79,7 @@ public class GuiPrenotazione extends javax.swing.JFrame {
     public GuiPrenotazione() throws SQLException {
         createDb = new CreateDb();
         initComponents();
+        setLocationRelativeTo(null);
         JData.setDate(dataOdierna);
         riempiItemPrimi();
         riempiItemSecondi();

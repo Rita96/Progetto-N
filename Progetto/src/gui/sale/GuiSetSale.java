@@ -38,6 +38,7 @@ public class GuiSetSale extends javax.swing.JFrame {
     
     public GuiSetSale() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         fileChooser = new FileChooser();
         createDb = new CreateDb();
         guiInputSale = new GuiInputSale();

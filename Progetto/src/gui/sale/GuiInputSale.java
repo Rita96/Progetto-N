@@ -27,6 +27,7 @@ public class GuiInputSale extends javax.swing.JFrame {
     
     public GuiInputSale() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         guiAddSala = new GuiAddSala();
         createDb = new CreateDb();
         imprevisto();

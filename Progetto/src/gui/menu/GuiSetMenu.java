@@ -30,6 +30,7 @@ public class GuiSetMenu extends javax.swing.JFrame {
     private GuiInputMenu guiInputMenu;
     public GuiSetMenu() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         fileChooser = new FileChooser();
         createDb = new CreateDb();
         guiInputMenu = new GuiInputMenu();

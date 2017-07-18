@@ -25,6 +25,7 @@ public class GuiInformationMenu extends javax.swing.JFrame {
             
     public GuiInformationMenu() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         imprevisto();
     }
 

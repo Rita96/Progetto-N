@@ -63,6 +63,7 @@ public class GuiAddPortata extends javax.swing.JFrame {
      */
     public GuiAddPortata() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         createDb = new CreateDb();
     }
 

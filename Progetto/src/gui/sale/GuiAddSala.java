@@ -30,6 +30,7 @@ public class GuiAddSala extends javax.swing.JFrame {
     
     public GuiAddSala() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         createDb = new CreateDb();
     }
 

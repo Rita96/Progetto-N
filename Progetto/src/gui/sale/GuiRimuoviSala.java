@@ -23,6 +23,7 @@ public class GuiRimuoviSala extends javax.swing.JFrame {
    
     public GuiRimuoviSala() throws SQLException {
         initComponents();
+        setLocationRelativeTo(null);
         createDb = new CreateDb();
         riempiItemSala();
     }
